@@ -3,7 +3,7 @@ Markdown Output and Script Writer Engine.
 Writes production-ready B-Roll, SFX, Sources, and Artistic Logic back into the Markdown script.
 """
 
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from pathlib import Path
 import yaml
 from core.models import ScriptDocument, VisualUnit
@@ -13,10 +13,15 @@ from core.logger import logger
 
 
 class MarkdownWriter:
-    def update_script_with_production_data(self, doc: ScriptDocument, units: List[VisualUnit]) -> Path:
+    def update_script_with_production_data(
+        self,
+        doc: ScriptDocument,
+        units: List[VisualUnit],
+        music_cues: Optional[List[Dict[str, Any]]] = None
+    ) -> Path:
         """
         Enriches the script note with 6-level Visual Interpretation,
-        Artistic Search Matrix, DO NOT MATCH guardrails, B-Roll, SFX, and Coverage gauges.
+        Artistic Search Matrix, DO NOT MATCH guardrails, B-Roll, SFX, Score Cues, and Coverage gauges.
         """
         # Update metadata
         meta = dict(doc.metadata)
@@ -40,7 +45,7 @@ class MarkdownWriter:
             ""
         ]
 
-        for u in units:
+        for u_idx, u in enumerate(units):
             lines.append(f"## {u.script_section}")
             lines.append(f"> {u.text}")
             lines.append("")
@@ -174,6 +179,18 @@ class MarkdownWriter:
             else:
                 lines.append("| Ambience | Environmental room tone | [Studio Library](#) | 90% |")
             lines.append("")
+
+            # 9. Musical Score Direction
+            if music_cues and u_idx < len(music_cues):
+                mc = music_cues[u_idx]
+                lines.append("### Musical Score Direction")
+                lines.append(f"- **Cue**: `{mc['cue_id']}` ({mc['timecode_range']})")
+                lines.append(f"- **Tempo & Key**: `{mc['tempo']}` | Key: `{mc['musical_key']}`")
+                lines.append(f"- **Emotional Tone**: *{mc['emotional_mood']}*")
+                lines.append(f"- **Instrumentation**: {mc['instrumentation']}")
+                lines.append(f"- **Style Reference**: `{mc['reference_style']}`")
+                lines.append(f"- **Thematic Track**: [{mc['matched_asset'].title}]({mc['matched_asset'].url})")
+                lines.append("")
 
             # 9. Claims and Verified Sources
             lines.append("### Claims & Verified Evidence")

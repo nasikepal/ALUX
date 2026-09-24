@@ -61,9 +61,15 @@ All commands are executed using the vault's embedded Python environment:
 # 6. Generate Shot Cards & Master Shot Planner
 & "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" shots "02_SCRIPTS\Draft\The_Rise_of_AI.md"
 
-# 7. Scan and Index In-House Media Library
+# 7. Compose Musical Score Trajectory & Emotional Cues
+& "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" music "02_SCRIPTS\Draft\The_Rise_of_AI.md"
+
+# 8. Export DaVinci/Premiere NLE Cut List CSV & Executive Brief
+& "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" export "02_SCRIPTS\Draft\The_Rise_of_AI.md"
+
+# 9. Scan and Index In-House Media Library
 & "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" index-local
 
-# 8. Scaffold a New Production Script
+# 10. Scaffold a New Production Script
 & "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" new-script --title "The Silicon Frontier" --project "Tech Series"
 ```

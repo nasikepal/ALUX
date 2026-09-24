@@ -105,11 +105,11 @@ ALUX/
 ├── 08_AUTOMATION/
 │   ├── Scripts/                   # Python 3.14 pipeline engine
 │   │   ├── core/                  # Config, models, logger, errors
-│   │   ├── artistic_logic/        # Visual interpreter, narrative classifier, metaphor engine, sequence logic, coverage
+│   │   ├── artistic_logic/        # Visual interpreter, narrative classifier, metaphor engine, sequence logic, coverage, music engine
 │   │   ├── pipeline/              # Script, visual, footage, sfx, source, shots
 │   │   ├── providers/             # Local media, Wikimedia, Archive, Stock, News
 │   │   ├── scoring/               # 9-Factor editorial relevance engine
-│   │   ├── output/                # Markdown writer & frontmatter updater
+│   │   ├── output/                # Markdown writer, NLE Cut List CSV & Production Brief exporter
 │   │   ├── cli.py                 # Unified CLI orchestrator
 │   │   └── run_pipeline_quickadd.js  # QuickAdd Obsidian user script
 │   ├── Search/                    # Local asset cache (local_media_index.json)
@@ -170,12 +170,43 @@ Inside Obsidian:
 ### Method C: Command Line Interface (CLI)
 Using the vault's embedded Python runtime:
 ```powershell
-# Run full end-to-end pipeline
+# Run full end-to-end pipeline (Script update + Cut List CSV + Executive Brief)
 & "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" pipeline "02_SCRIPTS\Draft\The_Rise_of_AI.md"
 
-# Scaffold a new script
+# Generate musical score cues and trajectory analysis
+& "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" music "02_SCRIPTS\Draft\The_Rise_of_AI.md"
+
+# Export DaVinci Resolve / Premiere Pro Cut List CSV and Executive Brief
+& "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" export "02_SCRIPTS\Draft\The_Rise_of_AI.md"
+
+# Scaffold a new production script template
 & "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" new-script --title "Project Title" --project "Project Name"
 
-# Re-index internal media library
+# Re-index in-house asset library (04_MEDIA/ and D:\MEDIA_LIBRARY)
 & "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" index-local
 ```
+
+---
+
+## 5. Production Deliverables & Export Formats
+
+Every pipeline run outputs three synchronized editorial deliverables:
+
+1. **Updated Markdown Script Note (`02_SCRIPTS/Draft/<Title>.md`)**:
+   - 6-Level Visual Interpretation (Literal, Contextual, Conceptual, Metaphorical, Emotional, Cinematic).
+   - Ranked B-Roll recommendations with 9-Factor editorial relevance score, visual specificity (0-5), and sequence cutting rules.
+   - Multi-layered SFX acoustic design table (Ambience, Mechanical, Foley, Transition, Impact).
+   - Dynamic Musical Score direction (Tempo BPM, Musical Key, Instrumentation, and In-house Theme matches).
+   - Factual claim verifications linked bidirectionally to canonical Source Notes in `06_SOURCES/News/`.
+
+2. **NLE Cut List CSV (`02_SCRIPTS/Draft/<Title>_CutList.csv`)**:
+   - DaVinci Resolve & Adobe Premiere Pro conformable spreadsheet.
+   - Exact SMPTE timecodes (`00:00:00:00` to `HH:MM:SS:FF`), Shot IDs, Narration lines, B-Roll download URLs, camera movement specs, and SFX / Score cue metadata.
+
+3. **Executive Production Brief (`02_SCRIPTS/Draft/<Title>_Production_Brief.md`)**:
+   - Broadcast runtime analytics (total duration, word count, words-per-second pacing vs standard 2.3-2.5 wps).
+   - Master Storyboard table with camera framing, narrative functions, and asset URLs.
+   - Musical Score cue sheet (motifs, tempo, key, instrumentation).
+   - Legal Fact Verification dossier with source publisher reputations and excerpt proof.
+   - Post-production sign-off and delivery lock checklist.
+

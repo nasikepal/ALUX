@@ -197,3 +197,24 @@ Every section requires multi-layered visual coverage before production lock:
 - Kinetic / Transition Cutaway (15%)
 - Conceptual Metaphorical B-Roll (10%)
 - Empirical Proof / Source Citation (10%)
+
+---
+
+## 9. Musical Score Direction & Emotional Pacing
+
+Visual pacing is bound directly to musical tempo, harmonic mode, and instrumentation:
+
+| Narrative Section | Motif | Target BPM | Musical Key | Dominant Instrumentation |
+|---|---|---|---|---|
+| **01 — Hook** | `scale` | 80-95 BPM | D Minor / C Major | Sub-bass drone, brass swell, modular synth arpeggio |
+| **02 — Conflict / Investment** | `growth` | 95-108 BPM | A Major | Driving percussion, electric guitar ambience, forward momentum |
+| **03 — Exposition / Machine** | `precision` | 90-100 BPM | G Minor | Glass marimba, crisp electronic clicks, clockwork rhythm |
+| **04 — Human Tension** | `automation` | 80-95 BPM | D Minor / C Major | Solo cello, organic textures, subtle electronic bass |
+| **05 — Climax / Economic** | `scale` | 80-95 BPM | D Minor / C Major | Full orchestral synth hybrid, monumental percussion impact |
+
+---
+
+## 10. NLE Conform & Timeline Export
+
+Outputs a frame-accurate CSV cut list formatted with SMPTE timecodes (`00:00:00:00`) for direct import into DaVinci Resolve (Edit Index) and Adobe Premiere Pro, alongside an Executive Production Brief detailing broadcast speech pacing, source dossiers, and post-production lock checklists.
+

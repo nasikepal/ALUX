@@ -20,7 +20,9 @@ from pipeline.sfx import sfx_analyzer
 from pipeline.footage import footage_pipeline
 from pipeline.source import source_pipeline
 from pipeline.shots import shot_planner
+from artistic_logic.music_engine import music_score_engine
 from output.markdown import markdown_writer
+from output.export_nle import nle_exporter
 from providers.local_media import local_media_provider
 
 
@@ -69,10 +71,22 @@ def run_pipeline(script_path: Path):
         shots = shot_planner.create_shots_from_units(doc.visual_units, doc.title)
     console.print(f"[bold green][OK][/bold green] Created [bold]{len(shots)}[/bold] production shots in 05_SHOTS/B-Roll/.")
 
-    # 7. Write Back to Script Note
-    with console.status("[bold green]Writing production-ready B-Roll, SFX, and Sources back to Markdown..."):
-        updated_file = markdown_writer.update_script_with_production_data(doc, doc.visual_units)
+    # 7. Musical Score & Emotional Trajectory
+    with console.status("[bold green]Composing musical pacing, BPM, and instrumentation cues..."):
+        music_cues = music_score_engine.analyze_score_trajectory(doc.visual_units)
+    console.print(f"[bold green][OK][/bold green] Generated [bold]{len(music_cues)}[/bold] dynamic score cues.")
+
+    # 8. Write Back to Script Note
+    with console.status("[bold green]Writing production-ready B-Roll, SFX, Score, and Sources back to Markdown..."):
+        updated_file = markdown_writer.update_script_with_production_data(doc, doc.visual_units, music_cues)
     console.print(f"[bold green][OK][/bold green] Script successfully updated: [bold green]{updated_file.name}[/bold green]")
+
+    # 9. Export NLE Cut List CSV & Executive Production Brief
+    with console.status("[bold green]Generating DaVinci/Premiere NLE Cut List CSV & Executive Brief..."):
+        csv_file = nle_exporter.export_csv(doc, doc.visual_units, shots, music_cues)
+        brief_file = nle_exporter.export_production_brief(doc, doc.visual_units, shots, music_cues)
+    console.print(f"[bold green][OK][/bold green] Exported NLE Cut List: [bold cyan]{csv_file.name}[/bold cyan]")
+    console.print(f"[bold green][OK][/bold green] Exported Executive Brief: [bold cyan]{brief_file.name}[/bold cyan]")
 
     # Display Summary Table
     table = Table(title="Production OS — Artistic Logic & Editorial Summary", border_style="green")
@@ -186,6 +200,14 @@ def main():
     p_shots = subparsers.add_parser("shots", help="Build shot list and shot planner")
     p_shots.add_argument("script", type=str, help="Path to script markdown note")
 
+    # Music command
+    p_mus = subparsers.add_parser("music", help="Analyze narrative arc and compose score cues")
+    p_mus.add_argument("script", type=str, help="Path to script markdown note")
+
+    # Export command
+    p_exp = subparsers.add_parser("export", help="Export DaVinci/Premiere CSV Cut List & Executive Brief")
+    p_exp.add_argument("script", type=str, help="Path to script markdown note")
+
     # New script
     p_new = subparsers.add_parser("new-script", help="Scaffold a new production script")
     p_new.add_argument("--title", required=True, help="Title of script")
@@ -202,7 +224,7 @@ def main():
         parser.print_help()
         sys.exit(0)
 
-    if args.command == "pipeline":
+    if args.command in ["pipeline", "export", "music", "analyze", "broll", "sfx", "news", "shots"]:
         script_file = Path(args.script)
         if not script_file.is_absolute():
             script_file = config.vault_root / script_file
@@ -218,13 +240,6 @@ def main():
         scan_dir = [Path(args.dir)] if args.dir else None
         count = local_media_provider.build_index(scan_dir)
         console.print(f"[bold green][OK] Successfully indexed {count} local media assets.[/bold green]")
-
-    elif args.command in ["analyze", "broll", "sfx", "news", "shots"]:
-        # Run specific stage or pipeline
-        script_file = Path(args.script)
-        if not script_file.is_absolute():
-            script_file = config.vault_root / script_file
-        run_pipeline(script_file)
 
 
 if __name__ == "__main__":
