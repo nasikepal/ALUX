@@ -1,0 +1,6 @@
+{
+  "command_timeout": 5,
+  "templates_folder": "99_TEMPLATES",
+  "syntax_highlighting": true,
+  "enabled_templates": []
+}

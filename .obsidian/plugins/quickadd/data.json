@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "id": "run-pipeline-macro",
+      "name": "Run Production OS Pipeline",
+      "type": "Macro",
+      "command": true,
+      "macro": {
+        "name": "Run Production OS Pipeline",
+        "commands": [
+          {
+            "name": "run_pipeline_quickadd.js",
+            "type": "UserScript",
+            "id": "user-script-1",
+            "path": "08_AUTOMATION/Scripts/run_pipeline_quickadd.js"
+          }
+        ]
+      }
+    }
+  ],
+  "macros": [
+    {
+      "name": "Run Production OS Pipeline",
+      "id": "macro-1",
+      "commands": [
+        {
+          "name": "run_pipeline_quickadd.js",
+          "type": "UserScript",
+          "id": "user-script-1",
+          "path": "08_AUTOMATION/Scripts/run_pipeline_quickadd.js"
+        }
+      ]
+    }
+  ],
+  "inputPrompt": "single-line"
+}

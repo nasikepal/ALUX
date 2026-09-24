@@ -1,0 +1,137 @@
+[
+  {
+    "title": "Studio Datacenter Aisle Pushin 4K",
+    "asset_type": "footage",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Footage/Studio_DataCenter_Aisle_PushIn_4K.mp4",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Footage\\Studio_DataCenter_Aisle_PushIn_4K.mp4",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "footage",
+      "studio_datacenter_aisle_pushin_4k"
+    ],
+    "description": "Internal asset from Footage"
+  },
+  {
+    "title": "Studio Humanoid Robot Walking Cleanroom 4K",
+    "asset_type": "footage",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Footage/Studio_Humanoid_Robot_Walking_Cleanroom_4K.mp4",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Footage\\Studio_Humanoid_Robot_Walking_Cleanroom_4K.mp4",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "studio_humanoid_robot_walking_cleanroom_4k",
+      "footage"
+    ],
+    "description": "Internal asset from Footage"
+  },
+  {
+    "title": "Studio Serverrack Blinkingleds Macro 4K",
+    "asset_type": "footage",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Footage/Studio_ServerRack_BlinkingLEDs_Macro_4K.mov",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Footage\\Studio_ServerRack_BlinkingLEDs_Macro_4K.mov",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "studio_serverrack_blinkingleds_macro_4k",
+      "footage"
+    ],
+    "description": "Internal asset from Footage"
+  },
+  {
+    "title": "Studio Silicon Wafer Macro Tilt 4K",
+    "asset_type": "footage",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Footage/Studio_Silicon_Wafer_Macro_Tilt_4K.mp4",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Footage\\Studio_Silicon_Wafer_Macro_Tilt_4K.mp4",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "footage",
+      "studio_silicon_wafer_macro_tilt_4k"
+    ],
+    "description": "Internal asset from Footage"
+  },
+  {
+    "title": "Studio Cinematic Technology Ambient Theme",
+    "asset_type": "music",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Music/Studio_Cinematic_Technology_Ambient_Theme.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Music\\Studio_Cinematic_Technology_Ambient_Theme.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "music",
+      "studio_cinematic_technology_ambient_theme"
+    ],
+    "description": "Internal asset from Music"
+  },
+  {
+    "title": "Studio Cooling Fan Rpm Drone",
+    "asset_type": "sfx",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/SFX/Studio_Cooling_Fan_RPM_Drone.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\SFX\\Studio_Cooling_Fan_RPM_Drone.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "studio_cooling_fan_rpm_drone",
+      "sfx"
+    ],
+    "description": "Internal asset from SFX"
+  },
+  {
+    "title": "Studio Digital Sub Whoosh Transition",
+    "asset_type": "sfx",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/SFX/Studio_Digital_Sub_Whoosh_Transition.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\SFX\\Studio_Digital_Sub_Whoosh_Transition.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "studio_digital_sub_whoosh_transition",
+      "sfx"
+    ],
+    "description": "Internal asset from SFX"
+  },
+  {
+    "title": "Studio Server Room Low Drone 48K24B",
+    "asset_type": "sfx",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/SFX/Studio_Server_Room_Low_Drone_48k24b.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\SFX\\Studio_Server_Room_Low_Drone_48k24b.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "sfx",
+      "studio_server_room_low_drone_48k24b"
+    ],
+    "description": "Internal asset from SFX"
+  },
+  {
+    "title": "Studio Sub Bass Boom Impact",
+    "asset_type": "sfx",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/SFX/Studio_Sub_Bass_Boom_Impact.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\SFX\\Studio_Sub_Bass_Boom_Impact.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "sfx",
+      "studio_sub_bass_boom_impact"
+    ],
+    "description": "Internal asset from SFX"
+  }
+]
