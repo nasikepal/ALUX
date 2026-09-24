@@ -63,4 +63,16 @@ Run `run_pipeline.bat` or execute via CLI:
 ### Step 4: Production Lock
 Once all shots and sources are approved:
 - Move script note to `02_SCRIPTS/Production/`
-- Export shot list for editor / cinematographer
+- Export conformed NLE cut list CSV and executive brief
+
+---
+
+## 🔗 System Interconnections & Graph Links
+
+- **Pipeline Engine**: [[00_SYSTEM/Automation|Automation Pipeline & Panel Breakdown Engine]]
+- **Command Dashboard**: [[00_SYSTEM/Dashboard|Production OS Command Center]]
+- **Artistic Directorial Hierarchy**: [[00_SYSTEM/ARTISTIC_LOGIC_ENGINE|Artistic Logic Engine Specification]]
+- **Editorial Scoring Settings**: [[00_SYSTEM/Settings|System Settings & 9-Factor Weights]]
+- **Master Storyboard Deck**: [[05_SHOTS/Shot_Planner|Master Shot Planner]]
+- **Script Production Template**: [[99_TEMPLATES/Script_Template|Script Template]]
+

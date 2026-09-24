@@ -20,4 +20,10 @@ license: master
 
 ## Acoustic Characteristics
 - Spectral range: Mid-low warmth with crisp transient.
-- Use case: Ideal for server room background beds or high-tech facility scenes.
+- Use case: Audio bed or tactile Foley layer.
+
+---
+## 🔗 System Links
+- **Automation Pipeline**: [[00_SYSTEM/Automation|Automation Engine]]
+- **Command Dashboard**: [[00_SYSTEM/Dashboard|Production OS Dashboard]]
+

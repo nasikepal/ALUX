@@ -1,6 +1,7 @@
 """
 Markdown Output and Script Writer Engine.
-Writes production-ready B-Roll, SFX, Sources, and Artistic Logic back into the Markdown script.
+Enforces rational constraints to convert raw narration into production-ready
+Visual Markdown Panel Breakdowns with bidirectional Obsidian graph links.
 """
 
 from typing import List, Dict, Any, Optional
@@ -20,8 +21,8 @@ class MarkdownWriter:
         music_cues: Optional[List[Dict[str, Any]]] = None
     ) -> Path:
         """
-        Enriches the script note with 6-level Visual Interpretation,
-        Artistic Search Matrix, DO NOT MATCH guardrails, B-Roll, SFX, Score Cues, and Coverage gauges.
+        Enriches the script note into a conformed Visual Markdown Panel Breakdown
+        adhering to rational pacing, artistic transduction, and graph link constraints.
         """
         # Update metadata
         meta = dict(doc.metadata)
@@ -42,119 +43,146 @@ class MarkdownWriter:
             "---",
             "",
             f"# {doc.title}",
+            "",
+            "> [!info|system] 🧭 Production OS Graph Navigation",
+            "> **Core System Links**: [[00_SYSTEM/Dashboard|Command Dashboard]] • [[00_SYSTEM/Automation|Automation Engine]] • [[00_SYSTEM/ARTISTIC_LOGIC_ENGINE|Artistic Logic]] • [[00_SYSTEM/Settings|Scoring Rules]] • [[05_SHOTS/Shot_Planner|Master Storyboard]]",
+            "",
+            "---",
             ""
         ]
 
+        cumulative_sec = 0
+
         for u_idx, u in enumerate(units):
+            start_sec = cumulative_sec
+            end_sec = cumulative_sec + u.duration_sec
+            cumulative_sec = end_sec
+            tc_range = f"{start_sec//60:02d}:{start_sec%60:02d} — {end_sec//60:02d}:{end_sec%60:02d}"
+
+            word_count = len(u.text.split())
+            wps = round(word_count / max(u.duration_sec, 1), 2)
+
             lines.append(f"## {u.script_section}")
             lines.append(f"> {u.text}")
             lines.append("")
 
-            # 1. Artistic Reasoning & Visual Strategy
-            lines.append("### Artistic Reasoning & Visual Strategy")
-            lines.append(f"- **Visual Job**: `{', '.join(u.visual_jobs)}`")
-            lines.append(f"- **Narrative Function**: `{', '.join(u.narrative_functions)}`")
-            
+            # 1. Master Visual Markdown Panel Breakdown (Two-Column A/V Table)
+            p = u.primary_broll
+            p_title = f"[{p.title}]({p.url})" if p else "Pending Asset Match"
+            p_spec = f"`{p.visual_specificity}/5`" if p else "`3/5`"
+            p_score = f"`{int(round(p.relevance_score * 100))}%`" if p else "`N/A`"
+
+            # Claims summary for panel
+            claims_summary = ""
+            if u.claims and u.source_matches:
+                claims_links = []
+                for sm in u.source_matches[:2]:
+                    safe_pub = sm.publisher.replace('/', '-').replace(':', '')
+                    safe_title = sm.title[:35].replace('/', '-').replace(':', '')
+                    claims_links.append(f"[[Source - {safe_pub} - {safe_title}\\|{sm.publisher}]]")
+                claims_summary = "<br>".join(claims_links)
+            elif u.claims:
+                claims_summary = f"*{u.claims[0][:40]}...*"
+            else:
+                claims_summary = "*Narrative beat (stylistic)*"
+
+            # Sound & Score summary for panel
+            ambience_txt = u.sound_intent.ambience[0] if u.sound_intent and u.sound_intent.ambience else "Atmospheric room tone"
+            mech_txt = u.sound_intent.mechanical[0] if u.sound_intent and u.sound_intent.mechanical else "Tactile operation"
+            trans_txt = u.sound_intent.transition[0] if u.sound_intent and u.sound_intent.transition else "Cinematic whoosh"
+            impact_txt = u.sound_intent.emphasis[0] if u.sound_intent and u.sound_intent.emphasis else "Sub bass hit"
+
+            mc = music_cues[u_idx] if (music_cues and u_idx < len(music_cues)) else None
+            score_summary = f"**Score Cue**: `{mc['cue_id']}` ({mc['tempo']}, {mc['musical_key']})<br>*{mc['emotional_mood']}*" if mc else "**Score**: Thematic bed"
+
+            cine = u.interpretation_levels.get("level_06_cinematic", {})
+            framing_txt = cine.get("preferred_shots", [u.visual_intent.camera])[0]
+            motion_txt = cine.get("camera_motion", u.visual_intent.movement)
+            lighting_txt = cine.get("lighting", u.visual_intent.lighting)
+            avoid_txt = ", ".join(u.avoid_criteria.get("items", ["slop_tropes"])[:3])
+
+            lines.append(f"### Visual Markdown Panel — {u.id}")
+            lines.append("")
+            lines.append("| AUDIO / VO TRACK | VISUAL DIRECTION & B-ROLL SPEC | ACOUSTIC & MUSIC TRACK |")
+            lines.append("|---|---|---|")
+            lines.append(
+                f"| **Timecode**: `{tc_range}` ({u.duration_sec}s)<br>"
+                f"**Pacing**: `{word_count} words` ({wps} wps)<br><br>"
+                f"**Visual Job**: `{', '.join(u.visual_jobs)}`<br>"
+                f"**Function**: `{', '.join(u.narrative_functions)}`<br><br>"
+                f"📰 **Claims & Proof**:<br>{claims_summary} "
+                f"| **Framing**: `{framing_txt}`<br>"
+                f"**Movement**: `{motion_txt}`<br>"
+                f"**Lighting**: `{lighting_txt}`<br><br>"
+                f"🎬 **Primary Asset**:<br>{p_title}<br>"
+                f"**Specificity**: {p_spec} • **Relevance**: {p_score}<br><br>"
+                f"🚫 **Avoid**: `{avoid_txt}` "
+                f"| 🔊 **Ambience**: `{ambience_txt}`<br>"
+                f"⚙️ **Mechanical**: `{mech_txt}`<br>"
+                f"💨 **Transition**: `{trans_txt}`<br>"
+                f"💥 **Impact**: `{impact_txt}`<br><br>"
+                f"🎵 {score_summary} |"
+            )
+            lines.append("")
+
+            # 2. Collapsible Directorial Callouts
             strat = u.visual_strategy
-            lines.append(f"- **Thematic Motif**: `{strat.get('motif', 'scale')}`")
-            lines.append(f"- **Primary Visual**: {strat.get('primary_visual', 'Subject')}")
-            lines.append(f"- **Secondary Visual**: {strat.get('secondary_visual', 'Context')}")
-            lines.append(f"- **Visual Metaphor**: *{strat.get('abstract_visual', 'Metaphor')}*")
-            lines.append("")
-
-            # 2. 6-Level Visual Interpretation Hierarchy
             levels = u.interpretation_levels
-            lines.append("#### 6-Level Visual Interpretation")
-            lines.append(f"1. **Literal (Physical)**: {', '.join(levels.get('level_01_literal', []))}")
-            lines.append(f"2. **Contextual (Environment)**: {', '.join(levels.get('level_02_contextual', []))}")
-            lines.append(f"3. **Conceptual (Underlying Idea)**: {', '.join(levels.get('level_03_conceptual', []))}")
-            lines.append(f"4. **Metaphorical (Analogous Reality)**: {', '.join(levels.get('level_04_metaphorical', []))}")
-            lines.append(f"5. **Emotional (Audience Feeling)**: {', '.join(levels.get('level_05_emotional', []))}")
-            cine = levels.get('level_06_cinematic', {})
-            lines.append(f"6. **Cinematic (Behavior in Edit)**: `{cine.get('preferred_shots', ['wide'])[0]}` | Motion: `{cine.get('camera_motion', 'slow push')}` | Lighting: `{cine.get('lighting', 'high contrast')}`")
+
+            lines.append("> [!quote|artistic] 🎨 Artistic Reasoning & 6-Level Interpretation Hierarchy")
+            lines.append(f"> - **Thematic Motif**: `{strat.get('motif', 'scale')}` (Evaluated via [[00_SYSTEM/ARTISTIC_LOGIC_ENGINE|Artistic Logic Engine]])")
+            lines.append(f"> - **Primary Visual**: {strat.get('primary_visual', 'Subject')}")
+            lines.append(f"> - **Secondary Visual**: {strat.get('secondary_visual', 'Context')}")
+            lines.append(f"> - **Visual Metaphor**: *{strat.get('abstract_visual', 'Metaphor')}*")
+            lines.append("> ")
+            lines.append(f"> 1. **Literal**: {', '.join(levels.get('level_01_literal', []))}")
+            lines.append(f"> 2. **Contextual**: {', '.join(levels.get('level_02_contextual', []))}")
+            lines.append(f"> 3. **Conceptual**: {', '.join(levels.get('level_03_conceptual', []))}")
+            lines.append(f"> 4. **Metaphorical**: {', '.join(levels.get('level_04_metaphorical', []))}")
+            lines.append(f"> 5. **Emotional**: {', '.join(levels.get('level_05_emotional', []))}")
+            lines.append(f"> 6. **Cinematic**: `{framing_txt}` | Motion: `{motion_txt}` | Lighting: `{lighting_txt}`")
             lines.append("")
 
-            # 3. DO NOT MATCH Guardrails
+            # Avoid Guardrails
             avoid = u.avoid_criteria
             if avoid.get("items"):
-                lines.append("#### Editorial Avoid Guardrails (DO NOT MATCH)")
-                lines.append(f"- **Banned Visual Tropes**: `{', '.join(avoid.get('items', []))}`")
-                lines.append(f"- **Director Rationale**: > {avoid.get('reason', 'Prevents generic imagery.')}")
+                lines.append("> [!warning|avoid] 🚫 Editorial Avoid Guardrails (DO NOT MATCH)")
+                lines.append(f"> - **Banned Visual Tropes**: `{', '.join(avoid.get('items', []))}`")
+                lines.append(f"> - **Director Rationale**: > {avoid.get('reason', 'Prevents generic imagery.')}")
                 lines.append("")
 
-            # 4. Search Strategy Matrix
-            matrix = u.search_matrix
-            if matrix:
-                lines.append("#### Artistic Search Matrix")
-                lines.append(f"- **Literal**: `{', '.join(matrix.get('literal_search', []))}`")
-                lines.append(f"- **Contextual**: `{', '.join(matrix.get('contextual_search', []))}`")
-                lines.append(f"- **Conceptual**: `{', '.join(matrix.get('conceptual_search', []))}`")
-                lines.append(f"- **Cinematic**: `{', '.join(matrix.get('cinematic_search', []))}`")
-                lines.append(f"- **Detail**: `{', '.join(matrix.get('detail_search', []))}`")
-                lines.append("")
-
-            # 5. B-Roll Recommendations
-            lines.append(f"### B-Roll Recommendations — {u.id}")
+            # B-Roll Shot Candidates
+            lines.append("> [!example|broll] 🎬 Shot Candidate Cards & Scored Assets")
             if u.primary_broll:
-                p = u.primary_broll
-                pct = int(round(p.relevance_score * 100))
-                bar = render_progress_bar(pct)
-                lines.append("#### Primary Recommendation")
-                lines.append(f"**{p.title}**")
-                lines.append(f"Relevance: {bar} | **Visual Specificity**: `{p.visual_specificity}/5`")
-                lines.append(f"Narrative Function: `{p.narrative_function}`")
-                lines.append("Why:")
-                lines.append(f"> {p.why_reason}")
-                lines.append(f"- **Source**: [{p.source}]({p.url})")
-                lines.append(f"- **Type**: `{p.asset_type.upper()}` | **Resolution**: `{p.resolution}`")
-                lines.append(f"- **License**: {p.license}")
-                lines.append(f"- **Target Duration**: {p.duration or f'{u.duration_sec}s'}")
-                lines.append("")
+                p_pct = int(round(p.relevance_score * 100))
+                p_bar = render_progress_bar(p_pct)
+                lines.append(f"> - **Primary Recommendation**: **[{p.title}]({p.url})**")
+                lines.append(f">   - **Relevance**: {p_bar} `{p_pct}%` | **Specificity**: `{p.visual_specificity}/5`")
+                lines.append(f">   - **Director Note**: > {p.why_reason}")
+                lines.append(f">   - **Specs**: Source: `{p.source}` | Type: `{p.asset_type.upper()}` | Res: `{p.resolution}` | License: `{p.license}`")
 
             if u.alternative_broll:
                 alt = u.alternative_broll
                 alt_pct = int(round(alt.relevance_score * 100))
                 alt_bar = render_progress_bar(alt_pct)
-                lines.append("---")
-                lines.append("#### Alternative Option")
-                lines.append(f"**{alt.title}**")
-                lines.append(f"Relevance: {alt_bar} | **Visual Specificity**: `{alt.visual_specificity}/5`")
-                lines.append(f"- **Source**: [{alt.source}]({alt.url})")
-                lines.append(f"- **Type**: `{alt.asset_type.title()}` | **License**: `{alt.license}`")
-                lines.append("")
+                lines.append(f"> - **Alternative Candidate**: **[{alt.title}]({alt.url})**")
+                lines.append(f">   - **Relevance**: {alt_bar} `{alt_pct}%` | **Specificity**: `{alt.visual_specificity}/5`")
+                lines.append(f">   - **Specs**: Source: `{alt.source}` | Type: `{alt.asset_type.title()}` | License: `{alt.license}`")
+            lines.append("")
 
-            if u.editorial_news:
-                en = u.editorial_news
-                lines.append("---")
-                lines.append("#### Editorial / News Context")
-                lines.append(f"**{en.title}**")
-                lines.append(f"- **Publisher**: {en.publisher}")
-                lines.append(f"- **Source URL**: [{en.publisher}]({en.url})")
-                lines.append(f"- **Published**: {en.published_date}")
-                lines.append(f"- **Credibility / Relevance**: `{en.credibility.upper()}` ({int(round(en.relevance_score * 100))}%)")
-                lines.append("")
-
-            # 6. Sequence Intelligence
+            # Sequence Intelligence & Coverage
             seq = u.sequence_logic
-            if seq:
-                lines.append("#### Sequence Intelligence")
-                lines.append(f"- **Editorial Cutting Rule**: `{seq.get('editorial_intent', 'Dynamic visual progression')}`")
-                lines.append(f"- **Recommended Next Framing**: `{seq.get('recommended_framing', 'medium contextual')}`")
-                lines.append(f"- **Visual Redundancy Filter**: `{', '.join(seq.get('avoid', ['visual monotony']))}`")
-                lines.append("")
-
-            # 7. Visual Coverage
             cov = u.visual_coverage
+            lines.append("> [!note|sequence] 🎯 Sequence Intelligence & Visual Coverage")
+            if seq:
+                lines.append(f"> - **Editorial Cutting Rule**: `{seq.get('editorial_intent', 'Dynamic visual progression')}`")
+                lines.append(f"> - **Recommended Next Framing**: `{seq.get('recommended_framing', 'medium contextual')}`")
+                lines.append(f"> - **Redundancy Filter**: `{', '.join(seq.get('avoid', ['visual monotony']))}`")
             if cov:
-                lines.append("#### Visual Coverage")
-                lines.append(f"> **Section Coverage**: `{cov.get('coverage_pct', 75)}%` ({cov.get('status_label', 'SUFFICIENT')})")
-                lines.append("```")
-                for b in cov.get("ascii_bars", []):
-                    lines.append(b)
-                lines.append("```")
-                lines.append("")
+                lines.append(f"> - **Section Coverage**: `{cov.get('coverage_pct', 75)}%` ({cov.get('status_label', 'SUFFICIENT')}) (Target: $\\ge 75\\%$)")
+            lines.append("")
 
-            # 8. SFX Table
+            # Acoustic SFX Table
             lines.append("### SFX & Sound Design")
             lines.append("| Layer | Semantic Sound Intent | Asset Match | Relevance |")
             lines.append("|---|---|---|---:|")
@@ -180,9 +208,8 @@ class MarkdownWriter:
                 lines.append("| Ambience | Environmental room tone | [Studio Library](#) | 90% |")
             lines.append("")
 
-            # 9. Musical Score Direction
-            if music_cues and u_idx < len(music_cues):
-                mc = music_cues[u_idx]
+            # Musical Score Direction
+            if mc:
                 lines.append("### Musical Score Direction")
                 lines.append(f"- **Cue**: `{mc['cue_id']}` ({mc['timecode_range']})")
                 lines.append(f"- **Tempo & Key**: `{mc['tempo']}` | Key: `{mc['musical_key']}`")
@@ -192,7 +219,7 @@ class MarkdownWriter:
                 lines.append(f"- **Thematic Track**: [{mc['matched_asset'].title}]({mc['matched_asset'].url})")
                 lines.append("")
 
-            # 9. Claims and Verified Sources
+            # Claims and Verified Sources
             lines.append("### Claims & Verified Evidence")
             if u.claims:
                 for c in u.claims:
@@ -200,8 +227,8 @@ class MarkdownWriter:
                     lines.append("Sources:")
                     if u.source_matches:
                         for sm in u.source_matches:
-                            safe_pub = sm.publisher.replace('/', '-')
-                            safe_title = sm.title[:50].replace('/', '-')
+                            safe_pub = sm.publisher.replace('/', '-').replace(':', '')
+                            safe_title = sm.title[:50].replace('/', '-').replace(':', '')
                             lines.append(f"- [[Source - {safe_pub} - {safe_title}]] (`{sm.publisher}` - {int(round(sm.relevance_score * 100))}% credibility)")
                     else:
                         lines.append("- [ ] Source pending verification")
@@ -214,7 +241,7 @@ class MarkdownWriter:
 
         final_content = "\n".join(lines)
         doc.file_path.write_text(final_content, encoding="utf-8")
-        logger.info(f"Successfully updated script note with artistic logic: {doc.file_path}")
+        logger.info(f"Successfully updated script note with visual markdown panel breakdown: {doc.file_path}")
         return doc.file_path
 
 

@@ -23,7 +23,8 @@ created: {{date}}
 - **Target Channels**: YouTube, LinkedIn, Client Distribution
 
 ## Quick Actions & Pipeline Triggers
-- [Run Production Pipeline](run_pipeline.bat)
+- Trigger Automation: [[00_SYSTEM/Automation|Run Production OS Automation]]
+- View Command Dashboard: [[00_SYSTEM/Dashboard|Open Production OS Dashboard]]
 - View Master Storyboard: [[05_SHOTS/Shot_Planner|Open Shot Planner]]
 - View Research Queue: [[03_RESEARCH/_INBOX|Open Research Inbox]]
 

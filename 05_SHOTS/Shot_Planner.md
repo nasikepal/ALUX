@@ -34,3 +34,11 @@ SORT shot_id ASC
 1. Place your script into `02_SCRIPTS/Draft/<Title>.md`.
 2. Run the pipeline via QuickAdd (`Ctrl + P` $\to$ `QuickAdd: Run Production OS Pipeline`) or `run_pipeline.bat`.
 3. Shot cards will populate in `05_SHOTS/B-Roll/` and render dynamically in the table above.
+
+---
+
+## 🔗 Related Production Systems
+- **Pipeline Orchestrator**: [[00_SYSTEM/Automation|Automation Pipeline & Panel Breakdown Engine]]
+- **Command Dashboard**: [[00_SYSTEM/Dashboard|Production OS Command Center]]
+- **Artistic Directorial Logic**: [[00_SYSTEM/ARTISTIC_LOGIC_ENGINE|Artistic Logic Engine]]
+- **Production Workflows**: [[00_SYSTEM/Workflows|Production SOP & Lifecycle]]

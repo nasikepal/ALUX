@@ -24,3 +24,9 @@ related_claims:
 
 ## Source Excerpt & Abstract
 > Empirical reporting and citation context.
+
+---
+## 🔗 System Links
+- **Automation Pipeline**: [[00_SYSTEM/Automation|Automation Engine]]
+- **Command Dashboard**: [[00_SYSTEM/Dashboard|Production OS Dashboard]]
+

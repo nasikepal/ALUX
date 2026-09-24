@@ -61,3 +61,14 @@ A section is deemed production-ready when its coverage metric reaches $\ge 75\%$
 - Kinetic / Transition Cutaway (`15%`)
 - Conceptual Metaphorical B-Roll (`10%`)
 - Empirical Proof / Source Citation (`10%`)
+
+---
+
+## 4. System & Graph Interconnections
+
+- **Orchestration Engine**: [[00_SYSTEM/Automation|Automation Pipeline & Panel Breakdown Engine]]
+- **Art Direction Hierarchy**: [[00_SYSTEM/ARTISTIC_LOGIC_ENGINE|Artistic Logic Engine Specification]]
+- **Command Dashboard**: [[00_SYSTEM/Dashboard|Production OS Command Center]]
+- **Production SOP**: [[00_SYSTEM/Workflows|Production SOP & Lifecycle]]
+- **Master Storyboard Deck**: [[05_SHOTS/Shot_Planner|Master Shot Planner]]
+

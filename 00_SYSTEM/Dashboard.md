@@ -92,7 +92,11 @@ SORT relevance DESC
 
 ## 📊 SYSTEM DOCUMENTATION & ARCHITECTURE
 
-- **Artistic Logic Specification**: [[00_SYSTEM/ARTISTIC_LOGIC_ENGINE|Open Artistic Logic Engine Spec]]
-- **Master Shot Planner**: [[05_SHOTS/Shot_Planner|Open Storyboard Deck]]
-- **Visual Vocabulary Knowledge Base**: `08_AUTOMATION/Scripts/artistic_logic/visual_vocabulary.yaml`
+- **Automation & Pipeline Engine**: [[00_SYSTEM/Automation|Automation Pipeline & Panel Breakdown Engine]]
+- **Artistic Logic Specification**: [[00_SYSTEM/ARTISTIC_LOGIC_ENGINE|Artistic Logic Engine Spec]]
+- **Production Workflows & SOP**: [[00_SYSTEM/Workflows|Production SOP & Lifecycle]]
 - **System Settings & 9-Factor Weights**: [[00_SYSTEM/Settings|Configure Production Engine]]
+- **Master Shot Planner**: [[05_SHOTS/Shot_Planner|Master Storyboard Deck]]
+- **Script Production Template**: [[99_TEMPLATES/Script_Template|Script Template]]
+- **System Master Index**: [[README|Production OS Documentation]]
+

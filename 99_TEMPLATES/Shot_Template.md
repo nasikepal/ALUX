@@ -36,3 +36,10 @@ relevance: 90
 
 ## Script Text
 > {{narration}}
+
+---
+## 🔗 System Links
+- **Master Storyboard**: [[05_SHOTS/Shot_Planner|Master Shot Planner]]
+- **Automation Pipeline**: [[00_SYSTEM/Automation|Automation Engine]]
+- **Command Dashboard**: [[00_SYSTEM/Dashboard|Production OS Dashboard]]
+

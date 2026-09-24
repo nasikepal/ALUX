@@ -24,3 +24,9 @@ claim_id: "{{claim_id}}"
 - [ ] Accept (Promote to permanent project research)
 - [ ] Reject (Discard)
 - [ ] Save for Archive
+
+---
+## 🔗 System Links
+- **Automation Pipeline**: [[00_SYSTEM/Automation|Automation Engine]]
+- **Command Dashboard**: [[00_SYSTEM/Dashboard|Production OS Dashboard]]
+

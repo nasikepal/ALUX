@@ -218,3 +218,14 @@ Visual pacing is bound directly to musical tempo, harmonic mode, and instrumenta
 
 Outputs a frame-accurate CSV cut list formatted with SMPTE timecodes (`00:00:00:00`) for direct import into DaVinci Resolve (Edit Index) and Adobe Premiere Pro, alongside an Executive Production Brief detailing broadcast speech pacing, source dossiers, and post-production lock checklists.
 
+---
+
+## 11. System & Graph Interconnections
+
+- **Automation & Breakdown Engine**: [[00_SYSTEM/Automation|Automation Pipeline & Panel Breakdown Engine]]
+- **Command Dashboard**: [[00_SYSTEM/Dashboard|Production OS Command Center]]
+- **Scoring & Constraint Rules**: [[00_SYSTEM/Settings|System Settings & 9-Factor Weights]]
+- **Production SOP**: [[00_SYSTEM/Workflows|Production SOP & Lifecycle]]
+- **Master Storyboard Deck**: [[05_SHOTS/Shot_Planner|Master Shot Planner]]
+
+

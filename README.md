@@ -51,6 +51,20 @@ The vault operates across 5 decoupled layers:
 
 ---
 
+## 🧭 Core System Knowledge Graph & Navigational Matrix
+
+| Pillar | Node | Core Responsibility |
+|---|---|---|
+| **Command Center** | [[00_SYSTEM/Dashboard\|Production OS Dashboard]] | High-level status, metrics, Dataview tables, action triggers |
+| **Pipeline Automation** | [[00_SYSTEM/Automation\|Automation & Breakdown Engine]] | Rational constraints, pacing windows, script-to-visual panels |
+| **Directorial Logic** | [[00_SYSTEM/ARTISTIC_LOGIC_ENGINE\|Artistic Logic Engine]] | 6-Level Hierarchy, thematic motifs, editorial avoid guardrails |
+| **Scoring Rules** | [[00_SYSTEM/Settings\|System Settings & 9-Factor Weights]] | Mathematical relevance formula, specificity scale, penalties |
+| **Production SOP** | [[00_SYSTEM/Workflows\|Production SOP & Workflows]] | Lifecycle stages from idea to final export lock |
+| **Master Storyboard** | [[05_SHOTS/Shot_Planner\|Master Shot Planner]] | Visual shot compilation, sequence intelligence, coverage |
+| **Script Schema** | [[99_TEMPLATES/Script_Template\|Script Template]] | Visual Markdown Panel Breakdown template |
+
+---
+
 ## 2. Directory Hierarchy
 
 ```
