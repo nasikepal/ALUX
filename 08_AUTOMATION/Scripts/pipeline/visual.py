@@ -119,17 +119,9 @@ class VisualAnalyzer:
                 second_info = matched_domains[1][2]
                 secondary.append(second_info["primary"][0])
                 abstract.append(second_info["abstract"][0])
-        else:
-            # Fallback for generic narration
-            words = [w for w in re.findall(r"\w+", unit.text) if len(w) > 4][:3]
-            kw_str = " ".join(words)
-            primary = [f"{kw_str} conceptual representation", "cinematic technology sequence"]
-            secondary = ["modern technology workspace", "focused specialist at workstation"]
-            abstract = ["digital era progression", "complex systems operation"]
-            camera = "Medium slow push-in"
-            lighting = "Atmospheric contrast lighting"
-            movement = "Slow smooth forward track"
-
+        # 4. Integrate Full Artistic Logic Engine (6-Level Interpretation & Search Matrix)
+        from artistic_logic.visual_interpreter import visual_interpreter
+        
         unit.visual_intent = VisualIntent(
             primary=primary,
             secondary=secondary,
@@ -139,13 +131,19 @@ class VisualAnalyzer:
             movement=movement
         )
 
-        # 4. Generate targeted search queries for b-roll engines
-        search_queries = []
-        for p in primary[:2]:
-            search_queries.append(f"{p} 4k b-roll")
-        for s in secondary[:1]:
-            search_queries.append(f"{s} cinematic footage")
-        unit.search_queries = search_queries
+        interpretation = visual_interpreter.interpret_unit(unit)
+        unit.visual_jobs = interpretation["visual_jobs"]
+        unit.narrative_functions = interpretation["narrative_functions"]
+        unit.visual_strategy = interpretation["strategy"]
+        unit.interpretation_levels = interpretation["interpretation_levels"]
+        unit.search_matrix = interpretation["search_matrix"]
+        unit.avoid_criteria = interpretation["avoid"]
+        unit.search_queries = interpretation["prioritized_queries"]
+
+        # Override cinematic attributes from artistic logic engine
+        unit.visual_intent.camera = interpretation["cinematic"]["preferred_framing"]
+        unit.visual_intent.movement = interpretation["cinematic"]["camera_motion"]
+        unit.visual_intent.lighting = interpretation["cinematic"]["lighting_mood"]
 
         return unit
 

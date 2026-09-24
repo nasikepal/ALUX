@@ -9,6 +9,7 @@ created: {{date}}
 research_status: pending
 broll_status: pending
 source_status: pending
+artistic_engine: "v2-editorial"
 visual_units_count: 0
 ---
 
@@ -17,55 +18,53 @@ visual_units_count: 0
 ## 01 — Hook
 > Enter your captivating opening hook line here.
 
-### Visual Intent
-- Physical subject 1
-- Lighting and atmospheric mood
+### Artistic Reasoning & Visual Strategy
+- **Visual Job**: `establish, dramatize`
+- **Narrative Function**: `G — Establishing, D — Emotional Reinforcement`
+- **Thematic Motif**: `scale`
+- **Visual Metaphor**: *Analogous physical system*
 
-### B-Roll
-- [ ] Primary visual beat
-- [ ] Supporting cutaway
+### B-Roll Recommendations — VU-001
+- [ ] Primary Establishing Shot (4K)
+- [ ] Contextual Cutaway
+- [ ] Macro Detail Insert
+
+### Sequence Intelligence
+- **Editorial Cutting Rule**: Establish spatial environment before micro-detail.
+- **Recommended Next Framing**: `medium contextual`
+
+### Visual Coverage
+> **Status**: `PENDING PIPELINE RUN`
 
 ### Sources
-- [ ] Key factual or historical hook claim
+- [ ] Primary statistical or historical citation
 
-## 02 — The Core Problem / Catalyst
+## 02 — Context & Core Problem
 > Narration detailing the fundamental tension, crisis, or challenge.
 
-### Visual Intent
-- Contextual environment
-- Human tension / technical friction
+### Artistic Reasoning & Visual Strategy
+- **Visual Job**: `explain, contextualize`
+- **Narrative Function**: `B — Context, C — Explanation`
+- **Thematic Motif**: `tension`
 
-### B-Roll
-- [ ] Contextual footage
-- [ ] Archival or news reference
+### B-Roll Recommendations — VU-002
+- [ ] Contextual subject shot
+- [ ] Mechanical operation
 
 ### Sources
-- [ ] Quantitative data or statistical benchmark
+- [ ] Quantitative data or industry benchmark
 
 ## 03 — Climax / Structural Shift
 > The pivotal turning point or monumental revelation.
 
-### Visual Intent
-- Scale and transformation
-- Macro / high contrast visual
+### Artistic Reasoning & Visual Strategy
+- **Visual Job**: `emphasize, prove`
+- **Narrative Function**: `A — Literal Evidence, D — Emotional Reinforcement`
+- **Thematic Motif**: `power`
 
-### B-Roll
-- [ ] Climax B-roll asset
-- [ ] Kinetic transition
-
-### Sources
-- [ ] Corporate disclosure / official report
-
-## 04 — Resolution & Strategic Future
-> Synthesis of the takeaway and forward-looking thesis.
-
-### Visual Intent
-- Future outlook / expansive horizon
-- Human agency / technological resolution
-
-### B-Roll
-- [ ] Resolving wide shot
-- [ ] Forward motion tracking shot
+### B-Roll Recommendations — VU-003
+- [ ] Climax monolithic shot
+- [ ] High-kinetic visual transition
 
 ### Sources
-- [ ] Industry forecast / expert research paper
+- [ ] Official corporate or scientific disclosure

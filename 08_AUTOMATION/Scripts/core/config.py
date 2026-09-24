@@ -15,20 +15,26 @@ VAULT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 
 @dataclass
 class RelevanceWeights:
-    visual_similarity: float = 0.30
-    script_relevance: float = 0.25
-    entity_match: float = 0.15
+    semantic_relevance: float = 0.20
+    narrative_function: float = 0.15
+    visual_specificity: float = 0.15
+    artistic_interpretation: float = 0.15
+    cinematic_compatibility: float = 0.10
     temporal_relevance: float = 0.10
-    geographic_relevance: float = 0.10
-    source_quality: float = 0.10
+    geographic_relevance: float = 0.05
+    editorial_utility: float = 0.05
+    source_quality: float = 0.05
 
     def validate(self) -> bool:
         total = (
-            self.visual_similarity
-            + self.script_relevance
-            + self.entity_match
+            self.semantic_relevance
+            + self.narrative_function
+            + self.visual_specificity
+            + self.artistic_interpretation
+            + self.cinematic_compatibility
             + self.temporal_relevance
             + self.geographic_relevance
+            + self.editorial_utility
             + self.source_quality
         )
         return abs(total - 1.0) < 1e-4

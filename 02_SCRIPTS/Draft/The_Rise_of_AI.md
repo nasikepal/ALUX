@@ -10,6 +10,7 @@ research_status: completed
 broll_status: completed
 source_status: completed
 visual_units_count: 5
+artistic_engine: v2-editorial
 ---
 
 # The Rise of AI
@@ -17,26 +18,40 @@ visual_units_count: 5
 ## 01 — Hook
 > AI is no longer something that exists only inside research labs. From automated trading desks to surgical operating theaters, machine learning models are fundamentally rewriting the physical rules of human production.
 
-### Visual Intent
-- **Primary**: silicon wafer microchip closeup
-- **Primary**: holographic neural node graph
-- **Primary**: macro view of GPU die
-- **Secondary**: programmer dual monitor code reflection
-- **Secondary**: quantum circuit schematics
-- **Secondary**: glass-walled research lab
-- **Secondary**: people using futuristic mobile interfaces
-- *Abstract Concept*: synthetic cognition
-- *Abstract Concept*: digital consciousness matrix
-- *Abstract Concept*: mass technological adoption
-- **Camera**: `Extreme macro rack-focus across silicon circuit paths` | **Movement**: `Gliding slow tilt downward`
-- **Lighting**: `High-contrast darkroom with amber and teal neon glow`
+### Artistic Reasoning & Visual Strategy
+- **Visual Job**: `establish, dramatize, humanize`
+- **Narrative Function**: `G — Establishing, D — Emotional Reinforcement, H — Humanization`
+- **Thematic Motif**: `scale`
+- **Primary Visual**: Massive silicon wafer microchip closeup with deliberate camera movement
+- **Secondary Visual**: Contextual aerial drone landscape with high atmospheric contrast
+- **Visual Metaphor**: *Kinetic metaphor: endless shipping container ports*
+
+#### 6-Level Visual Interpretation
+1. **Literal (Physical)**: silicon wafer microchip closeup, holographic neural node graph, macro view of GPU die
+2. **Contextual (Environment)**: aerial drone landscape, wide panoramic vista, dense repetitive infrastructure
+3. **Conceptual (Underlying Idea)**: scale of technological capability, physical capital allocation, systemic structural transformation
+4. **Metaphorical (Analogous Reality)**: endless shipping container ports, vast hydroelectric dams, mega-city transit networks
+5. **Emotional (Audience Feeling)**: awe, technological sublimity, overwhelming power
+6. **Cinematic (Behavior in Edit)**: `ultra-wide aerial panoramic` | Motion: `smooth forward drone sweep` | Lighting: `horizon backlight with atmospheric haze`
+
+#### Editorial Avoid Guardrails (DO NOT MATCH)
+- **Banned Visual Tropes**: `glowing_human_brain_render, blue_matrix_code_stream, robot_hand_touching_human, smiling_cyborg`
+- **Director Rationale**: > Severe AI visual slop. Lowers documentary credibility. Prefer physical silicon dies, server arrays, cleanroom technicians, or infrastructure scale.
+
+#### Artistic Search Matrix
+- **Literal**: `silicon wafer microchip closeup 4k, holographic neural node graph 4k`
+- **Contextual**: `aerial drone landscape b roll, wide panoramic vista 4k`
+- **Conceptual**: `scale of technological capability footage, massive industrial infrastructure 4k`
+- **Cinematic**: `silicon wafer microchip closeup ultra-wide aerial panoramic cinematic, silicon wafer microchip closeup smooth forward drone sweep`
+- **Detail**: `silicon wafer microchip closeup macro close up, silicon wafer microchip closeup rack focus detail`
 
 ### B-Roll Recommendations — VU-001
 #### Primary Recommendation
 **Silicon Wafer Microchip Closeup (Cinematic Footage)**
-Relevance: ██████████████░░░░░░ 70%
+Relevance: ████████████░░░░░░ 64% | **Visual Specificity**: `4/5`
+Narrative Function: `G — Establishing`
 Why:
-> Visually communicates silicon wafer microchip closeup; strong alignment with 'silicon wafer microchip closeup, holographic neural node graph'; high-fidelity asset (4K UHD (3840x2160)).
+> Fulfills visual job 'establish' as G — Establishing (Specificity 4/5); Artistically conveys 'scale' with horizon backlight with atmospheric haze.
 - **Source**: [Pexels Stock](https://www.pexels.com/search/videos/silicon+wafer+microchip+closeup/)
 - **Type**: `FOOTAGE` | **Resolution**: `4K UHD (3840x2160)`
 - **License**: Commercial / Royalty-Free
@@ -45,7 +60,7 @@ Why:
 ---
 #### Alternative Option
 **Silicon Wafer Microchip Closeup (Reference & B-Roll)**
-Relevance: █████████████░░░░░░░ 64%
+Relevance: ███████████░░░░░░░ 62% | **Visual Specificity**: `4/5`
 - **Source**: [YouTube B-Roll](https://www.youtube.com/results?search_query=silicon+wafer+microchip+closeup+b+roll+4k)
 - **Type**: `Footage` | **License**: `Creative Commons / Editorial Review`
 
@@ -57,10 +72,21 @@ Relevance: █████████████░░░░░░░ 64%
 - **Published**: 2026-09-24
 - **Credibility / Relevance**: `HIGH` (99%)
 
-#### Shot Checklist
-- [ ] VU-001 Master B-Roll asset ingested
-- [ ] Color profile & framerate matched
-- [ ] Edit cut-point trimmed (13s)
+#### Sequence Intelligence
+- **Editorial Cutting Rule**: `Establish geographic and spatial physical reality.`
+- **Recommended Next Framing**: `medium contextual`
+- **Visual Redundancy Filter**: `extreme_closeup_first, chaotic_handheld`
+
+#### Visual Coverage
+> **Section Coverage**: `94%` (SUFFICIENT COVERAGE)
+```
+██████████████████ Primary
+██████████████████ Secondary
+████████████████░░ Macro
+███████████████░░░ Kinetic
+██████████████░░░░ Conceptual
+██████████████████ Empirical
+```
 
 ### SFX & Sound Design
 | Layer | Semantic Sound Intent | Asset Match | Relevance |
@@ -81,26 +107,40 @@ Sources:
 ## 02 — The Capital Infrastructure
 > The company spent billions building infrastructure for artificial intelligence, deploying over $10 billion into hyperscale compute centers across North America.
 
-### Visual Intent
-- **Primary**: hyperscale data center
-- **Primary**: server racks with blinking LEDs
-- **Primary**: high-density GPU infrastructure
-- **Secondary**: cleanroom engineers inspecting hardware
-- **Secondary**: liquid cooling tubes
-- **Secondary**: data center aerial exterior
-- **Secondary**: silicon wafer microchip closeup
-- *Abstract Concept*: exponential computing power
-- *Abstract Concept*: technological capital scaling
-- *Abstract Concept*: synthetic cognition
-- **Camera**: `Slow forward tracking shot through server aisle` | **Movement**: `Steady motorized slider push-in`
-- **Lighting**: `Deep cobalt blue with bright green/cyan status indicators`
+### Artistic Reasoning & Visual Strategy
+- **Visual Job**: `prove, contextualize`
+- **Narrative Function**: `A — Literal Evidence, B — Context`
+- **Thematic Motif**: `growth`
+- **Primary Visual**: Massive hyperscale data center with deliberate camera movement
+- **Secondary Visual**: Contextual structural steel assembly with high atmospheric contrast
+- **Visual Metaphor**: *Kinetic metaphor: construction cranes swinging against sunrise*
+
+#### 6-Level Visual Interpretation
+1. **Literal (Physical)**: hyperscale data center, server racks with blinking LEDs, high-density GPU infrastructure
+2. **Contextual (Environment)**: structural steel assembly, rising skyscraper frameworks, multiplying server clusters
+3. **Conceptual (Underlying Idea)**: growth of technological capability, physical capital allocation, systemic structural transformation
+4. **Metaphorical (Analogous Reality)**: construction cranes swinging against sunrise, branching neural or vascular tree networks, silicon crystal ingot extraction
+5. **Emotional (Audience Feeling)**: dynamic momentum, industrial expansion, structural inevitability
+6. **Cinematic (Behavior in Edit)**: `close-up detail or macro rack-focus` | Motion: `locked-off tripod or micro-slider` | Lighting: `focused directional key light`
+
+#### Editorial Avoid Guardrails (DO NOT MATCH)
+- **Banned Visual Tropes**: `humanoid_robot, random_laptop_screen, generic_futuristic_graphics, green_cash_flying, glowing_human_brain_render, blue_matrix_code_stream, robot_hand_touching_human, smiling_cyborg`
+- **Director Rationale**: > Communicates high-tech hype or cartoonish money, failing to convey true enterprise operational capital and balance sheet gravity. Severe AI visual slop. Lowers documentary credibility. Prefer physical silicon dies, server arrays, cleanroom technicians, or infrastructure scale.
+
+#### Artistic Search Matrix
+- **Literal**: `hyperscale data center 4k, server racks with blinking LEDs 4k`
+- **Contextual**: `structural steel assembly b roll, rising skyscraper frameworks 4k`
+- **Conceptual**: `growth of technological capability footage, massive industrial infrastructure 4k`
+- **Cinematic**: `hyperscale data center close-up detail or macro rack-focus cinematic, hyperscale data center locked-off tripod or micro-slider`
+- **Detail**: `hyperscale data center macro close up, hyperscale data center rack focus detail`
 
 ### B-Roll Recommendations — VU-002
 #### Primary Recommendation
 **Cavium ThunderX2, 54-core 3Ghz 14nm ARM Server Processor**
-Relevance: █████████████████░░░ 83%
+Relevance: ██████████████░░░░ 76% | **Visual Specificity**: `4/5`
+Narrative Function: `A — Literal Evidence`
 Why:
-> Visually communicates hyperscale data center; strong alignment with 'hyperscale data center, server racks with blinking LEDs'; high-fidelity asset (HD / Archival).
+> Fulfills visual job 'prove' as A — Literal Evidence (Specificity 4/5); Artistically conveys 'growth' with focused directional key light.
 - **Source**: [Internet Archive](https://archive.org/details/CaviumThunderx254-core3ghz14nmArmServerProcessor)
 - **Type**: `FOOTAGE` | **Resolution**: `HD / Archival`
 - **License**: Public Domain / Open Access
@@ -109,7 +149,7 @@ Why:
 ---
 #### Alternative Option
 **Cavium Thunder X Product Family ( ARM Tech Con 2014)**
-Relevance: ████████████████░░░░ 78%
+Relevance: ████████████░░░░░░ 68% | **Visual Specificity**: `4/5`
 - **Source**: [Internet Archive](https://archive.org/details/CaviumThunderXProductFamilyARMTechCon2014)
 - **Type**: `Footage` | **License**: `Public Domain / Open Access`
 
@@ -121,10 +161,21 @@ Relevance: ████████████████░░░░ 78%
 - **Published**: 2026-09-24
 - **Credibility / Relevance**: `HIGH` (99%)
 
-#### Shot Checklist
-- [ ] VU-002 Master B-Roll asset ingested
-- [ ] Color profile & framerate matched
-- [ ] Edit cut-point trimmed (8s)
+#### Sequence Intelligence
+- **Editorial Cutting Rule**: `Cut from ultra-wide aerial panoramic to fresh focal length to advance narrative rhythm.`
+- **Recommended Next Framing**: `medium contextual`
+- **Visual Redundancy Filter**: `same_scale_as_ultra-wide aerial panoramic, visual_monotony, jump_cut_scale`
+
+#### Visual Coverage
+> **Section Coverage**: `94%` (SUFFICIENT COVERAGE)
+```
+██████████████████ Primary
+██████████████████ Secondary
+████████████████░░ Macro
+███████████████░░░ Kinetic
+██████████████░░░░ Conceptual
+██████████████████ Empirical
+```
 
 ### SFX & Sound Design
 | Layer | Semantic Sound Intent | Asset Match | Relevance |
@@ -145,24 +196,40 @@ Sources:
 ## 03 — The Hardware Engine
 > Thousands of servers are running around the clock, cooled by liquid thermal loops and connected by miles of high-bandwidth fiber optic conduits.
 
-### Visual Intent
-- **Primary**: hyperscale data center
-- **Primary**: server racks with blinking LEDs
-- **Primary**: high-density GPU infrastructure
-- **Secondary**: cleanroom engineers inspecting hardware
-- **Secondary**: liquid cooling tubes
-- **Secondary**: data center aerial exterior
-- *Abstract Concept*: exponential computing power
-- *Abstract Concept*: technological capital scaling
-- **Camera**: `Slow forward tracking shot through server aisle` | **Movement**: `Steady motorized slider push-in`
-- **Lighting**: `Deep cobalt blue with bright green/cyan status indicators`
+### Artistic Reasoning & Visual Strategy
+- **Visual Job**: `explain, illustrate, provide_atmosphere`
+- **Narrative Function**: `C — Explanation`
+- **Thematic Motif**: `precision`
+- **Primary Visual**: Massive hyperscale data center with deliberate camera movement
+- **Secondary Visual**: Contextual semiconductor lithography extreme macro with high atmospheric contrast
+- **Visual Metaphor**: *Kinetic metaphor: laser beam splitting through optical prism*
+
+#### 6-Level Visual Interpretation
+1. **Literal (Physical)**: hyperscale data center, server racks with blinking LEDs, high-density GPU infrastructure
+2. **Contextual (Environment)**: semiconductor lithography extreme macro, surgical robotic arm articulating with sub-millimeter accuracy, laser interferometer calibration
+3. **Conceptual (Underlying Idea)**: precision of technological capability, physical capital allocation, systemic structural transformation
+4. **Metaphorical (Analogous Reality)**: laser beam splitting through optical prism, microchip wire bonding micro-weld, perfectly synchronized robotic pick-and-place assembly
+5. **Emotional (Audience Feeling)**: intellectual clarity, technological mastery, extreme discipline
+6. **Cinematic (Behavior in Edit)**: `medium eye-level contextual` | Motion: `slow lateral dolly track` | Lighting: `clean clinical illumination, neutral contrast`
+
+#### Editorial Avoid Guardrails (DO NOT MATCH)
+- **Banned Visual Tropes**: `generic_stock_laptop, cliché_abstract_shapes, unmotivated_lens_flare`
+- **Director Rationale**: > Rejects low-intent stock footage without specific subject matter relevance.
+
+#### Artistic Search Matrix
+- **Literal**: `hyperscale data center 4k, server racks with blinking LEDs 4k`
+- **Contextual**: `semiconductor lithography extreme macro b roll, surgical robotic arm articulating with sub-millimeter accuracy 4k`
+- **Conceptual**: `precision of technological capability footage, massive industrial infrastructure 4k`
+- **Cinematic**: `hyperscale data center medium eye-level contextual cinematic, hyperscale data center slow lateral dolly track`
+- **Detail**: `hyperscale data center macro close up, hyperscale data center rack focus detail`
 
 ### B-Roll Recommendations — VU-003
 #### Primary Recommendation
 **Cavium ThunderX2, 54-core 3Ghz 14nm ARM Server Processor**
-Relevance: █████████████████░░░ 83%
+Relevance: ███████████░░░░░░░ 60% | **Visual Specificity**: `4/5`
+Narrative Function: `C — Explanation`
 Why:
-> Visually communicates hyperscale data center; strong alignment with 'hyperscale data center, server racks with blinking LEDs'; high-fidelity asset (HD / Archival).
+> Fulfills visual job 'explain' as C — Explanation (Specificity 4/5); Artistically conveys 'precision' with clean clinical illumination, neutral contrast; [-12% sequence redundancy penalty applied].
 - **Source**: [Internet Archive](https://archive.org/details/CaviumThunderx254-core3ghz14nmArmServerProcessor)
 - **Type**: `FOOTAGE` | **Resolution**: `HD / Archival`
 - **License**: Public Domain / Open Access
@@ -171,7 +238,7 @@ Why:
 ---
 #### Alternative Option
 **Cavium Thunder X Product Family ( ARM Tech Con 2014)**
-Relevance: █████████████████░░░ 83%
+Relevance: ███████████░░░░░░░ 60% | **Visual Specificity**: `4/5`
 - **Source**: [Internet Archive](https://archive.org/details/CaviumThunderXProductFamilyARMTechCon2014)
 - **Type**: `Footage` | **License**: `Public Domain / Open Access`
 
@@ -183,10 +250,21 @@ Relevance: █████████████████░░░ 83%
 - **Published**: 2026-09-24
 - **Credibility / Relevance**: `HIGH` (99%)
 
-#### Shot Checklist
-- [ ] VU-003 Master B-Roll asset ingested
-- [ ] Color profile & framerate matched
-- [ ] Edit cut-point trimmed (9s)
+#### Sequence Intelligence
+- **Editorial Cutting Rule**: `Cut from close-up detail or macro rack-focus to fresh focal length to advance narrative rhythm.`
+- **Recommended Next Framing**: `close-up detail`
+- **Visual Redundancy Filter**: `same_scale_as_close-up detail or macro rack-focus, visual_monotony, jump_cut_scale`
+
+#### Visual Coverage
+> **Section Coverage**: `94%` (SUFFICIENT COVERAGE)
+```
+██████████████████ Primary
+██████████████████ Secondary
+████████████████░░ Macro
+███████████████░░░ Kinetic
+██████████████░░░░ Conceptual
+██████████████████ Empirical
+```
 
 ### SFX & Sound Design
 | Layer | Semantic Sound Intent | Asset Match | Relevance |
@@ -207,26 +285,40 @@ Sources:
 ## 04 — The Physical Embodiment
 > Next-generation humanoid robots are now stepping off laboratory test benches and entering automotive factory assembly floors.
 
-### Visual Intent
-- **Primary**: humanoid robot walking
-- **Primary**: robotic mechanical arm assembling
-- **Primary**: bipedal robotic actuators
-- **Secondary**: engineers calibrating robotic joints
-- **Secondary**: wire harnesses and electric motors
-- **Secondary**: laboratory testing floor
-- **Secondary**: scientific research cleanroom
-- *Abstract Concept*: autonomous physical agency
-- *Abstract Concept*: human-machine synthesis
-- *Abstract Concept*: scientific exploration
-- **Camera**: `Close-up macro pan across metallic articulated fingers` | **Movement**: `Slow orbital arc around the robot`
-- **Lighting**: `Clean surgical clinical white with rim lighting`
+### Artistic Reasoning & Visual Strategy
+- **Visual Job**: `humanize`
+- **Narrative Function**: `H — Humanization`
+- **Thematic Motif**: `automation`
+- **Primary Visual**: Massive humanoid robot walking with deliberate camera movement
+- **Secondary Visual**: Contextual dark factory floor operating without human lighting with high atmospheric contrast
+- **Visual Metaphor**: *Kinetic metaphor: giant sorting facility operating in total darkness*
+
+#### 6-Level Visual Interpretation
+1. **Literal (Physical)**: humanoid robot walking, robotic mechanical arm assembling, bipedal robotic actuators
+2. **Contextual (Environment)**: dark factory floor operating without human lighting, bipedal robot executing autonomous navigation, automated guided vehicles (AGV) navigating warehouse floor
+3. **Conceptual (Underlying Idea)**: automation of technological capability, physical capital allocation, systemic structural transformation
+4. **Metaphorical (Analogous Reality)**: giant sorting facility operating in total darkness, automated container ship docking via sensor arrays, drone swarm forming geometric formations
+5. **Emotional (Audience Feeling)**: alien efficiency, silent transformation, post-human operational capacity
+6. **Cinematic (Behavior in Edit)**: `medium close-up` | Motion: `subtle organic handheld` | Lighting: `soft diffused ambient daylight`
+
+#### Editorial Avoid Guardrails (DO NOT MATCH)
+- **Banned Visual Tropes**: `white_plastic_toy_robot, creepy_uncanny_android_face, sci-fi_laser_gun`
+- **Director Rationale**: > Distorts real industrial manufacturing. Focus on precision six-axis articulated arms, hydraulic actuators, cleanroom testing rigs, or AGVs.
+
+#### Artistic Search Matrix
+- **Literal**: `humanoid robot walking 4k, robotic mechanical arm assembling 4k`
+- **Contextual**: `dark factory floor operating without human lighting b roll, bipedal robot executing autonomous navigation 4k`
+- **Conceptual**: `automation of technological capability footage, massive industrial infrastructure 4k`
+- **Cinematic**: `humanoid robot walking medium close-up cinematic, humanoid robot walking subtle organic handheld`
+- **Detail**: `humanoid robot walking macro close up, humanoid robot walking rack focus detail`
 
 ### B-Roll Recommendations — VU-004
 #### Primary Recommendation
 **Dcuo CelticMinx's Story Seasons 1 - 3**
-Relevance: ██████████████████░░ 92%
+Relevance: █████████████████░ 93% | **Visual Specificity**: `4/5`
+Narrative Function: `H — Humanization`
 Why:
-> Visually communicates humanoid robot walking; strong alignment with 'humanoid robot walking, robotic mechanical arm assembling'; high-fidelity asset (HD / Archival).
+> Fulfills visual job 'humanize' as H — Humanization (Specificity 4/5); Artistically conveys 'automation' with soft diffused ambient daylight.
 - **Source**: [Internet Archive](https://archive.org/details/mysticfire-dcuo-celticminxs-story-seasons-1-3)
 - **Type**: `FOOTAGE` | **Resolution**: `HD / Archival`
 - **License**: Public Domain / Open Access
@@ -235,7 +327,7 @@ Why:
 ---
 #### Alternative Option
 **Humanoid Robot Walking (Cinematic Footage)**
-Relevance: ███████████████░░░░░ 74%
+Relevance: █████████████░░░░░ 71% | **Visual Specificity**: `4/5`
 - **Source**: [Pexels Stock](https://www.pexels.com/search/videos/humanoid+robot+walking/)
 - **Type**: `Footage` | **License**: `Commercial / Royalty-Free`
 
@@ -247,10 +339,21 @@ Relevance: ███████████████░░░░░ 74%
 - **Published**: 2026-09-24
 - **Credibility / Relevance**: `HIGH` (99%)
 
-#### Shot Checklist
-- [ ] VU-004 Master B-Roll asset ingested
-- [ ] Color profile & framerate matched
-- [ ] Edit cut-point trimmed (7s)
+#### Sequence Intelligence
+- **Editorial Cutting Rule**: `Cut from medium eye-level contextual to fresh focal length to advance narrative rhythm.`
+- **Recommended Next Framing**: `human interaction`
+- **Visual Redundancy Filter**: `same_scale_as_medium eye-level contextual, visual_monotony, jump_cut_scale`
+
+#### Visual Coverage
+> **Section Coverage**: `94%` (SUFFICIENT COVERAGE)
+```
+██████████████████ Primary
+██████████████████ Secondary
+████████████████░░ Macro
+███████████████░░░ Kinetic
+██████████████░░░░ Conceptual
+██████████████████ Empirical
+```
 
 ### SFX & Sound Design
 | Layer | Semantic Sound Intent | Asset Match | Relevance |
@@ -271,24 +374,40 @@ Sources:
 ## 05 — The Economic Horizon
 > Venture investment in frontier cognitive architectures surpassed historical records in 2026, creating an undeniable technological paradigm shift.
 
-### Visual Intent
-- **Primary**: financial trading floor screens
-- **Primary**: modern skyscraper corporate headquarters
-- **Primary**: digitized financial ticker tape
-- **Secondary**: executive boardroom meeting
-- **Secondary**: documents signing and handshake
-- **Secondary**: money counting machine
-- *Abstract Concept*: massive capital deployment
-- *Abstract Concept*: economic market domination
-- **Camera**: `Low angle wide tilt looking up at glass skyscraper` | **Movement**: `Rising crane shot`
-- **Lighting**: `Sunset golden hour reflecting off high-rise windows`
+### Artistic Reasoning & Visual Strategy
+- **Visual Job**: `transition, visualize_abstract_concept, prove`
+- **Narrative Function**: `A — Literal Evidence, E — Visual Metaphor, F — Transition`
+- **Thematic Motif**: `scale`
+- **Primary Visual**: Massive financial trading floor screens with deliberate camera movement
+- **Secondary Visual**: Contextual aerial drone landscape with high atmospheric contrast
+- **Visual Metaphor**: *Kinetic metaphor: endless shipping container ports*
+
+#### 6-Level Visual Interpretation
+1. **Literal (Physical)**: financial trading floor screens, modern skyscraper corporate headquarters, digitized financial ticker tape
+2. **Contextual (Environment)**: aerial drone landscape, wide panoramic vista, dense repetitive infrastructure
+3. **Conceptual (Underlying Idea)**: scale of technological capability, physical capital allocation, systemic structural transformation
+4. **Metaphorical (Analogous Reality)**: endless shipping container ports, vast hydroelectric dams, mega-city transit networks
+5. **Emotional (Audience Feeling)**: awe, technological sublimity, overwhelming power
+6. **Cinematic (Behavior in Edit)**: `close-up detail or macro rack-focus` | Motion: `locked-off tripod or micro-slider` | Lighting: `focused directional key light`
+
+#### Editorial Avoid Guardrails (DO NOT MATCH)
+- **Banned Visual Tropes**: `green_arrow_pointing_up, sprouting_plant, generic_stock_handshake, clapping_executives`
+- **Director Rationale**: > Amateur corporate video tropes. Replace with kinetic visual metaphors: nocturnal highway time-lapse, automated port logistics, or structural steel assembly.
+
+#### Artistic Search Matrix
+- **Literal**: `financial trading floor screens 4k, modern skyscraper corporate headquarters 4k`
+- **Contextual**: `aerial drone landscape b roll, wide panoramic vista 4k`
+- **Conceptual**: `scale of technological capability footage, massive industrial infrastructure 4k`
+- **Cinematic**: `financial trading floor screens close-up detail or macro rack-focus cinematic, financial trading floor screens locked-off tripod or micro-slider`
+- **Detail**: `financial trading floor screens macro close up, financial trading floor screens rack focus detail`
 
 ### B-Roll Recommendations — VU-005
 #### Primary Recommendation
 **LEGO Military AI: DOLLAR COLLAPSE — 31% in 24 Hours, No Surrender**
-Relevance: ████████████████░░░░ 80%
+Relevance: █████████████░░░░░ 70% | **Visual Specificity**: `4/5`
+Narrative Function: `A — Literal Evidence`
 Why:
-> Visually communicates financial trading floor screens; strong alignment with 'financial trading floor screens, modern skyscraper corporate headquarters'; entity match on 2026; high-fidelity asset (HD / Archival).
+> Fulfills visual job 'transition' as A — Literal Evidence (Specificity 4/5); Artistically conveys 'scale' with focused directional key light.
 - **Source**: [Internet Archive](https://archive.org/details/youtube-VTA_89aQmD4)
 - **Type**: `FOOTAGE` | **Resolution**: `HD / Archival`
 - **License**: Public Domain / Open Access
@@ -297,7 +416,7 @@ Why:
 ---
 #### Alternative Option
 **Financial Trading Floor Screens (Cinematic Footage)**
-Relevance: █████████████░░░░░░░ 63%
+Relevance: ████████████░░░░░░ 68% | **Visual Specificity**: `4/5`
 - **Source**: [Pexels Stock](https://www.pexels.com/search/videos/financial+trading+floor+screens/)
 - **Type**: `Footage` | **License**: `Commercial / Royalty-Free`
 
@@ -309,10 +428,21 @@ Relevance: █████████████░░░░░░░ 63%
 - **Published**: 2026-09-24
 - **Credibility / Relevance**: `HIGH` (99%)
 
-#### Shot Checklist
-- [ ] VU-005 Master B-Roll asset ingested
-- [ ] Color profile & framerate matched
-- [ ] Edit cut-point trimmed (7s)
+#### Sequence Intelligence
+- **Editorial Cutting Rule**: `Cut from medium close-up to fresh focal length to advance narrative rhythm.`
+- **Recommended Next Framing**: `macro / visual metaphor`
+- **Visual Redundancy Filter**: `same_scale_as_medium close-up, visual_monotony, jump_cut_scale`
+
+#### Visual Coverage
+> **Section Coverage**: `94%` (SUFFICIENT COVERAGE)
+```
+██████████████████ Primary
+██████████████████ Secondary
+████████████████░░ Macro
+███████████████░░░ Kinetic
+██████████████░░░░ Conceptual
+██████████████████ Empirical
+```
 
 ### SFX & Sound Design
 | Layer | Semantic Sound Intent | Asset Match | Relevance |

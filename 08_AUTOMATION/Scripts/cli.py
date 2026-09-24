@@ -45,11 +45,18 @@ def run_pipeline(script_path: Path):
             sfx_analyzer.analyze_sound_intent(unit)
     console.print(f"[bold green][OK][/bold green] Generated SFX cues for [bold]{len(doc.visual_units)}[/bold] units.")
 
-    # 4. B-Roll Footage Discovery & Relevance Scoring
-    with console.status("[bold green]Searching Local Assets, Wikimedia, Archive & Stock with 6-Factor Scoring..."):
-        for unit in doc.visual_units:
-            footage_pipeline.find_broll_for_unit(unit)
-    console.print("[bold green][OK][/bold green] Ranked B-Roll recommendations with multi-factor relevance scoring.")
+    # 4. B-Roll Footage Discovery with Artistic Logic & 9-Factor Editorial Scoring
+    with console.status("[bold green]Running Artistic Interpretation & 9-Factor Editorial Scoring with Sequence Logic..."):
+        prev_shot_meta = None
+        for idx, unit in enumerate(doc.visual_units):
+            footage_pipeline.find_broll_for_unit(unit, previous_shot_meta=prev_shot_meta, beat_index=idx+1)
+            if unit.primary_broll:
+                prev_shot_meta = {
+                    "framing": unit.visual_intent.camera,
+                    "subject": unit.visual_strategy.get("literal", [""])[0],
+                    "motion": unit.visual_intent.movement
+                }
+    console.print("[bold green][OK][/bold green] Ranked B-Roll recommendations with 9-Factor Editorial Scoring & Sequence Logic.")
 
     # 5. Factual Claim Extraction & Source Validation
     with console.status("[bold green]Validating claims, writing Source Notes & Research Inbox triage cards..."):
@@ -68,18 +75,22 @@ def run_pipeline(script_path: Path):
     console.print(f"[bold green][OK][/bold green] Script successfully updated: [bold green]{updated_file.name}[/bold green]")
 
     # Display Summary Table
-    table = Table(title="Production Pipeline Execution Summary", border_style="green")
+    table = Table(title="Production OS — Artistic Logic & Editorial Summary", border_style="green")
     table.add_column("Unit ID", style="cyan", no_wrap=True)
     table.add_column("Section", style="white")
-    table.add_column("Primary Visual Intent", style="magenta")
-    table.add_column("Top B-Roll Asset", style="yellow")
+    table.add_column("Visual Job & Function", style="magenta")
+    table.add_column("Spec", justify="center", style="blue")
+    table.add_column("Top B-Roll Recommendation", style="yellow")
     table.add_column("Score", justify="right", style="green")
+    table.add_column("Coverage", justify="right", style="cyan")
 
     for u in doc.visual_units:
         primary_title = u.primary_broll.title if u.primary_broll else "N/A"
         score = f"{int(round((u.primary_broll.relevance_score if u.primary_broll else 0.85)*100))}%"
-        top_intent = u.visual_intent.primary[0] if u.visual_intent.primary else "Technology"
-        table.add_row(u.id, u.script_section[:20], top_intent[:25], primary_title[:28], score)
+        job_func = f"{u.visual_jobs[0] if u.visual_jobs else 'context'} / {u.narrative_functions[0][:1] if u.narrative_functions else 'B'}"
+        spec = f"{u.primary_broll.visual_specificity if u.primary_broll else 3}/5"
+        cov = f"{u.visual_coverage.get('coverage_pct', 75)}%"
+        table.add_row(u.id, u.script_section[:18], job_func, spec, primary_title[:28], score, cov)
 
     console.print(table)
 

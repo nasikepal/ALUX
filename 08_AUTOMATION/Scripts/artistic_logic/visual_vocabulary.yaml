@@ -1,0 +1,175 @@
+# Visual Vocabulary & Art Direction Knowledge Base
+# Encodes aesthetic principles, emotional mapping, physical metaphors, and anti-patterns.
+
+scale:
+  visual_language:
+    - aerial drone landscape
+    - wide panoramic vista
+    - dense repetitive infrastructure
+    - macro to micro rack zoom
+    - towering architectural verticality
+  visual_metaphors:
+    - endless shipping container ports
+    - vast hydroelectric dams
+    - mega-city transit networks
+    - mountain ranges and tectonic geological strata
+  emotional_tone:
+    - awe
+    - technological sublimity
+    - overwhelming power
+  cinematic_cues:
+    camera: "Ultra-wide 16mm or anamorphic establishing shot"
+    motion: "Slow, majestic continuous forward tracking"
+    lighting: "Epic golden hour horizon or dark monolithic shadows with rim light"
+    composition: "Deep depth of field, tiny human silhouette against vast structure"
+  avoid:
+    - generic_globe_animation: "Communicates cheap corporate PowerPoint, not authentic scale"
+    - cartoonish_3d_arrows: "Detracts from physical reality"
+
+urgency:
+  visual_language:
+    - rapid time-lapse
+    - kinetic whip pans
+    - fast pedestrian flow
+    - flashing telemetry and warning strobes
+    - tight shallow-depth tracking
+  visual_metaphors:
+    - arterial highway traffic at dusk
+    - pressurized steam release valves
+    - high-frequency stock exchange ticker cascade
+    - emergency response dispatch floor
+  emotional_tone:
+    - visceral tension
+    - competitive anxiety
+    - rapid acceleration
+  cinematic_cues:
+    camera: "Handheld kinetic rig or high-shutter 45-degree angle"
+    motion: "Fast push-in, sudden lateral snap cuts"
+    lighting: "Harsh strobing contrast, neon reds and amber warnings"
+    composition: "Tight framing, off-center framing, Dutch tilt accent"
+  avoid:
+    - ticking_clock_graphic: "Cliché and visually patronizing"
+    - generic_stock_running_person: "Lacks narrative specificity"
+
+growth:
+  visual_language:
+    - structural steel assembly
+    - rising skyscraper frameworks
+    - multiplying server clusters
+    - botanical time-lapse cellular division
+    - expanding logistics hubs
+  visual_metaphors:
+    - construction cranes swinging against sunrise
+    - branching neural or vascular tree networks
+    - silicon crystal ingot extraction
+    - pouring glowing molten alloy into foundation molds
+  emotional_tone:
+    - dynamic momentum
+    - industrial expansion
+    - structural inevitability
+  cinematic_cues:
+    camera: "Low-angle upward tilt looking past rising vertical columns"
+    motion: "Slow upward pedestal crane movement"
+    lighting: "Dawn warm sunlight cutting through morning industrial mist"
+    composition: "Strong leading diagonal lines pointing upward"
+  avoid:
+    - green_sprouting_plant_in_money: "Low-brow metaphorical slop"
+    - generic_bar_chart_overlays: "Editorial dead weight"
+
+power:
+  visual_language:
+    - monumental brutalist architecture
+    - massive industrial machinery
+    - high-voltage electrical substations
+    - heavy hydraulic presses
+    - server monoliths with pulsating status buses
+  visual_metaphors:
+    - roaring blast furnaces
+    - jet engine turbine test benches
+    - deep bedrock underground bunkers
+    - orbital launchpad gantry towers
+  emotional_tone:
+    - gravity
+    - sovereign control
+    - unstoppable inertia
+  cinematic_cues:
+    camera: "Low-angle eye-level locked-off or slow motorized push"
+    motion: "Deliberate, heavy, immovable camera presence"
+    lighting: "High-contrast chiaroscuro, cold cobalt blue and tungsten highlights"
+    composition: "Strict central symmetry, monolithic massing"
+  avoid:
+    - chess_pieces_falling: "Tired executive metaphor"
+    - lion_roaring: "Unrelated wildlife cliché"
+
+uncertainty:
+  visual_language:
+    - fog-shrouded industrial landscapes
+    - silhouette reflections in rain-slicked glass
+    - fragmented optical distortions
+    - shadowed cleanrooms through security grilles
+    - oscilloscope static and signal noise
+  visual_metaphors:
+    - maze of subterranean fiber optic conduits
+    - chess board obscured by smoke
+    - compass needle spinning erratically
+    - deep ocean trench research sub headlights
+  emotional_tone:
+    - epistemic tension
+    - existential ambiguity
+    - calculated foreboding
+  cinematic_cues:
+    camera: "Obscured through dirty glass or doorway frame"
+    motion: "Unsettled micro-jitter or slow lateral drift"
+    lighting: "Low-key underexposed gloom with single piercing point source"
+    composition: "Negative space dominating 70% of the frame"
+  avoid:
+    - question_mark_animations: "Amateur visual shortcut"
+    - head_in_hands_frustration: "Overacted stock melodrama"
+
+precision:
+  visual_language:
+    - semiconductor lithography extreme macro
+    - surgical robotic arm articulating with sub-millimeter accuracy
+    - laser interferometer calibration
+    - watchmaker tweezers placing escapement gear
+    - cleanroom laminar airflow indicators
+  visual_metaphors:
+    - laser beam splitting through optical prism
+    - microchip wire bonding micro-weld
+    - perfectly synchronized robotic pick-and-place assembly
+    - diamond cutting facet reflection
+  emotional_tone:
+    - intellectual clarity
+    - technological mastery
+    - extreme discipline
+  cinematic_cues:
+    camera: "Macro probe lens tracking millimeters from moving subject"
+    motion: "Zero-vibration robotic slide"
+    lighting: "Clinical high-CRI white light with crisp metallic reflections"
+    composition: "Mathematical grid alignment, razor-sharp focus plane"
+  avoid:
+    - generic_blue_binary_code_matrix: "Dated 1990s hacker trope"
+    - generic_spinning_gear_graphic: "Visual cliché for productivity"
+
+automation:
+  visual_language:
+    - dark factory floor operating without human lighting
+    - bipedal robot executing autonomous navigation
+    - automated guided vehicles (AGV) navigating warehouse floor
+    - robotic pick-and-place arms moving at superhuman velocity
+  visual_metaphors:
+    - giant sorting facility operating in total darkness
+    - automated container ship docking via sensor arrays
+    - drone swarm forming geometric formations
+  emotional_tone:
+    - alien efficiency
+    - silent transformation
+    - post-human operational capacity
+  cinematic_cues:
+    camera: "Eye-level following robotic movement or static master surveillance"
+    motion: "Smooth mechanized tracking"
+    lighting: "Darkroom illuminated solely by sensor lasers and LED status arrays"
+    composition: "Absence of human figures, stark geometry"
+  avoid:
+    - human_and_robot_touching_fingers_michelangelo: "Unforgivable visual slop"
+    - cheesy_smiling_cyborg: "B-movie caricature"

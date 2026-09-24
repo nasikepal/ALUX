@@ -4,12 +4,17 @@ title: "Production OS Settings"
 local_media_root: "D:\\MEDIA_LIBRARY"
 words_per_second: 2.4
 weights:
-  visual_similarity: 0.30
-  script_relevance: 0.25
-  entity_match: 0.15
+  semantic_relevance: 0.20
+  narrative_function: 0.15
+  visual_specificity: 0.15
+  artistic_interpretation: 0.15
+  cinematic_compatibility: 0.10
   temporal_relevance: 0.10
-  geographic_relevance: 0.10
-  source_quality: 0.10
+  geographic_relevance: 0.05
+  editorial_utility: 0.05
+  source_quality: 0.05
+anti_pattern_penalty: 0.40
+redundancy_penalty_max: 0.30
 api_endpoints:
   pexels_enabled: true
   pixabay_enabled: true
@@ -20,28 +25,39 @@ api_endpoints:
 
 # PRODUCTION OS — SYSTEM SETTINGS
 
-> Configuration parameters for the multi-factor relevance scoring engine and media providers.
+> Configuration parameters for the 9-factor editorial relevance scoring engine and artistic logic layers.
 
-## 1. Relevance Scoring Weights ($S \in [0.0, 1.0]$)
-The scoring engine computes composite relevance according to Charlie Munger inversion & Bayesian principles:
-- **Visual Similarity ($S_{vis}$)**: `0.30` (Direct semantic overlap with primary/secondary physical concepts)
-- **Script Relevance ($S_{script}$)**: `0.25` (Narrative sentence contextual fit)
-- **Entity Match ($S_{entity}$)**: `0.15` (Company, person, hardware, or model match)
-- **Temporal Relevance ($S_{temporal}$)**: `0.10` (Era / year coherence)
-- **Geographic Relevance ($S_{geo}$)**: `0.10` (Location / regional accuracy)
-- **Source Quality ($S_{source}$)**: `0.10` (Resolution, bitrate, and license rating)
+## 1. Editorial Relevance Scoring Weights ($S \in [0.0, 1.0]$)
 
-$$\sum w_i = 0.30 + 0.25 + 0.15 + 0.10 + 0.10 + 0.10 = 1.00$$
+$$S = 100 \times \left( \begin{aligned}
+& 0.20 \cdot S_{\text{semantic}} + 0.15 \cdot S_{\text{narrative}} + 0.15 \cdot S_{\text{specificity}} \\
++ & 0.15 \cdot S_{\text{artistic}} + 0.10 \cdot S_{\text{cinematic}} + 0.10 \cdot S_{\text{temporal}} \\
++ & 0.05 \cdot S_{\text{geo}} + 0.05 \cdot S_{\text{utility}} + 0.05 \cdot S_{\text{source}}
+\end{aligned} \right) - P_{\text{redundancy}} - P_{\text{avoid}}$$
 
-## 2. Media Providers & Local Asset Library
-- **Primary Search Target**: Local in-house media library at `D:\MEDIA_LIBRARY` or `04_MEDIA/`
-- **Fallback Web Providers**:
-  - `Wikimedia Commons` (Public domain & Creative Commons 4K/HD video and photos)
-  - `Internet Archive` (Historical footage, documentary archives)
-  - `Pexels & Pixabay` (Commercial stock footage)
-  - `DuckDuckGo & Reuters` (Journalistic source verification)
+| Dimension | Weight | Purpose |
+|---|---:|---|
+| **Semantic Relevance ($S_{\text{semantic}}$)** | `20%` | Subject matter vocabulary and keyword overlap |
+| **Narrative Function ($S_{\text{narrative}}$)** | `15%` | Fulfills assigned visual job (Establishing, Proof, Context, etc.) |
+| **Visual Specificity ($S_{\text{specificity}}$)** | `15%` | Degree of direct representation vs generic stock (0 to 5) |
+| **Artistic Interpretation ($S_{\text{artistic}}$)** | `15%` | Alignment with underlying conceptual motif and physical metaphor |
+| **Cinematic Compatibility ($S_{\text{cinematic}}$)** | `10%` | Framing (wide/macro), camera motion, and contrast lighting |
+| **Temporal Relevance ($S_{\text{temporal}}$)** | `10%` | Chronological era and historical coherence |
+| **Geographic Relevance ($S_{\text{geo}}$)** | `5%` | Regional and physical setting accuracy |
+| **Editorial Utility ($S_{\text{utility}}$)** | `5%` | Clean composition, typography space, absence of watermarks |
+| **Source Quality ($S_{\text{source}}$)** | `5%` | Resolution (4K UHD), bitrate, and commercial license grade |
 
-## 3. Pacing & Word Count Calculation
-- **Speaking Rate**: `2.4 words/second` (~144 words/minute)
-- **Minimum Visual Unit Duration**: `4 seconds`
-- **Maximum Recommended Single Shot**: `12 seconds`
+$$\sum w_i = 0.20 + 0.15 + 0.15 + 0.15 + 0.10 + 0.10 + 0.05 + 0.05 + 0.05 = 1.00$$
+
+## 2. Editorial Penalties
+- **Visual Redundancy ($P_{\text{redundancy}}$)**: `-30%` penalty if candidate repeats previous shot's subject and framing scale.
+- **Anti-Pattern Guardrail ($P_{\text{avoid}}$)**: `-40%` penalty if candidate matches banned visual slop tropes.
+
+## 3. Visual Coverage Requirements
+A section is deemed production-ready when its coverage metric reaches $\ge 75\%$:
+- Primary Establishing / Master Shot (`25%`)
+- Secondary Contextual Shot (`20%`)
+- Macro / Detail Insert Shot (`20%`)
+- Kinetic / Transition Cutaway (`15%`)
+- Conceptual Metaphorical B-Roll (`10%`)
+- Empirical Proof / Source Citation (`10%`)

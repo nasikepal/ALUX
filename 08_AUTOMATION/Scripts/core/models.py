@@ -38,6 +38,10 @@ class MediaAsset:
     relevance_score: float = 0.85
     relevance_breakdown: Dict[str, float] = field(default_factory=dict)
     why_reason: str = ""
+    visual_specificity: int = 4  # 0 to 5 (0=generic, 5=exact)
+    narrative_function: str = "C — Explanation"
+    editorial_utility_passed: bool = True
+    redundancy_penalty: float = 0.0
 
 
 @dataclass
@@ -68,6 +72,16 @@ class VisualUnit:
     time_period: List[str] = field(default_factory=list)
     search_queries: List[str] = field(default_factory=list)
     asset_types: List[str] = field(default_factory=lambda: ["footage", "news", "image", "graphic"])
+    
+    # Artistic Logic Engine attributes
+    visual_jobs: List[str] = field(default_factory=list)
+    narrative_functions: List[str] = field(default_factory=list)
+    visual_strategy: Dict[str, Any] = field(default_factory=dict)
+    interpretation_levels: Dict[str, Any] = field(default_factory=dict)
+    search_matrix: Dict[str, List[str]] = field(default_factory=dict)
+    avoid_criteria: Dict[str, Any] = field(default_factory=dict)
+    visual_coverage: Dict[str, Any] = field(default_factory=dict)
+    sequence_logic: Dict[str, Any] = field(default_factory=dict)
     
     # Sourced recommendations
     primary_broll: Optional[MediaAsset] = None

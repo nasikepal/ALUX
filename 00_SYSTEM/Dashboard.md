@@ -6,8 +6,8 @@ updated: 2026-09-24
 
 # PRODUCTION OS — COMMAND CENTER
 
-> **Polymath Video Production & Pre-Production Engine**
-> Machine-Readable Script Decomposition • 6-Factor B-Roll Scoring • Source Verification • SFX Cues
+> **Artistic Logic & Pre-Production Engine**
+> Directorial Reasoning • 6-Level Visual Hierarchy • 9-Factor Editorial Scoring • Sequence Intelligence
 
 ---
 
@@ -15,17 +15,17 @@ updated: 2026-09-24
 
 | Action | Command / Trigger | Target Scope |
 |---|---|---|
-| ⚡ **Run End-to-End Pipeline** | `cli.py pipeline <file>` | Full Script → Visuals → Footage → SFX → Sources → Shots |
-| 🔍 **Analyze Script & Visual Intent** | `cli.py analyze <file>` | Narrative → Physical Cinematic Units & Framing |
-| 🎥 **Find & Score B-Roll** | `cli.py broll <file>` | Multi-factor scored stock & local footage |
+| ⚡ **Run End-to-End Pipeline** | `cli.py pipeline <file>` | Script → Artistic Interpretation → B-Roll → SFX → Sources → Shots |
+| 🎨 **Artistic Reasoning & Intent** | `cli.py analyze <file>` | Visual Job, Metaphor, 6-Level Hierarchy, DO NOT MATCH |
+| 🎥 **Find & Score B-Roll** | `cli.py broll <file>` | 9-factor editorial scoring, sequence logic & redundancy filter |
 | 📰 **Verify Claims & Sources** | `cli.py news <file>` | Fact checking & Source Note generation |
 | 🔊 **Generate SFX Sound Design** | `cli.py sfx <file>` | Ambience, mechanical, transition, and emphasis |
-| 📋 **Generate Shot Planner** | `cli.py shots <file>` | Visual Unit → Shot cards & Storyboard deck |
+| 📋 **Generate Shot Planner** | `cli.py shots <file>` | Visual Unit → Shot cards, sequence rules & Storyboard deck |
 | 📦 **Index Local Media Library** | `cli.py index-local` | Scans `D:\MEDIA_LIBRARY` or `04_MEDIA` |
 
 ---
 
-## 🎬 ACTIVE PROJECTS OVERVIEW
+## 🎬 ACTIVE PROJECTS & VISUAL COVERAGE
 
 ```dataview
 TABLE 
@@ -46,10 +46,10 @@ SORT deadline ASC
 TABLE 
   project AS "Project", 
   duration AS "Length", 
-  status AS "Script State", 
+  artistic_engine AS "Artistic Engine", 
   broll_status AS "B-Roll", 
   source_status AS "Sources", 
-  research_status AS "Research"
+  status AS "Stage"
 FROM "02_SCRIPTS"
 WHERE type = "script"
 SORT file.mtime DESC
@@ -57,7 +57,23 @@ SORT file.mtime DESC
 
 ---
 
-## 🎯 NEEDS ATTENTION QUEUE
+## 🎯 SHOT SEQUENCE & COVERAGE MONITOR
+
+```dataview
+TABLE 
+  narrative_function AS "Narrative Function", 
+  visual_specificity AS "Specificity", 
+  camera AS "Camera Setup", 
+  relevance AS "Score %", 
+  coverage_pct AS "Coverage %"
+FROM "05_SHOTS/B-Roll"
+WHERE type = "shot"
+SORT shot_id ASC
+```
+
+---
+
+## 🛡️ NEEDS ATTENTION & TRIAGE QUEUE
 
 ```dataview
 TABLE 
@@ -70,19 +86,11 @@ WHERE status = "unreviewed"
 SORT relevance DESC
 ```
 
-### Critical Production Checks
-- [ ] Review pending items in [[03_RESEARCH/_INBOX|Research Inbox]]
-- [ ] Confirm licensed B-Roll in [[05_SHOTS/Shot_Planner|Master Shot Planner]]
-- [ ] Verify claims against generated [[06_SOURCES/News|Canonical Source Notes]]
-- [ ] Match SFX tracks in [[04_MEDIA/SFX|Local SFX Vault]]
-
 ---
 
-## 📊 MEDIA & SHOT ARCHITECTURE
+## 📊 SYSTEM DOCUMENTATION & ARCHITECTURE
 
+- **Artistic Logic Specification**: [[00_SYSTEM/ARTISTIC_LOGIC_ENGINE|Open Artistic Logic Engine Spec]]
 - **Master Shot Planner**: [[05_SHOTS/Shot_Planner|Open Storyboard Deck]]
-- **Draft Scripts Folder**: `02_SCRIPTS/Draft/`
-- **Verified Sources Vault**: `06_SOURCES/News/`
-- **Research Inbox (Triage)**: `03_RESEARCH/_INBOX/`
-- **Local Asset Index**: `08_AUTOMATION/Search/local_media_index.json`
-- **System Settings & Weights**: [[00_SYSTEM/Settings|Configure Production Engine]]
+- **Visual Vocabulary Knowledge Base**: `08_AUTOMATION/Scripts/artistic_logic/visual_vocabulary.yaml`
+- **System Settings & 9-Factor Weights**: [[00_SYSTEM/Settings|Configure Production Engine]]

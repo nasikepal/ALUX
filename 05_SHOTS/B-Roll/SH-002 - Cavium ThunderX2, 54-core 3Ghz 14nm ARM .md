@@ -6,11 +6,14 @@ visual_unit: VU-002
 duration: 8
 priority: high
 shot_type: b-roll
-camera: Slow forward tracking shot through server aisle
-movement: Steady motorized slider push-in
+narrative_function: "A \u2014 Literal Evidence"
+visual_specificity: 4
+camera: close-up detail or macro rack-focus
+movement: locked-off tripod or micro-slider
 transition: cut
 status: planned
-relevance: 83
+relevance: 76
+coverage_pct: 94
 ---
 
 # Shot SH-002 — Cavium ThunderX2, 54-core 3Ghz 14nm ARM Server Processor
@@ -21,21 +24,41 @@ relevance: 83
 │                                                        │
 │ "The company spent billions building infras..."                                  │
 │                                                        │
-│ █████████████████░░░ 83%                           │
+│ ██████████████░░░░ 76%                           │
 │                                                        │
 │ 🎥 Footage : Cavium ThunderX2, 54-core 3Ghz 14nm AR   │
 │ 🔊 SFX     : Studio Server Room Low Drone 48K24B      │
 │ 📰 Source  : Financial & Industry Analysis: The com   │
 │                                                        │
-│ Status: [PLANNED] | Duration: 8s | Type: b-roll   │
+│ Function: A — Literal Evidence   | Specificity: 4/5 | 8s │
 └────────────────────────────────────────────────────────┘
 ```
 
 ## Director Notes & Cinematic Direction
-- **Camera Setup**: `Slow forward tracking shot through server aisle`
-- **Camera Movement**: `Steady motorized slider push-in`
-- **Lighting Mood**: `Deep cobalt blue with bright green/cyan status indicators`
+- **Narrative Function**: `A — Literal Evidence`
+- **Visual Job**: `prove, contextualize`
+- **Visual Specificity**: `4/5`
+- **Camera Setup**: `close-up detail or macro rack-focus`
+- **Camera Movement**: `locked-off tripod or micro-slider`
+- **Lighting Mood**: `focused directional key light`
 - **Transition In/Out**: `cut`
+
+## Sequence Intelligence
+- **Cutting Logic**: `Cut from ultra-wide aerial panoramic to fresh focal length to advance narrative rhythm.`
+- **Recommended Next Framing**: `medium contextual`
+- **Avoid Repetition**: `same_scale_as_ultra-wide aerial panoramic, visual_monotony, jump_cut_scale`
+
+## Visual Coverage
+> **Status**: `SUFFICIENT COVERAGE` (94%)
+
+```
+██████████████████ Primary
+██████████████████ Secondary
+████████████████░░ Macro
+███████████████░░░ Kinetic
+██████████████░░░░ Conceptual
+██████████████████ Empirical
+```
 
 ## Script Alignment
 > The company spent billions building infrastructure for artificial intelligence, deploying over $10 billion into hyperscale compute centers across North America.
@@ -45,3 +68,4 @@ relevance: 83
 - **License**: `Public Domain / Open Access`
 - **Resolution**: `HD / Archival`
 - **Source Platform**: `Internet Archive`
+- **Artistic Rationale**: > Fulfills visual job 'prove' as A — Literal Evidence (Specificity 4/5); Artistically conveys 'growth' with focused directional key light.

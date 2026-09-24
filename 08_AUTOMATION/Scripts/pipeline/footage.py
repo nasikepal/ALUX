@@ -12,6 +12,8 @@ from providers.archive import archive_provider
 from providers.stock import stock_footage_provider
 from providers.news import news_provider
 from scoring.relevance import RelevanceEngine
+from artistic_logic.coverage import coverage_engine
+from artistic_logic.shot_logic import sequence_engine
 from core.logger import logger
 
 
@@ -19,8 +21,11 @@ class FootagePipeline:
     def __init__(self):
         self.scorer = RelevanceEngine()
 
-    def find_broll_for_unit(self, unit: VisualUnit) -> VisualUnit:
+    def find_broll_for_unit(self, unit: VisualUnit, previous_shot_meta: Optional[Dict[str, Any]] = None, beat_index: int = 1) -> VisualUnit:
         candidates = []
+
+        # 0. Sequence Intelligence: Compute desired next shot type
+        unit.sequence_logic = sequence_engine.get_desired_next_shot(previous_shot_meta, beat_index)
 
         # 1. Search Local Media Library First (Layer 5)
         for q in unit.visual_intent.primary + unit.search_queries:
@@ -45,10 +50,10 @@ class FootagePipeline:
             )
         candidates.extend(stock_hits)
 
-        # 4. Score all candidates using 6-factor relevance engine
+        # 4. Score all candidates using 9-Factor Editorial Relevance Engine
         scored_assets: List[MediaAsset] = []
         for cand in candidates:
-            score, breakdown, why = self.scorer.score_media(cand, unit)
+            score, breakdown, why, spec, n_func = self.scorer.score_media(cand, unit, previous_shot_meta)
             scored_assets.append(MediaAsset(
                 title=cand.get("title", "Cinematic Footage"),
                 asset_type=cand.get("asset_type", "footage"),
@@ -60,7 +65,10 @@ class FootagePipeline:
                 license=cand.get("license", "Commercial / Royalty-Free"),
                 relevance_score=score,
                 relevance_breakdown=breakdown,
-                why_reason=why
+                why_reason=why,
+                visual_specificity=spec,
+                narrative_function=n_func,
+                redundancy_penalty=breakdown.get("redundancy_penalty", 0.0)
             ))
 
         # Sort by relevance score descending
@@ -90,6 +98,9 @@ class FootagePipeline:
                 relevance_score=n_score,
                 excerpt=nh.get("excerpt", "")
             )
+
+        # 6. Evaluate Visual Coverage for this unit
+        unit.visual_coverage = coverage_engine.evaluate_unit_coverage(unit)
 
         return unit
 

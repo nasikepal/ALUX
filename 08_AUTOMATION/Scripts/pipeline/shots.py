@@ -52,6 +52,10 @@ class ShotPlanner:
         filename = f"{shot.shot_id} - {safe_desc[:40]}.md"
         file_path = target_dir / filename
 
+        p_asset = shot.primary_asset
+        n_func = p_asset.narrative_function if p_asset else "B — Context"
+        spec_score = p_asset.visual_specificity if p_asset else 3
+
         frontmatter = {
             "type": "shot",
             "shot_id": shot.shot_id,
@@ -60,16 +64,20 @@ class ShotPlanner:
             "duration": shot.duration_sec,
             "priority": shot.priority,
             "shot_type": shot.shot_type,
+            "narrative_function": n_func,
+            "visual_specificity": spec_score,
             "camera": shot.camera,
             "movement": shot.movement,
             "transition": shot.transition,
             "status": shot.status,
-            "relevance": int(round((shot.primary_asset.relevance_score if shot.primary_asset else 0.85) * 100))
+            "relevance": int(round((shot.primary_asset.relevance_score if shot.primary_asset else 0.85) * 100)),
+            "coverage_pct": unit.visual_coverage.get("coverage_pct", 75)
         }
 
         progress = render_progress_bar(frontmatter["relevance"])
         sfx_name = unit.sfx_matches[0].title if unit.sfx_matches else "Default Ambience"
         news_name = unit.editorial_news.title if unit.editorial_news else "Supporting Context"
+        cov = unit.visual_coverage
 
         content = f"""---
 {yaml.dump(frontmatter, sort_keys=False).strip()}
@@ -89,15 +97,30 @@ class ShotPlanner:
 │ 🔊 SFX     : {sfx_name[:38].ljust(40)} │
 │ 📰 Source  : {news_name[:38].ljust(40)} │
 │                                                        │
-│ Status: [{shot.status.upper()}] | Duration: {shot.duration_sec}s | Type: {shot.shot_type}   │
+│ Function: {n_func[:20].ljust(22)} | Specificity: {spec_score}/5 | {shot.duration_sec}s │
 └────────────────────────────────────────────────────────┘
 ```
 
 ## Director Notes & Cinematic Direction
+- **Narrative Function**: `{n_func}`
+- **Visual Job**: `{', '.join(unit.visual_jobs)}`
+- **Visual Specificity**: `{spec_score}/5`
 - **Camera Setup**: `{shot.camera}`
 - **Camera Movement**: `{shot.movement}`
 - **Lighting Mood**: `{unit.visual_intent.lighting}`
 - **Transition In/Out**: `{shot.transition}`
+
+## Sequence Intelligence
+- **Cutting Logic**: `{unit.sequence_logic.get('editorial_intent', 'Dynamic visual progression')}`
+- **Recommended Next Framing**: `{unit.sequence_logic.get('recommended_framing', 'medium contextual')}`
+- **Avoid Repetition**: `{', '.join(unit.sequence_logic.get('avoid', ['visual monotony']))}`
+
+## Visual Coverage
+> **Status**: `{cov.get('status_label', 'SUFFICIENT COVERAGE')}` ({cov.get('coverage_pct', 75)}%)
+
+```
+{chr(10).join(cov.get('ascii_bars', []))}
+```
 
 ## Script Alignment
 > {unit.text}
@@ -107,6 +130,7 @@ class ShotPlanner:
 - **License**: `{shot.primary_asset.license if shot.primary_asset else 'N/A'}`
 - **Resolution**: `{shot.primary_asset.resolution if shot.primary_asset else '4K'}`
 - **Source Platform**: `{shot.source}`
+- **Artistic Rationale**: > {shot.primary_asset.why_reason if shot.primary_asset else 'Sourced to fulfill narrative beat.'}
 """
         file_path.write_text(content, encoding="utf-8")
         return file_path
@@ -120,15 +144,20 @@ class ShotPlanner:
             bar = render_progress_bar(score_pct)
             sfx_term = u.sound_intent.ambience[0] if u.sound_intent.ambience else "Ambience"
             source_term = u.editorial_news.title if u.editorial_news else "Source verification"
+            n_func = s.primary_asset.narrative_function if s.primary_asset else "B — Context"
+            spec = s.primary_asset.visual_specificity if s.primary_asset else 3
+            cov = u.visual_coverage
 
             card = f"""### {s.shot_id} — [[{s.shot_id} - {s.visual_description[:35]}|{s.visual_description}]]
 > **Narration**: "{u.text}"
 
-- **Relevance**: `{bar}`
+- **Relevance**: `{bar}` | **Specificity**: `{spec}/5`
+- **Narrative Function**: `{n_func}`
 - 🎥 **Footage**: [{s.visual_description}]({s.primary_asset.url if s.primary_asset else '#'}) (`{s.source}`)
 - 🔊 **SFX**: `{sfx_term}`
 - 📰 **Source**: `{source_term[:50]}`
 - ⏱️ **Duration**: `{s.duration_sec}s` | **Camera**: `{s.camera}` | **Status**: `{s.status}`
+- 📊 **Coverage**: `{cov.get('coverage_pct', 75)}%` (`{cov.get('status_label', 'SUFFICIENT')}`)
 
 ---
 """
@@ -139,12 +168,13 @@ type: shot_planner
 project: "{project_name}"
 total_shots: {len(shots)}
 total_duration: {sum(s.duration_sec for s in shots)}s
+average_coverage: {int(sum(u.visual_coverage.get('coverage_pct', 75) for u in units) / max(1, len(units)))}%
 updated: 2026-09-24
 ---
 
 # Master Shot Planner — {project_name}
 
-> Production storyboard and shot-by-shot asset mapping board.
+> Editorial storyboard, sequence intelligence, and artistic asset mapping board.
 
 ## Visual Shot Deck
 
@@ -153,7 +183,7 @@ updated: 2026-09-24
 ## Shot Database Query (Dataview)
 
 ```dataview
-TABLE duration AS "Duration (s)", priority AS "Priority", shot_type AS "Type", camera AS "Camera", relevance AS "Relevance %", status AS "Status"
+TABLE duration AS "Duration (s)", narrative_function AS "Function", visual_specificity AS "Spec", camera AS "Camera", relevance AS "Relevance %", coverage_pct AS "Coverage %", status AS "Status"
 FROM "05_SHOTS/B-Roll"
 WHERE type = "shot"
 SORT shot_id ASC

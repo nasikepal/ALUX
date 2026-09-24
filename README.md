@@ -29,8 +29,12 @@ The vault operates across 5 decoupled layers:
                            ▼
 ┌────────────────────────────────────────────────────────┐
 │                   LAYER 3 — AI / NLP                   │
-│   • Script Segmentation (Visual Units VU-001..N)       │
-│   • Physical Visual Intent (Subject, Camera, Lighting) │
+│   • SCRIPT PARSER (Visual Units VU-001..N)             │
+│   • ARTISTIC LOGIC ENGINE (6-Level Hierarchy)          │
+│     - Visual Job (13 types) & Narrative Function (A-J) │
+│     - Conceptual & Metaphorical Transduction           │
+│     - DO NOT MATCH Guardrails (Anti-Pattern Filter)    │
+│     - Multi-Tier Search Matrix (Literal..Detail)       │
 │   • Acoustic Sound Intent (Ambience, Foley, Hits)      │
 └──────────────────────────┬─────────────────────────────┘
                            │ Asset Resolution
@@ -52,62 +56,64 @@ The vault operates across 5 decoupled layers:
 ```
 ALUX/
 ├── 00_SYSTEM/
-│   ├── Dashboard.md        # Command center with Dataview tables & quick launchers
-│   ├── Automation.md       # Pipeline architecture & CLI syntax reference
-│   ├── Settings.md         # Relevance scoring weights & local asset paths
-│   └── Workflows.md        # Visual SOP and production stage guidelines
+│   ├── Dashboard.md               # Command center with Dataview tables & quick launchers
+│   ├── ARTISTIC_LOGIC_ENGINE.md   # Canonical artistic reasoning & editorial specification
+│   ├── Automation.md              # Pipeline architecture & CLI syntax reference
+│   ├── Settings.md                # 9-Factor scoring weights & penalty configs
+│   └── Workflows.md               # Visual SOP and production stage guidelines
 ├── 01_PROJECTS/
-│   ├── Active/             # Ongoing project command files (e.g. The_Rise_of_AI.md)
-│   ├── Archive/            # Completed production records
-│   └── Templates/          # Project scaffolds
+│   ├── Active/                    # Ongoing project command files (e.g. The_Rise_of_AI.md)
+│   ├── Archive/                   # Completed production records
+│   └── Templates/                 # Project scaffolds
 ├── 02_SCRIPTS/
-│   ├── Draft/              # Scripts in progress (e.g. The_Rise_of_AI.md)
-│   ├── Research/           # Fact check & visual unit development
-│   ├── Production/         # Locked scripts with approved B-roll & SFX
-│   └── Published/          # Delivered and uploaded video records
+│   ├── Draft/                     # Scripts in progress (e.g. The_Rise_of_AI.md)
+│   ├── Research/                  # Fact check & visual unit development
+│   ├── Production/                # Locked scripts with approved B-roll & SFX
+│   └── Published/                 # Delivered and uploaded video records
 ├── 03_RESEARCH/
-│   ├── _INBOX/             # Triage inbox for discovered sources (Human-in-the-loop)
-│   ├── News/               # Journalistic reports
-│   ├── Articles/           # Long-form essays & analyses
-│   ├── References/         # Historical benchmarks
-│   ├── People/             # Biographies & key figures
-│   ├── Companies/          # Corporate intelligence dossiers
-│   └── Topics/             # Thematic research files
+│   ├── _INBOX/                    # Triage inbox for discovered sources (Human-in-the-loop)
+│   ├── News/                      # Journalistic reports
+│   ├── Articles/                  # Long-form essays & analyses
+│   ├── References/                # Historical benchmarks
+│   ├── People/                    # Biographies & key figures
+│   ├── Companies/                 # Corporate intelligence dossiers
+│   └── Topics/                    # Thematic research files
 ├── 04_MEDIA/
-│   ├── Footage/            # Master raw/ingested B-roll
-│   ├── SFX/                # In-house sound design & Foley library
-│   ├── Music/              # Scored themes & background tracks
-│   ├── Images/             # Stills, photographs, and figures
-│   └── Graphics/           # Motion design assets & 3D models
+│   ├── Footage/                   # Master raw/ingested B-roll
+│   ├── SFX/                       # In-house sound design & Foley library
+│   ├── Music/                     # Scored themes & background tracks
+│   ├── Images/                    # Stills, photographs, and figures
+│   └── Graphics/                  # Motion design assets & 3D models
 ├── 05_SHOTS/
-│   ├── B-Roll/             # Individual shot cards (SH-001, SH-002...)
-│   ├── A-Roll/             # Main presenter / interview clips
-│   ├── Motion/             # Kinetic graphics & title sequences
-│   ├── Archive/            # Unused shot candidates
-│   └── Shot_Planner.md     # Master storyboard deck & Dataview shot table
+│   ├── B-Roll/                    # Individual shot cards (SH-001, SH-002...)
+│   ├── A-Roll/                    # Main presenter / interview clips
+│   ├── Motion/                    # Kinetic graphics & title sequences
+│   ├── Archive/                   # Unused shot candidates
+│   └── Shot_Planner.md            # Master storyboard deck & Dataview shot table
 ├── 06_SOURCES/
-│   ├── News/               # Permanent verified source notes
-│   ├── YouTube/            # Video reference links
-│   ├── Websites/           # Web citations
-│   ├── Papers/             # Academic literature
-│   └── Social/             # Social media & public statements
+│   ├── News/                      # Permanent verified source notes
+│   ├── YouTube/                   # Video reference links
+│   ├── Websites/                  # Web citations
+│   ├── Papers/                    # Academic literature
+│   └── Social/                    # Social media & public statements
 ├── 07_DATABASE/
-│   ├── People/             # Structured entity cards
-│   ├── Companies/          # Capitalization & corporate entities
-│   ├── Topics/             # Subject matter graphs
-│   ├── Locations/          # Geographic sites & facilities
-│   └── Keywords/           # Tag indices
+│   ├── People/                    # Structured entity cards
+│   ├── Companies/                 # Capitalization & corporate entities
+│   ├── Topics/                    # Subject matter graphs
+│   ├── Locations/                 # Geographic sites & facilities
+│   └── Keywords/                  # Tag indices
 ├── 08_AUTOMATION/
-│   ├── Scripts/            # Python 3.14 pipeline engine
-│   │   ├── core/           # Config, models, logger, errors
-│   │   ├── pipeline/       # Script, visual, footage, sfx, source, shots
-│   │   ├── providers/      # Local media, Wikimedia, Archive, Stock, News
-│   │   ├── scoring/        # 6-factor relevance engine
-│   │   ├── output/         # Markdown writer & frontmatter updater
-│   │   ├── cli.py          # Unified CLI orchestrator
+│   ├── Scripts/                   # Python 3.14 pipeline engine
+│   │   ├── core/                  # Config, models, logger, errors
+│   │   ├── artistic_logic/        # Visual interpreter, narrative classifier, metaphor engine, sequence logic, coverage
+│   │   ├── pipeline/              # Script, visual, footage, sfx, source, shots
+│   │   ├── providers/             # Local media, Wikimedia, Archive, Stock, News
+│   │   ├── scoring/               # 9-Factor editorial relevance engine
+│   │   ├── output/                # Markdown writer & frontmatter updater
+│   │   ├── cli.py                 # Unified CLI orchestrator
 │   │   └── run_pipeline_quickadd.js  # QuickAdd Obsidian user script
-│   ├── Search/             # Local asset cache (local_media_index.json)
-│   └── Logs/               # Persistent run logs
+│   ├── Search/                    # Local asset cache (local_media_index.json)
+│   └── Logs/                      # Persistent run logs
 ├── 99_TEMPLATES/
 │   ├── Script_Template.md
 │   ├── Project_Template.md
@@ -116,25 +122,36 @@ ALUX/
 │   ├── Source_Template.md
 │   ├── Research_Inbox_Template.md
 │   └── SFX_Asset_Template.md
-├── run_pipeline.bat        # 1-Click Windows launcher for active script
-├── create_script.bat       # Interactive script scaffolder
-└── index_media.bat         # Re-indexes in-house media library
+├── run_pipeline.bat               # 1-Click Windows launcher for active script
+├── create_script.bat              # Interactive script scaffolder
+└── index_media.bat                # Re-indexes in-house media library
 ```
 
 ---
 
-## 3. Mathematical Relevance Scoring Engine
+## 3. Mathematical 9-Factor Editorial Relevance Scoring
 
-Candidate footage and audio assets are evaluated using a 6-factor composite score:
+Candidate footage and audio assets are evaluated using a 9-factor composite formula:
 
-$$S = 100 \times \left( 0.30 \cdot S_{\text{vis}} + 0.25 \cdot S_{\text{script}} + 0.15 \cdot S_{\text{entity}} + 0.10 \cdot S_{\text{temporal}} + 0.10 \cdot S_{\text{geo}} + 0.10 \cdot S_{\text{source}} \right)$$
+$$S = 100 \times \left( \begin{aligned}
+& 0.20 \cdot S_{\text{semantic}} + 0.15 \cdot S_{\text{narrative}} + 0.15 \cdot S_{\text{specificity}} \\
++ & 0.15 \cdot S_{\text{artistic}} + 0.10 \cdot S_{\text{cinematic}} + 0.10 \cdot S_{\text{temporal}} \\
++ & 0.05 \cdot S_{\text{geo}} + 0.05 \cdot S_{\text{utility}} + 0.05 \cdot S_{\text{source}}
+\end{aligned} \right) - P_{\text{redundancy}} - P_{\text{avoid}}$$
 
-1. **$S_{\text{vis}}$ (Visual Similarity - 30%)**: Overlap between asset title/tags and derived physical visual intent (primary, secondary, abstract).
-2. **$S_{\text{script}}$ (Script Relevance - 25%)**: Contextual alignment with spoken narration line.
-3. **$S_{\text{entity}}$ (Entity Match - 15%)**: Specific detection of named companies, hardware, or people.
-4. **$S_{\text{temporal}}$ (Temporal Relevance - 10%)**: Verification of chronological alignment (e.g., 2026 frontier vs historical archival).
-5. **$S_{\text{geo}}$ (Geographic Relevance - 10%)**: Verification of physical site or universal neutral setting.
-6. **$S_{\text{source}}$ (Source Quality - 10%)**: Asset resolution (4K vs 1080p), license (commercial royalty-free vs editorial), and framerate.
+1. **$S_{\text{semantic}}$ (Semantic Relevance - 20%)**: Script vocabulary and subject overlap.
+2. **$S_{\text{narrative}}$ (Narrative Function - 15%)**: Fulfills designated visual job (Establishing, Proof, Context, etc.).
+3. **$S_{\text{specificity}}$ (Visual Specificity - 15%)**: Graded 0 to 5 (0=generic stock slop, 5=exact physical representation).
+4. **$S_{\text{artistic}}$ (Artistic Interpretation - 15%)**: Conceptual & metaphorical transduction alignment.
+5. **$S_{\text{cinematic}}$ (Cinematic Compatibility - 10%)**: Camera framing, movement, and contrast lighting.
+6. **$S_{\text{temporal}}$ (Temporal Relevance - 10%)**: Chronological era alignment.
+7. **$S_{\text{geo}}$ (Geographic Relevance - 5%)**: Regional and physical site fidelity.
+8. **$S_{\text{utility}}$ (Editorial Utility - 5%)**: Clean framing, typography room, duration $\ge 4s$.
+9. **$S_{\text{source}}$ (Source Quality - 5%)**: Resolution (4K UHD), commercial license grade.
+
+### Penalties
+- **$P_{\text{redundancy}}$**: Deduces up to -30% if repeating previous shot's subject and framing scale.
+- **$P_{\text{avoid}}$**: Deduces -40% if candidate matches visual anti-pattern tropes.
 
 ---
 

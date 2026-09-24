@@ -1,6 +1,6 @@
 """
 Markdown Output and Script Writer Engine.
-Writes production-ready B-Roll, SFX, and Source recommendations back into the Markdown script.
+Writes production-ready B-Roll, SFX, Sources, and Artistic Logic back into the Markdown script.
 """
 
 from typing import List, Dict, Any
@@ -15,8 +15,8 @@ from core.logger import logger
 class MarkdownWriter:
     def update_script_with_production_data(self, doc: ScriptDocument, units: List[VisualUnit]) -> Path:
         """
-        Rewrites/enriches the script note with production-ready Visual Intent,
-        B-Roll suggestions, SFX tables, and Source wikilinks.
+        Enriches the script note with 6-level Visual Interpretation,
+        Artistic Search Matrix, DO NOT MATCH guardrails, B-Roll, SFX, and Coverage gauges.
         """
         # Update metadata
         meta = dict(doc.metadata)
@@ -25,6 +25,7 @@ class MarkdownWriter:
         meta["research_status"] = "completed"
         meta["source_status"] = "completed"
         meta["visual_units_count"] = len(units)
+        meta["artistic_engine"] = "v2-editorial"
         total_duration = sum(u.duration_sec for u in units)
         minutes = total_duration // 60
         seconds = total_duration % 60
@@ -44,19 +45,50 @@ class MarkdownWriter:
             lines.append(f"> {u.text}")
             lines.append("")
 
-            # Visual Intent block
-            lines.append("### Visual Intent")
-            for p in u.visual_intent.primary:
-                lines.append(f"- **Primary**: {p}")
-            for s in u.visual_intent.secondary:
-                lines.append(f"- **Secondary**: {s}")
-            for a in u.visual_intent.abstract:
-                lines.append(f"- *Abstract Concept*: {a}")
-            lines.append(f"- **Camera**: `{u.visual_intent.camera}` | **Movement**: `{u.visual_intent.movement}`")
-            lines.append(f"- **Lighting**: `{u.visual_intent.lighting}`")
+            # 1. Artistic Reasoning & Visual Strategy
+            lines.append("### Artistic Reasoning & Visual Strategy")
+            lines.append(f"- **Visual Job**: `{', '.join(u.visual_jobs)}`")
+            lines.append(f"- **Narrative Function**: `{', '.join(u.narrative_functions)}`")
+            
+            strat = u.visual_strategy
+            lines.append(f"- **Thematic Motif**: `{strat.get('motif', 'scale')}`")
+            lines.append(f"- **Primary Visual**: {strat.get('primary_visual', 'Subject')}")
+            lines.append(f"- **Secondary Visual**: {strat.get('secondary_visual', 'Context')}")
+            lines.append(f"- **Visual Metaphor**: *{strat.get('abstract_visual', 'Metaphor')}*")
             lines.append("")
 
-            # B-Roll Recommendations
+            # 2. 6-Level Visual Interpretation Hierarchy
+            levels = u.interpretation_levels
+            lines.append("#### 6-Level Visual Interpretation")
+            lines.append(f"1. **Literal (Physical)**: {', '.join(levels.get('level_01_literal', []))}")
+            lines.append(f"2. **Contextual (Environment)**: {', '.join(levels.get('level_02_contextual', []))}")
+            lines.append(f"3. **Conceptual (Underlying Idea)**: {', '.join(levels.get('level_03_conceptual', []))}")
+            lines.append(f"4. **Metaphorical (Analogous Reality)**: {', '.join(levels.get('level_04_metaphorical', []))}")
+            lines.append(f"5. **Emotional (Audience Feeling)**: {', '.join(levels.get('level_05_emotional', []))}")
+            cine = levels.get('level_06_cinematic', {})
+            lines.append(f"6. **Cinematic (Behavior in Edit)**: `{cine.get('preferred_shots', ['wide'])[0]}` | Motion: `{cine.get('camera_motion', 'slow push')}` | Lighting: `{cine.get('lighting', 'high contrast')}`")
+            lines.append("")
+
+            # 3. DO NOT MATCH Guardrails
+            avoid = u.avoid_criteria
+            if avoid.get("items"):
+                lines.append("#### Editorial Avoid Guardrails (DO NOT MATCH)")
+                lines.append(f"- **Banned Visual Tropes**: `{', '.join(avoid.get('items', []))}`")
+                lines.append(f"- **Director Rationale**: > {avoid.get('reason', 'Prevents generic imagery.')}")
+                lines.append("")
+
+            # 4. Search Strategy Matrix
+            matrix = u.search_matrix
+            if matrix:
+                lines.append("#### Artistic Search Matrix")
+                lines.append(f"- **Literal**: `{', '.join(matrix.get('literal_search', []))}`")
+                lines.append(f"- **Contextual**: `{', '.join(matrix.get('contextual_search', []))}`")
+                lines.append(f"- **Conceptual**: `{', '.join(matrix.get('conceptual_search', []))}`")
+                lines.append(f"- **Cinematic**: `{', '.join(matrix.get('cinematic_search', []))}`")
+                lines.append(f"- **Detail**: `{', '.join(matrix.get('detail_search', []))}`")
+                lines.append("")
+
+            # 5. B-Roll Recommendations
             lines.append(f"### B-Roll Recommendations — {u.id}")
             if u.primary_broll:
                 p = u.primary_broll
@@ -64,7 +96,8 @@ class MarkdownWriter:
                 bar = render_progress_bar(pct)
                 lines.append("#### Primary Recommendation")
                 lines.append(f"**{p.title}**")
-                lines.append(f"Relevance: {bar}")
+                lines.append(f"Relevance: {bar} | **Visual Specificity**: `{p.visual_specificity}/5`")
+                lines.append(f"Narrative Function: `{p.narrative_function}`")
                 lines.append("Why:")
                 lines.append(f"> {p.why_reason}")
                 lines.append(f"- **Source**: [{p.source}]({p.url})")
@@ -80,7 +113,7 @@ class MarkdownWriter:
                 lines.append("---")
                 lines.append("#### Alternative Option")
                 lines.append(f"**{alt.title}**")
-                lines.append(f"Relevance: {alt_bar}")
+                lines.append(f"Relevance: {alt_bar} | **Visual Specificity**: `{alt.visual_specificity}/5`")
                 lines.append(f"- **Source**: [{alt.source}]({alt.url})")
                 lines.append(f"- **Type**: `{alt.asset_type.title()}` | **License**: `{alt.license}`")
                 lines.append("")
@@ -96,14 +129,27 @@ class MarkdownWriter:
                 lines.append(f"- **Credibility / Relevance**: `{en.credibility.upper()}` ({int(round(en.relevance_score * 100))}%)")
                 lines.append("")
 
-            # Checklist
-            lines.append("#### Shot Checklist")
-            lines.append(f"- [ ] {u.id} Master B-Roll asset ingested")
-            lines.append(f"- [ ] Color profile & framerate matched")
-            lines.append(f"- [ ] Edit cut-point trimmed ({u.duration_sec}s)")
-            lines.append("")
+            # 6. Sequence Intelligence
+            seq = u.sequence_logic
+            if seq:
+                lines.append("#### Sequence Intelligence")
+                lines.append(f"- **Editorial Cutting Rule**: `{seq.get('editorial_intent', 'Dynamic visual progression')}`")
+                lines.append(f"- **Recommended Next Framing**: `{seq.get('recommended_framing', 'medium contextual')}`")
+                lines.append(f"- **Visual Redundancy Filter**: `{', '.join(seq.get('avoid', ['visual monotony']))}`")
+                lines.append("")
 
-            # SFX Table
+            # 7. Visual Coverage
+            cov = u.visual_coverage
+            if cov:
+                lines.append("#### Visual Coverage")
+                lines.append(f"> **Section Coverage**: `{cov.get('coverage_pct', 75)}%` ({cov.get('status_label', 'SUFFICIENT')})")
+                lines.append("```")
+                for b in cov.get("ascii_bars", []):
+                    lines.append(b)
+                lines.append("```")
+                lines.append("")
+
+            # 8. SFX Table
             lines.append("### SFX & Sound Design")
             lines.append("| Layer | Semantic Sound Intent | Asset Match | Relevance |")
             lines.append("|---|---|---|---:|")
@@ -129,7 +175,7 @@ class MarkdownWriter:
                 lines.append("| Ambience | Environmental room tone | [Studio Library](#) | 90% |")
             lines.append("")
 
-            # Claims and Verified Sources
+            # 9. Claims and Verified Sources
             lines.append("### Claims & Verified Evidence")
             if u.claims:
                 for c in u.claims:
@@ -151,7 +197,7 @@ class MarkdownWriter:
 
         final_content = "\n".join(lines)
         doc.file_path.write_text(final_content, encoding="utf-8")
-        logger.info(f"Successfully updated script note: {doc.file_path}")
+        logger.info(f"Successfully updated script note with artistic logic: {doc.file_path}")
         return doc.file_path
 
 

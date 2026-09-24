@@ -6,11 +6,14 @@ visual_unit: VU-001
 duration: 13
 priority: high
 shot_type: b-roll
-camera: Extreme macro rack-focus across silicon circuit paths
-movement: Gliding slow tilt downward
+narrative_function: "G \u2014 Establishing"
+visual_specificity: 4
+camera: ultra-wide aerial panoramic
+movement: smooth forward drone sweep
 transition: fade-in
 status: planned
-relevance: 70
+relevance: 64
+coverage_pct: 94
 ---
 
 # Shot SH-001 — Silicon Wafer Microchip Closeup (Cinematic Footage)
@@ -21,21 +24,41 @@ relevance: 70
 │                                                        │
 │ "AI is no longer something that exists only..."                                  │
 │                                                        │
-│ ██████████████░░░░░░ 70%                           │
+│ ████████████░░░░░░ 64%                           │
 │                                                        │
 │ 🎥 Footage : Silicon Wafer Microchip Closeup (Cinem   │
 │ 🔊 SFX     : Sound Design: Deep Binaural Synthetic    │
 │ 📰 Source  : Financial & Industry Analysis: AI is n   │
 │                                                        │
-│ Status: [PLANNED] | Duration: 13s | Type: b-roll   │
+│ Function: G — Establishing       | Specificity: 4/5 | 13s │
 └────────────────────────────────────────────────────────┘
 ```
 
 ## Director Notes & Cinematic Direction
-- **Camera Setup**: `Extreme macro rack-focus across silicon circuit paths`
-- **Camera Movement**: `Gliding slow tilt downward`
-- **Lighting Mood**: `High-contrast darkroom with amber and teal neon glow`
+- **Narrative Function**: `G — Establishing`
+- **Visual Job**: `establish, dramatize, humanize`
+- **Visual Specificity**: `4/5`
+- **Camera Setup**: `ultra-wide aerial panoramic`
+- **Camera Movement**: `smooth forward drone sweep`
+- **Lighting Mood**: `horizon backlight with atmospheric haze`
 - **Transition In/Out**: `fade-in`
+
+## Sequence Intelligence
+- **Cutting Logic**: `Establish geographic and spatial physical reality.`
+- **Recommended Next Framing**: `medium contextual`
+- **Avoid Repetition**: `extreme_closeup_first, chaotic_handheld`
+
+## Visual Coverage
+> **Status**: `SUFFICIENT COVERAGE` (94%)
+
+```
+██████████████████ Primary
+██████████████████ Secondary
+████████████████░░ Macro
+███████████████░░░ Kinetic
+██████████████░░░░ Conceptual
+██████████████████ Empirical
+```
 
 ## Script Alignment
 > AI is no longer something that exists only inside research labs. From automated trading desks to surgical operating theaters, machine learning models are fundamentally rewriting the physical rules of human production.
@@ -45,3 +68,4 @@ relevance: 70
 - **License**: `Commercial / Royalty-Free`
 - **Resolution**: `4K UHD (3840x2160)`
 - **Source Platform**: `Pexels Stock`
+- **Artistic Rationale**: > Fulfills visual job 'establish' as G — Establishing (Specificity 4/5); Artistically conveys 'scale' with horizon backlight with atmospheric haze.
