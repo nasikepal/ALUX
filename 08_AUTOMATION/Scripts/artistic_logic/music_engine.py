@@ -51,6 +51,55 @@ class MusicScoreEngine:
             "mood": "Authoritative, heavy, industrial sovereign control",
             "instrumentation": "Taiko drums, brass braams, distorted synth bass lead",
             "reference_style": "Junkie XL (Mad Max), Geoff Barrow & Ben Salisbury"
+        },
+        "wealth_capital": {
+            "tempo_bpm": "72-85 BPM",
+            "key": "B Minor / F# Major",
+            "mood": "Opulent, restrained, sovereign, quiet luxury",
+            "instrumentation": "Solo acoustic grand piano, delicate chamber strings, warm sub-bass, subtle vinyl texture",
+            "reference_style": "Max Richter, Jóhann Jóhannsson (Succession / The Crown aesthetic)"
+        },
+        "financial_asymmetry": {
+            "tempo_bpm": "95-110 BPM",
+            "key": "D Minor",
+            "mood": "Calculated risk, strategic tension, market dominance",
+            "instrumentation": "Fast muted cello arpeggios, analog clockwork percussion, sub-bass riser",
+            "reference_style": "Cliff Martinez (The Lincoln Lawyer), Trent Reznor (The Social Network)"
+        },
+        "mental_focus": {
+            "tempo_bpm": "80-92 BPM",
+            "key": "A Minor",
+            "mood": "Monastic clarity, unbroken concentration, cognitive momentum",
+            "instrumentation": "Repetitive acoustic guitar ostinato, muted glass marimba, rhythmic analog synth pulse",
+            "reference_style": "Nils Frahm, Ólafur Arnalds, Dustin O'Halloran"
+        },
+        "mental_burnout": {
+            "tempo_bpm": "60-72 BPM",
+            "key": "C Minor",
+            "mood": "Claustrophobic, exhausted, sensory overwhelm",
+            "instrumentation": "Detuned felt piano, tape saturation flutter, sub-harmonic rumble",
+            "reference_style": "Hauschka, Hildur Guðnadóttir (Chernobyl / Joker)"
+        },
+        "stoic_clarity": {
+            "tempo_bpm": "60-75 BPM",
+            "key": "D Major / F# Minor",
+            "mood": "Serene, immovable, transcendent stillness",
+            "instrumentation": "Warm ambient pads, bowing glass, gentle acoustic cello, spacious silence",
+            "reference_style": "Brian Eno, Stars of the Lid, Arvo Pärt"
+        },
+        "wellness_vitality": {
+            "tempo_bpm": "100-115 BPM",
+            "key": "E Major",
+            "mood": "Invigorating, primal, physical resilience",
+            "instrumentation": "Organic percussion, breath textures, soaring harmonic strings, bright acoustic resonance",
+            "reference_style": "Ludovico Einaudi, Jon Hopkins (Singularity)"
+        },
+        "recovery_restoration": {
+            "tempo_bpm": "55-68 BPM",
+            "key": "G Major",
+            "mood": "Profound restorative ease, parasympathetic warmth, peaceful twilight",
+            "instrumentation": "Warm analog synth drone, muted upright piano with felt dampers, singing bowl decay",
+            "reference_style": "Marconi Union (Weightless), Harold Budd"
         }
     }
 

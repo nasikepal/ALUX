@@ -1,6 +1,7 @@
 """
 Visual Intent and Semantic Analysis Engine.
-Translates literal narrative lines into physical, shootable cinematic concepts.
+Translates literal narrative lines into physical, shootable cinematic concepts across
+Finance, Wealth, Mental Health, Wellness, Stoicism, and Technology.
 """
 
 from typing import List, Dict, Any, Tuple
@@ -12,6 +13,51 @@ from core.logger import logger
 class VisualAnalyzer:
     # High-signal domain semantic visual mappings
     DOMAIN_ONTOLOGY = {
+        "wealth_luxury": {
+            "keywords": ["wealth", "rich", "luxury", "asset", "estate", "capital", "private equity", "portfolio", "passive income", "cash flow", "compounding", "financial freedom", "sovereign", "legacy", "billionaire", "millionaire", "patek", "family office"],
+            "primary": ["monolithic modern marble architecture", "executive penthouse skyline view", "tactile fountain pen on bond paper"],
+            "secondary": ["private bank vault door", "architectural living room with natural stone", "antique mechanical watch movement"],
+            "abstract": ["generational wealth preservation", "financial sovereignty"],
+            "camera": "Slow deliberate slider push-in with 50mm prime",
+            "lighting": "Warm architectural raking sunlight cutting across textured stone",
+            "movement": "Smooth controlled motorized dolly"
+        },
+        "finance_markets": {
+            "keywords": ["market", "stock", "trade", "trading", "hedge fund", "wall street", "federal reserve", "interest rate", "inflation", "bond", "valuation", "balance sheet", "asymmetry", "arbitrage", "liquidity", "leverage", "invest"],
+            "primary": ["financial trading floor multi-monitors", "bloomberg terminal data stream", "corporate headquarters skyscraper"],
+            "secondary": ["executive contract signing", "central bank architectural facade", "financial district crosswalk"],
+            "abstract": ["capital allocation dynamics", "systemic economic forces"],
+            "camera": "Low-angle wide tilt looking up at high-rise financial center",
+            "lighting": "Crisp corporate cool daylight with sharp reflections",
+            "movement": "Vertical crane tilt-up"
+        },
+        "mental_psychology": {
+            "keywords": ["mental", "mind", "brain", "psychology", "focus", "discipline", "dopamine", "addiction", "habit", "anxiety", "stress", "burnout", "depression", "ego", "mindset", "subconscious", "cognitive", "meditation", "attention", "deep work"],
+            "primary": ["solitary individual writing in leather journal", "clock ticking in minimalist room", "person meditating in tranquil interior"],
+            "secondary": ["rain streaking across dark window pane", "person walking through morning mist", "dense personal library bookshelf"],
+            "abstract": ["cognitive clarity and emotional mastery", "monastic focus and inner stillness"],
+            "camera": "Intimate close-up macro probe on journal or eyes",
+            "lighting": "Natural directional morning window light with soft shadow",
+            "movement": "Imperceptible slow push-in"
+        },
+        "wellness_longevity": {
+            "keywords": ["wellness", "health", "longevity", "lifespan", "sleep", "circadian", "fitness", "workout", "training", "nutrition", "diet", "fasting", "recovery", "sauna", "cold plunge", "breathwork", "energy", "vitality", "biomarker", "athletic", "physical"],
+            "primary": ["athlete immersing into cold plunge bath", "morning sunlight hitting face outdoors at dawn", "runner breath in crisp cold air"],
+            "secondary": ["clean preparation of whole organic foods", "cedar wood sauna with steam rising", "biometric wearable device tracking heart rate"],
+            "abstract": ["cellular vitality and biological resilience", "somatic equilibrium and physical peak"],
+            "camera": "Low-angle dynamic tracking with 35mm lens",
+            "lighting": "Golden dawn backlighting with high dynamic range",
+            "movement": "Organic steadycam glide"
+        },
+        "philosophy_stoicism": {
+            "keywords": ["philosophy", "stoic", "stoicism", "virtue", "wisdom", "marcus aurelius", "seneca", "epictetus", "memento mori", "death", "time", "purpose", "meaning", "character", "stillness", "calm"],
+            "primary": ["classical marble bust in museum shadow", "monolithic granite cliff against ocean waves", "ancient stone temple ruins"],
+            "secondary": ["hourglass sand falling steadily", "solitary figure standing in heavy rain", "old leather-bound philosophy book"],
+            "abstract": ["timeless human endurance", "stoic equanimity"],
+            "camera": "Static locked-off symmetrical tableau",
+            "lighting": "Moody overcast soft slate-grey daylight",
+            "movement": "Completely locked tripod"
+        },
         "datacenter": {
             "keywords": ["data center", "datacenter", "server", "infrastructure", "compute", "cloud", "hyperscale", "gpu", "clusters"],
             "primary": ["hyperscale data center", "server racks with blinking LEDs", "high-density GPU infrastructure"],
@@ -21,58 +67,28 @@ class VisualAnalyzer:
             "lighting": "Deep cobalt blue with bright green/cyan status indicators",
             "movement": "Steady motorized slider push-in"
         },
-        "robotics": {
-            "keywords": ["robot", "robotics", "humanoid", "automation", "actuator", "dexterous", "cybernetic", "mechanic"],
-            "primary": ["humanoid robot walking", "robotic mechanical arm assembling", "bipedal robotic actuators"],
-            "secondary": ["engineers calibrating robotic joints", "wire harnesses and electric motors", "laboratory testing floor"],
-            "abstract": ["autonomous physical agency", "human-machine synthesis"],
-            "camera": "Close-up macro pan across metallic articulated fingers",
-            "lighting": "Clean surgical clinical white with rim lighting",
-            "movement": "Slow orbital arc around the robot"
-        },
-        "neural": {
-            "keywords": ["neural", "weights", "parameters", "algorithm", "intelligence", "model", "llm", "deep learning", "transformer"],
-            "primary": ["silicon wafer microchip closeup", "holographic neural node graph", "macro view of GPU die"],
-            "secondary": ["programmer dual monitor code reflection", "quantum circuit schematics", "glass-walled research lab"],
-            "abstract": ["synthetic cognition", "digital consciousness matrix"],
-            "camera": "Extreme macro rack-focus across silicon circuit paths",
-            "lighting": "High-contrast darkroom with amber and teal neon glow",
-            "movement": "Gliding slow tilt downward"
-        },
-        "finance": {
-            "keywords": ["billion", "dollar", "capital", "invest", "spending", "venture", "market", "valuation", "trillion"],
-            "primary": ["financial trading floor screens", "modern skyscraper corporate headquarters", "digitized financial ticker tape"],
-            "secondary": ["executive boardroom meeting", "documents signing and handshake", "money counting machine"],
-            "abstract": ["massive capital deployment", "economic market domination"],
-            "camera": "Low angle wide tilt looking up at glass skyscraper",
-            "lighting": "Sunset golden hour reflecting off high-rise windows",
-            "movement": "Rising crane shot"
-        },
         "society": {
-            "keywords": ["people", "human", "society", "worker", "user", "everyday", "public", "world", "crowd"],
-            "primary": ["people using futuristic mobile interfaces", "crowded urban metropolis crosswalk", "creative professional working on tablet"],
-            "secondary": ["diverse modern workspace", "people looking at smartphones on subway", "coffee shop remote workers"],
-            "abstract": ["mass technological adoption", "societal paradigm transition"],
-            "camera": "Medium tracking shot following a walking protagonist",
+            "keywords": ["people", "human", "society", "worker", "user", "everyday", "public", "world", "crowd", "community"],
+            "primary": ["people walking in modern metropolis", "crowded urban crosswalk", "individual sitting thoughtfully in architectural cafe"],
+            "secondary": ["modern light-filled workspace", "commuters on transit", "quiet evening park"],
+            "abstract": ["human societal evolution", "collective consciousness"],
+            "camera": "Medium tracking shot following protagonist",
             "lighting": "Natural cinematic daylight with soft diffusion",
             "movement": "Handheld steadycam glide"
-        },
-        "laboratory": {
-            "keywords": ["lab", "laboratory", "scientist", "researcher", "experiment", "breakthrough", "discovery"],
-            "primary": ["scientific research cleanroom", "scientists examining microscopes", "laser optical bench in lab"],
-            "secondary": ["gloved hands handling microfluidic chips", "glass whiteboards covered in formulas", "pipettes and test tubes"],
-            "abstract": ["scientific exploration", "empirical truth discovery"],
-            "camera": "Eye-level medium closeup through laboratory glass partition",
-            "lighting": "Clean fluorescent ambient with tungsten accent",
-            "movement": "Slow lateral dolly track"
         }
     }
 
     ENTITY_PATTERNS = [
-        r"\b(?:OpenAI|Microsoft|NVIDIA|Google|Meta|Apple|Amazon|Anthropic|Tesla|TSMC|ASML)\b",
-        r"\b(?:San Francisco|Silicon Valley|Shenzhen|Tokyo|New York|London|Singapore)\b",
-        r"\b(?:Sam Altman|Jensen Huang|Satya Nadella|Elon Musk|Dario Amodei|Demis Hassabis)\b",
-        r"\b(?:\$\d+(?:\.\d+)?\s*(?:billion|trillion|million))\b",
+        # Finance & Institutions
+        r"\b(?:BlackRock|Vanguard|Berkshire Hathaway|Federal Reserve|Goldman Sachs|JPMorgan|Bridgewater|Citadel)\b",
+        r"\b(?:OpenAI|Microsoft|NVIDIA|Google|Apple|Tesla|Amazon)\b",
+        r"\b(?:New York|London|Singapore|Tokyo|Zurich|Geneva|San Francisco)\b",
+        # Figures across Finance, Philosophy, Health
+        r"\b(?:Warren Buffett|Charlie Munger|Ray Dalio|Naval Ravikant|Marcus Aurelius|Seneca|Epictetus)\b",
+        r"\b(?:Peter Attia|Andrew Huberman|Matthew Walker|David Goggins|Carl Jung|Friedrich Nietzsche)\b",
+        # Numeric Claims & Financial Assertions
+        r"\b(?:\$\d+(?:\.\d+)?\s*(?:billion|trillion|million|k)?)\b",
+        r"\b(?:\d+(?:\.\d+)?\s*(?:%|percent))\b",
         r"\b(?:20\d\d(?:\s*-\s*20\d\d)?)\b"
     ]
 
@@ -90,7 +106,7 @@ class VisualAnalyzer:
         claims = []
         sentences = [s.strip() for s in re.split(r"[.!?]", unit.text) if s.strip()]
         for s in sentences:
-            if any(k in s.lower() for k in ["billion", "trillion", "invest", "percent", "%", "spent", "built", "invented", "first", "surpassed", "record"]):
+            if any(k in s.lower() for k in ["billion", "million", "dollar", "percent", "%", "invest", "habit", "study", "research", "shows", "proved", "demonstrated", "rule", "principle"]):
                 claims.append(s)
         if not claims and len(sentences) > 0:
             claims.append(sentences[0])
@@ -119,6 +135,15 @@ class VisualAnalyzer:
                 second_info = matched_domains[1][2]
                 secondary.append(second_info["primary"][0])
                 abstract.append(second_info["abstract"][0])
+        else:
+            # Fallback for general unclassified narration
+            primary = ["cinematic environmental portrait", "architectural minimalism"]
+            secondary = ["ambient landscape details", "tactile object closeup"]
+            abstract = ["thematic gravity", "narrative progression"]
+            camera = "Medium slow push-in with 50mm prime lens"
+            lighting = "Cinematic natural directional daylight"
+            movement = "Slow smooth slider track"
+
         # 4. Integrate Full Artistic Logic Engine (6-Level Interpretation & Search Matrix)
         from artistic_logic.visual_interpreter import visual_interpreter
         

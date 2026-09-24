@@ -62,11 +62,11 @@ ALUX/
 │   ├── Settings.md                # 9-Factor scoring weights & penalty configs
 │   └── Workflows.md               # Visual SOP and production stage guidelines
 ├── 01_PROJECTS/
-│   ├── Active/                    # Ongoing project command files (e.g. The_Rise_of_AI.md)
+│   ├── Active/                    # Active project files
 │   ├── Archive/                   # Completed production records
 │   └── Templates/                 # Project scaffolds
 ├── 02_SCRIPTS/
-│   ├── Draft/                     # Scripts in progress (e.g. The_Rise_of_AI.md)
+│   ├── Draft/                     # Scripts in progress (<Title>.md)
 │   ├── Research/                  # Fact check & visual unit development
 │   ├── Production/                # Locked scripts with approved B-roll & SFX
 │   └── Published/                 # Delivered and uploaded video records
@@ -159,7 +159,7 @@ $$S = 100 \times \left( \begin{aligned}
 
 ### Method A: 1-Click Windows Launcher
 Double-click `run_pipeline.bat` from the root of the vault.
-- Press `Enter` to run on the default flagship script (`02_SCRIPTS/Draft/The_Rise_of_AI.md`) or type the relative path to any script in `02_SCRIPTS/`.
+- Automatically detects scripts in `02_SCRIPTS/Draft/` or prompts for target script.
 
 ### Method B: Obsidian QuickAdd Hotkey
 Inside Obsidian:
@@ -171,16 +171,16 @@ Inside Obsidian:
 Using the vault's embedded Python runtime:
 ```powershell
 # Run full end-to-end pipeline (Script update + Cut List CSV + Executive Brief)
-& "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" pipeline "02_SCRIPTS\Draft\The_Rise_of_AI.md"
+& "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" pipeline "02_SCRIPTS\Draft\<script_name>.md"
 
 # Generate musical score cues and trajectory analysis
-& "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" music "02_SCRIPTS\Draft\The_Rise_of_AI.md"
+& "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" music "02_SCRIPTS\Draft\<script_name>.md"
 
 # Export DaVinci Resolve / Premiere Pro Cut List CSV and Executive Brief
-& "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" export "02_SCRIPTS\Draft\The_Rise_of_AI.md"
+& "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" export "02_SCRIPTS\Draft\<script_name>.md"
 
 # Scaffold a new production script template
-& "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" new-script --title "Project Title" --project "Project Name"
+& "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" new-script --title "The Psychology of Money" --project "Finance Series"
 
 # Re-index in-house asset library (04_MEDIA/ and D:\MEDIA_LIBRARY)
 & "d:\Obsidian Vaults\ALUX\.venv\Scripts\python.exe" "08_AUTOMATION\Scripts\cli.py" index-local

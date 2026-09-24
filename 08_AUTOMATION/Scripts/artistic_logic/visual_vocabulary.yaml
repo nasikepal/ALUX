@@ -173,3 +173,185 @@ automation:
   avoid:
     - human_and_robot_touching_fingers_michelangelo: "Unforgivable visual slop"
     - cheesy_smiling_cyborg: "B-movie caricature"
+
+wealth_capital:
+  visual_language:
+    - monolithic modern marble architecture
+    - executive corner office overlooking morning city skyline
+    - tactile handling of archival asset deeds and heavy fountain pens
+    - private vault security mechanisms and heavy steel doors
+    - minimalist high-end residential interiors with natural stone and timber
+  visual_metaphors:
+    - deep bedrock foundation supporting towering glass structure
+    - quiet mountain reservoir holding immense water reserves
+    - timeless mechanical watch escapement beating in stillness
+    - ancient olive tree groves with deep winding root systems
+  emotional_tone:
+    - sovereign control
+    - quiet luxury
+    - generational patience
+    - dignified restraint
+  cinematic_cues:
+    camera: "Medium slow push-in with 50mm or 85mm prime lens"
+    motion: "Unrushed, locked-off slider or deliberate slow dolly"
+    lighting: "Warm architectural raking sunlight cutting across textured stone and dark walnut"
+    composition: "Restrained symmetry, generous negative space, extreme textural detail"
+  avoid:
+    - guy_in_suit_throwing_cash: "Tacky get-rich-quick 'guru' aesthetic"
+    - flashy_supercars_revving: "Juvenile flex culture; destroys institutional seriousness"
+    - shiny_gold_coins_stacks: "PowerPoint clip-art cliché"
+
+financial_asymmetry:
+  visual_language:
+    - Bloomberg trading terminals in dim blue ambient light
+    - fast electronic financial ticker tape reflecting in executive glasses
+    - macro close-up of ink drying on official contract signature
+    - empty corporate boardroom at sunrise before major announcement
+    - currency printing press or vault bullion inspection
+  visual_metaphors:
+    - massive chess board where single move triggers chain reaction
+    - steel suspension bridge bearing immense calculated load
+    - balance scale tipping decisively with single drop of water
+    - shipping fleet navigating through turbulent coastal narrows
+  emotional_tone:
+    - calculated risk
+    - intellectual dominance
+    - high-stakes gravity
+  cinematic_cues:
+    camera: "Tight 100mm macro rack-focus or low-angle slow tilt"
+    motion: "Precise linear motorized tracking"
+    lighting: "Cool corporate cobalt paired with single warm tungsten lamp"
+    composition: "Dynamic diagonals, sharp contrast edges"
+  avoid:
+    - green_and_red_crypto_candles_neon: "Gambling hype; ruins financial authority"
+    - wall_street_bull_statue_generic: "Overused tourist stock footage"
+
+mental_focus:
+  visual_language:
+    - solitary individual writing in leather journal at dawn
+    - clock hands ticking in silent minimalist room
+    - person reading dense book in wood-paneled library with natural window light
+    - athlete or craftsman eyes narrowing in intense concentration
+    - deep breath before entering cold plunge or focused sprint
+  visual_metaphors:
+    - single beam of sunlight piercing dark cavern
+    - calm mountain lake mirror-like surface without ripples
+    - samurai sword blade reflecting razor-sharp light edge
+    - archer drawing bowstring in total acoustic silence
+  emotional_tone:
+    - deep focus
+    - monastic discipline
+    - cognitive stillness
+    - unwavering resolve
+  cinematic_cues:
+    camera: "Intimate close-up on hands, eyes, or pen tip (macro probe lens)"
+    motion: "Locked-off tripod or imperceptible slow push"
+    lighting: "Natural directional daylight from single large north-facing window"
+    composition: "Extreme shallow depth of field, subject isolated against soft bokeh"
+  avoid:
+    - generic_student_studying_with_laptop: "Low-production YouTube vlog look"
+    - lightbulb_turning_on_over_head: "Comic-book visual slop"
+
+mental_burnout:
+  visual_language:
+    - fragmented reflections in rain-streaked night skyscraper windows
+    - harsh flickering fluorescent lights in empty late-night office
+    - blurred pedestrian crowd passing rapidly while subject stands frozen
+    - restless insomnia silhouette gazing out over neon city at 3 AM
+    - screen glare washing over exhausted face in pitch darkness
+  visual_metaphors:
+    - overheated steam engine with trembling pressure needle
+    - fraying rope holding heavy suspended weight
+    - glass vase showing fine spiderweb fractures before shattering
+    - dry cracked desert earth under merciless noon sun
+  emotional_tone:
+    - cognitive exhaustion
+    - sensory overload
+    - claustrophobic friction
+    - vulnerability
+  cinematic_cues:
+    camera: "Medium close-up with subtle organic breathing handheld motion"
+    motion: "Disorienting rack-focus or slow dizzying rotation"
+    lighting: "Sickly fluorescent green-tinted white or harsh blue monitor wash"
+    composition: "Cramped framing, subject trapped by heavy architectural edges"
+  avoid:
+    - head_in_hands_sobbing_actor: "Melodramatic amateur stock acting"
+    - cartoon_battery_empty_icon: "Patronizing visual shortcut"
+
+stoic_clarity:
+  visual_language:
+    - monolithic granite cliffs standing immovable against crashing ocean waves
+    - solitary figure standing calmly in heavy rain or mountain storm
+    - classical marble bust in quiet museum hall with shadow interplay
+    - footsteps echoing through ancient brutalist concrete corridor
+    - clear mountain spring water flowing over smooth dark river stones
+  visual_metaphors:
+    - lighthouse standing resolute amidst violent ocean gale
+    - massive oak tree bending in wind without breaking
+    - anvil remaining unblemished beneath falling hammer blows
+  emotional_tone:
+    - transcendent composure
+    - emotional equilibrium
+    - unshakeable endurance
+    - ancient wisdom
+  cinematic_cues:
+    camera: "Wide or medium static symmetrical tableau"
+    motion: "Static locked tripod (zero motion, let environment move around stillness)"
+    lighting: "Overcast soft diffused daylight, cool slate-grey and deep forest tones"
+    composition: "Strict central anchor, strong horizontal ground plane"
+  avoid:
+    - cheesy_zen_stones_stacked: "Spa brochure cliché"
+    - fake_buddha_statue_with_incense: "Superficial aesthetic trope"
+
+wellness_vitality:
+  visual_language:
+    - athlete immersing into icy mountain water or cold plunge bath
+    - morning sunlight hitting retinas outdoors at dawn
+    - runner breath condensing in crisp cold morning air
+    - clean culinary preparation of whole organic foods and knife cutting
+    - biometric sensor monitoring resting heart rate and sleep telemetry
+  visual_metaphors:
+    - clear alpine glacier stream fed by melting snow
+    - surging ocean swell with crystalline clarity
+    - vigorous green forest canopy photosynthesizing under direct morning sun
+    - glowing ember igniting clean firewood
+  emotional_tone:
+    - primal vitality
+    - biological resilience
+    - clean somatic energy
+    - cellular renewal
+  cinematic_cues:
+    camera: "Low-angle dynamic tracking with 35mm wide lens"
+    motion: "Organic steadycam glide or smooth tracking alongside movement"
+    lighting: "Golden dawn backlighting, crisp morning flare, high dynamic range"
+    composition: "Dynamic diagonal action lines, breath and water droplets catching light"
+  avoid:
+    - measuring_tape_wrapped_around_green_apple: "Diet commercial slop"
+    - smiling_people_eating_salad_together: "Overused stock photography cliché"
+    - generic_gym_influencer_bicep_flex: "Shallow vanity aesthetic"
+
+recovery_restoration:
+  visual_language:
+    - person resting in dark, temperature-controlled sleeping sanctuary
+    - cedar wood sauna with rising aromatic steam and glowing embers
+    - slow rhythmic breathwork in quiet natural setting surrounded by pines
+    - relaxing tea ceremony or pouring hot mineral water into ceramic cup
+    - gentle evening twilight fading into deep starlit sky
+  visual_metaphors:
+    - forest floor absorbing gentle soaking rain after summer heat
+    - embers settling into quiet warm coals in hearth
+    - calm inlet sheltered from ocean currents
+  emotional_tone:
+    - profound relaxation
+    - nervous system down-regulation
+    - parasympathetic ease
+    - restorative peace
+  cinematic_cues:
+    camera: "Gentle eye-level or high-angle soft perspective"
+    motion: "Extremely slow floating camera movement or locked-off tableau"
+    lighting: "Warm 2200K amber candlelight, dim bedside lamp, low lux environment"
+    composition: "Soft textures, linen, warm woods, minimal visual friction"
+  avoid:
+    - cartoon_sleeping_clouds_with_zzz: "Childish graphic shortcut"
+    - massage_therapist_hands_on_back: "Generic day-spa trope"
+

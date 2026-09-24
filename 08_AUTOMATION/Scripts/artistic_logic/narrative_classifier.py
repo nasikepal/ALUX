@@ -58,6 +58,21 @@ class NarrativeClassifier:
             "triggers": ["robot", "robotics", "automation", "assembly", "factory"],
             "avoid": ["white_plastic_toy_robot", "creepy_uncanny_android_face", "sci-fi_laser_gun"],
             "reason": "Distorts real industrial manufacturing. Focus on precision six-axis articulated arms, hydraulic actuators, cleanroom testing rigs, or AGVs."
+        },
+        "wealth_finance": {
+            "triggers": ["wealth", "rich", "luxury", "money", "investing", "portfolio", "millionaire", "billionaire", "asset", "passive income"],
+            "avoid": ["guy_in_suit_throwing_money", "rolex_watch_flex_stock", "ferrari_accelerating_generic", "piggy_bank_coins", "neon_crypto_charts"],
+            "reason": "Cheap get-rich-quick 'guru' cliches destroy audience trust. Direct the visual edit towards institutional finance, architectural restraint, quiet luxury, real asset custody, or historical industrial wealth."
+        },
+        "mental_psychology": {
+            "triggers": ["mind", "mental", "brain", "psychology", "focus", "discipline", "dopamine", "anxiety", "burnout", "stoic", "ego"],
+            "avoid": ["person_screaming_holding_head", "generic_brain_puzzle_pieces", "sad_face_stock_actor_against_window", "zen_stones_stacked_water"],
+            "reason": "Avoids melodrama and spa wellness cliches. Direct the visual edit towards solitary deep work, stark architectural symmetry, biometric monitors, early dawn discipline, or quiet introspective movement."
+        },
+        "wellness_health": {
+            "triggers": ["wellness", "health", "longevity", "vitality", "sleep", "fasting", "fitness", "recovery", "meditation", "diet"],
+            "avoid": ["measuring_tape_around_apple", "smiling_doctor_with_stethoscope", "generic_yoga_pose_beach_sunrise", "green_salad_smiling_woman"],
+            "reason": "Avoids daytime talk-show stock slop. Direct the visual edit towards cold plunges, circadian morning sunlight, endurance athletes in rain, biological laboratory assays, or physiological data tracking."
         }
     }
 

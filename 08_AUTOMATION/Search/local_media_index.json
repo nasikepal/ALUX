@@ -1,5 +1,20 @@
 [
   {
+    "title": "Studio Athlete Cold Plunge Mountain Immersion 4K",
+    "asset_type": "footage",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Footage/Studio_Athlete_Cold_Plunge_Mountain_Immersion_4K.mp4",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Footage\\Studio_Athlete_Cold_Plunge_Mountain_Immersion_4K.mp4",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "footage",
+      "studio_athlete_cold_plunge_mountain_immersion_4k"
+    ],
+    "description": "Internal asset from Footage"
+  },
+  {
     "title": "Studio Datacenter Aisle Pushin 4K",
     "asset_type": "footage",
     "source": "local",
@@ -15,6 +30,21 @@
     "description": "Internal asset from Footage"
   },
   {
+    "title": "Studio Deep Work Journal Fountain Pen Desk 4K",
+    "asset_type": "footage",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Footage/Studio_Deep_Work_Journal_Fountain_Pen_Desk_4K.mp4",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Footage\\Studio_Deep_Work_Journal_Fountain_Pen_Desk_4K.mp4",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "studio_deep_work_journal_fountain_pen_desk_4k",
+      "footage"
+    ],
+    "description": "Internal asset from Footage"
+  },
+  {
     "title": "Studio Humanoid Robot Walking Cleanroom 4K",
     "asset_type": "footage",
     "source": "local",
@@ -24,8 +54,53 @@
     "resolution": "Master / Native",
     "license": "Internal Studio Ownership",
     "tags": [
-      "studio_humanoid_robot_walking_cleanroom_4k",
-      "footage"
+      "footage",
+      "studio_humanoid_robot_walking_cleanroom_4k"
+    ],
+    "description": "Internal asset from Footage"
+  },
+  {
+    "title": "Studio Minimalist Modern Architecture Pacing 4K",
+    "asset_type": "footage",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Footage/Studio_Minimalist_Modern_Architecture_Pacing_4K.mp4",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Footage\\Studio_Minimalist_Modern_Architecture_Pacing_4K.mp4",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "footage",
+      "studio_minimalist_modern_architecture_pacing_4k"
+    ],
+    "description": "Internal asset from Footage"
+  },
+  {
+    "title": "Studio Penthouse Overlook City Skyline Sunset 4K",
+    "asset_type": "footage",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Footage/Studio_Penthouse_Overlook_City_Skyline_Sunset_4K.mp4",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Footage\\Studio_Penthouse_Overlook_City_Skyline_Sunset_4K.mp4",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "footage",
+      "studio_penthouse_overlook_city_skyline_sunset_4k"
+    ],
+    "description": "Internal asset from Footage"
+  },
+  {
+    "title": "Studio Private Vault Door Heavy Lock Macro 4K",
+    "asset_type": "footage",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Footage/Studio_Private_Vault_Door_Heavy_Lock_Macro_4K.mp4",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Footage\\Studio_Private_Vault_Door_Heavy_Lock_Macro_4K.mp4",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "footage",
+      "studio_private_vault_door_heavy_lock_macro_4k"
     ],
     "description": "Internal asset from Footage"
   },
@@ -39,8 +114,8 @@
     "resolution": "Master / Native",
     "license": "Internal Studio Ownership",
     "tags": [
-      "studio_serverrack_blinkingleds_macro_4k",
-      "footage"
+      "footage",
+      "studio_serverrack_blinkingleds_macro_4k"
     ],
     "description": "Internal asset from Footage"
   },
@@ -75,6 +150,81 @@
     "description": "Internal asset from Music"
   },
   {
+    "title": "Studio Monastic Deep Focus Ambient Pulse",
+    "asset_type": "music",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Music/Studio_Monastic_Deep_Focus_Ambient_Pulse.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Music\\Studio_Monastic_Deep_Focus_Ambient_Pulse.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "studio_monastic_deep_focus_ambient_pulse",
+      "music"
+    ],
+    "description": "Internal asset from Music"
+  },
+  {
+    "title": "Studio Quiet Luxury Acoustic Piano Chamber Strings",
+    "asset_type": "music",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Music/Studio_Quiet_Luxury_Acoustic_Piano_Chamber_Strings.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Music\\Studio_Quiet_Luxury_Acoustic_Piano_Chamber_Strings.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "studio_quiet_luxury_acoustic_piano_chamber_strings",
+      "music"
+    ],
+    "description": "Internal asset from Music"
+  },
+  {
+    "title": "Studio Stoic Serenity Stillness Atmosphere",
+    "asset_type": "music",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Music/Studio_Stoic_Serenity_Stillness_Atmosphere.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Music\\Studio_Stoic_Serenity_Stillness_Atmosphere.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "music",
+      "studio_stoic_serenity_stillness_atmosphere"
+    ],
+    "description": "Internal asset from Music"
+  },
+  {
+    "title": "Studio Vitality Resilience Organic Percussion",
+    "asset_type": "music",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/Music/Studio_Vitality_Resilience_Organic_Percussion.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\Music\\Studio_Vitality_Resilience_Organic_Percussion.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "music",
+      "studio_vitality_resilience_organic_percussion"
+    ],
+    "description": "Internal asset from Music"
+  },
+  {
+    "title": "Studio Cold Water Splash Disturbance",
+    "asset_type": "sfx",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/SFX/Studio_Cold_Water_Splash_Disturbance.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\SFX\\Studio_Cold_Water_Splash_Disturbance.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "sfx",
+      "studio_cold_water_splash_disturbance"
+    ],
+    "description": "Internal asset from SFX"
+  },
+  {
     "title": "Studio Cooling Fan Rpm Drone",
     "asset_type": "sfx",
     "source": "local",
@@ -105,6 +255,36 @@
     "description": "Internal asset from SFX"
   },
   {
+    "title": "Studio Fountain Pen Paper Writing Signature",
+    "asset_type": "sfx",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/SFX/Studio_Fountain_Pen_Paper_Writing_Signature.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\SFX\\Studio_Fountain_Pen_Paper_Writing_Signature.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "studio_fountain_pen_paper_writing_signature",
+      "sfx"
+    ],
+    "description": "Internal asset from SFX"
+  },
+  {
+    "title": "Studio Heavy Vault Lock Tumbler Click",
+    "asset_type": "sfx",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/SFX/Studio_Heavy_Vault_Lock_Tumbler_Click.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\SFX\\Studio_Heavy_Vault_Lock_Tumbler_Click.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "studio_heavy_vault_lock_tumbler_click",
+      "sfx"
+    ],
+    "description": "Internal asset from SFX"
+  },
+  {
     "title": "Studio Server Room Low Drone 48K24B",
     "asset_type": "sfx",
     "source": "local",
@@ -120,6 +300,36 @@
     "description": "Internal asset from SFX"
   },
   {
+    "title": "Studio Singing Bowl Resonant Meditation Hit",
+    "asset_type": "sfx",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/SFX/Studio_Singing_Bowl_Resonant_Meditation_Hit.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\SFX\\Studio_Singing_Bowl_Resonant_Meditation_Hit.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "studio_singing_bowl_resonant_meditation_hit",
+      "sfx"
+    ],
+    "description": "Internal asset from SFX"
+  },
+  {
+    "title": "Studio Subtle Silk Curtain Air Whoosh",
+    "asset_type": "sfx",
+    "source": "local",
+    "url": "file:///D:/Obsidian Vaults/ALUX/04_MEDIA/SFX/Studio_Subtle_Silk_Curtain_Air_Whoosh.wav",
+    "local_path": "D:\\Obsidian Vaults\\ALUX\\04_MEDIA\\SFX\\Studio_Subtle_Silk_Curtain_Air_Whoosh.wav",
+    "duration": "N/A",
+    "resolution": "Master / Native",
+    "license": "Internal Studio Ownership",
+    "tags": [
+      "sfx",
+      "studio_subtle_silk_curtain_air_whoosh"
+    ],
+    "description": "Internal asset from SFX"
+  },
+  {
     "title": "Studio Sub Bass Boom Impact",
     "asset_type": "sfx",
     "source": "local",
@@ -129,8 +339,8 @@
     "resolution": "Master / Native",
     "license": "Internal Studio Ownership",
     "tags": [
-      "sfx",
-      "studio_sub_bass_boom_impact"
+      "studio_sub_bass_boom_impact",
+      "sfx"
     ],
     "description": "Internal asset from SFX"
   }

@@ -33,7 +33,7 @@ class FootagePipeline:
             candidates.extend(local_hits)
 
         # 2. Search Wikimedia Commons & Internet Archive
-        primary_concept = unit.visual_intent.primary[0] if unit.visual_intent.primary else "technology"
+        primary_concept = unit.visual_intent.primary[0] if (unit.visual_intent and unit.visual_intent.primary) else "cinematic architecture"
         wiki_hits = wikimedia_provider.search_media(primary_concept, limit=2)
         candidates.extend(wiki_hits)
 
