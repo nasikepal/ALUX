@@ -20,7 +20,9 @@ updated: 2026-09-24
 | 🎥 **Find & Score B-Roll** | `cli.py broll <file>` | 9-factor editorial scoring, sequence logic & redundancy filter |
 | 📰 **Verify Claims & Sources** | `cli.py news <file>` | Fact checking & Source Note generation |
 | 🔊 **Generate SFX Sound Design** | `cli.py sfx <file>` | Ambience, mechanical, transition, and emphasis |
+| 🎵 **Musical Score Direction** | `cli.py music <file>` | Harmonic key, BPM tempo, mood & instrumentation cues |
 | 📋 **Generate Shot Planner** | `cli.py shots <file>` | Visual Unit → Shot cards, sequence rules & Storyboard deck |
+| ⏱️ **Export NLE Cut List & Brief** | `cli.py export <file>` | Generates DaVinci/Premiere CSV cut list & Executive Brief |
 | 📦 **Index Local Media Library** | `cli.py index-local` | Scans `D:\MEDIA_LIBRARY` or `04_MEDIA` |
 
 ---
