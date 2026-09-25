@@ -289,7 +289,11 @@ def boundary_punct(words: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         if vo_end and not sc_end:
             words[i] = {**w, "text": re.sub(r"[,;:]$", "", w["text"]) + vo_end.group()}
         elif sc_end and not vo_end and nxt is not None and "sidx" not in nxt and not _ABBR.search(w["text"]):
-            words[i] = {**w, "text": w["text"][:-1]}
+            # the narrator ran on: "number. [but] here's" -> "number, but here's"; "built for. [so] start" -> "built for, so start"
+            after = key(words[i + 2]["text"]) if i + 2 < len(words) else ""
+            joined = key(nxt["text"]) in COORD | {"so"} and nxt["text"][:1].lower() == nxt["text"][:1] \
+                and not (key(nxt["text"]) == "or" and after == "not")          # "ruin them or not" takes no comma
+            words[i] = {**w, "text": w["text"][:-1] + ("," if joined else "")}
     return words
 
 
@@ -406,7 +410,7 @@ def fix_punct(words: List[Dict[str, Any]], script_: List[str]) -> List[Dict[str,
     for i in range(len(words) - 1):
         w, nxt = words[i], words[i + 1]
         starts = i == 0 or re.search(r"[.?!]$", words[i - 1]["text"])
-        if starts and key(w["text"]) in DISCOURSE and not re.search(r"[,.?!:;]$", w["text"]) and w["text"][:1].isupper():
+        if starts and w["text"].lower() in DISCOURSE and not re.search(r"[,.?!:;]$", w["text"]) and w["text"][:1].isupper():
             words[i] = {**w, "text": w["text"] + ","}
             j = nxt.get("sidx")
             opened = j is not None and (j == 0 or re.search(r"[.?!:]$", script_[j - 1]) is not None)

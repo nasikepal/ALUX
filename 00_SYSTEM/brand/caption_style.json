@@ -1,0 +1,36 @@
+{
+  "_note": "ALUX caption style, set by Rijal in Premiere 2026-09-25 (EP001). Captions are delivered as graphics (Upgrade Caption to Graphic) on V3.",
+  "sequence": {
+    "width": 3840,
+    "height": 2160
+  },
+  "font": {
+    "postscript": "Gilroy-Bold",
+    "size": 72.0
+  },
+  "text_box": {
+    "width": 2880,
+    "height": 648,
+    "position_norm": [
+      0.125,
+      0.65
+    ],
+    "position_px_top_left": [
+      480,
+      1404
+    ],
+    "centered_horizontally": true,
+    "bottom_margin_px": 108
+  },
+  "alignment_raw": {
+    "field4": 2,
+    "field5": 1,
+    "_note": "Premiere enum values; field5 changed from the default 2 to 1"
+  },
+  "track": "V3",
+  "line_break": "\\r",
+  "max_line_chars": 42,
+  "max_lines": 2,
+  "source_text_template_b64": "wAEAAAAAAABEMyIRDAAAAAAABgAKAAQABgAAAGQAAAAAAF4AUAAQAAwATABIAEQAQAAAAAAAAAAAADwAOwA0AAAAMAAsACgAJAAAACAAHAAAAAAAAAAAAAAAGgAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAAAAAAAgAAAAAABsABwBeAAAAAAAAAUgAAACIAAAAnAAAAEQAAAAAAAEAAAAgQQAAAABgAAAAAABAQQAAwEAAAEBAAADIQgAAAAFQAAAAAQAAAAIAAAAAACJEAAA0RRT///8Y////AQAAAAwAAAAAAAYACAAEAAYAAAAEAAAADQAAAEFuaW1hdGlvblR5cGUAAABa////AAAAAGL///8AAAAAAQAAAAQAAAALAAAAR2lscm95LUJvbGQAAQAAAAwAAAAIAA4ABAAIAAgAAACEAAAAPAAAAAAANgAcAAAAGAAAAAAAFAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAIAAQANgAAAAIAAAAUAAAAGAAAAAAAAAAgAAAAAACQQuD///8EAAYABAAAAAAACgAIAAUABgAHAAoAAAAAAAAABAAEAAQAAAACAAAAQWEAAA==",
+  "template_text_offset": 452
+}
