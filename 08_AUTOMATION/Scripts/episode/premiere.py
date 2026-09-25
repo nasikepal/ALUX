@@ -11,13 +11,14 @@ import json
 import subprocess
 import time
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 BRIDGE = Path.home() / "Library" / "Application Support" / "ClaudeBridge"
 TICKS_PER_SEC = 254016000000
 
 # Premiere marker colour indices
-COLOR = {"chapter": 1, "client": 3, "suggested": 4}  # red, orange, yellow
+COLOR = {"chapter": 1, "client": 3, "suggested": 4,     # red, orange, yellow
+         "full": 3, "overlay": 7, "hold": 1}               # orange (V3), cyan (V4), red
 
 JSX_TEMPLATE = r"""
 var DATA = __DATA__;
@@ -125,6 +126,32 @@ def assembly_jsx(tl: Dict[str, Any], episode: Path) -> str:
         "markers": markers,
     }
     # ensure_ascii keeps the payload plain ASCII for ExtendScript's parser
+    return JSX_TEMPLATE.replace("__DATA__", json.dumps(data, ensure_ascii=True))
+
+
+def cues_jsx(cues: List[Dict[str, Any]], tl: Dict[str, Any], episode: Path) -> str:
+    """Markers from graphics_cues.json: same IDs as the Figma Graphics Map and the asset files, frame-accurate."""
+    fps = tl["fps"]
+    markers = []
+    for ch in tl["chapters"]:
+        markers.append({"start": _snap(ch["start"], fps), "end": 0, "name": ch["title"], "comments": "section",
+                        "chapter": True, "color": COLOR["chapter"]})
+    for c in cues:
+        name = f"{c['id']} {c['kind'].upper()}" + (" · HOLD" if c["status"] == "HOLD" else "")
+        comments = [f"track: {c['track']} ({'V3 full-frame' if c['track'] == 'FULL' else 'V4 over footage'})",
+                    f"in {c['tc_in']}  out {c['tc_out']}  dur {c['duration']}s ({c['frames']}f)",
+                    f"asset: {c['asset'] or '-'}", f"isi: {c['content']}"]
+        if c["key"]:
+            comments.append(f"masuk pada kata: {c['key']}")
+        if c["source"]:
+            comments.append(f"source: {c['source']}")
+        color = COLOR["hold"] if c["status"] == "HOLD" else (COLOR["full"] if c["track"] == "FULL" else COLOR["overlay"])
+        markers.append({"start": c["frame_in"] / fps, "end": c["frame_out"] / fps, "name": name,
+                        "comments": "\n".join(comments), "chapter": False, "color": color})
+    vo_path = Path(tl["vo"]["file"])
+    data = {"bin": f"ALUX {episode.name}", "seqName": f"ALUX {episode.name} — ASSEMBLY", "voPath": str(vo_path),
+            "voName": vo_path.name, "width": tl["resolution"][0], "height": tl["resolution"][1], "fps": fps,
+            "frameTicks": TICKS_PER_SEC // fps, "markers": markers}
     return JSX_TEMPLATE.replace("__DATA__", json.dumps(data, ensure_ascii=True))
 
 

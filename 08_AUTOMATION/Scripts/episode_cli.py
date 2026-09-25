@@ -100,9 +100,44 @@ def cmd_build(episode: Path) -> None:
     print(f"[out] {build / 'timeline.json'}\n[out] {build / 'marking.md'}")
 
 
+def asset_index(episode: Path, gmap, fill) -> dict:
+    """map_id -> file the editor places: generated artwork, or the MOGRT the template will become."""
+    root = episode / "assets" / "graphics"
+    out = {}
+    for it in gmap:
+        e = fill.get(it["map_id"]) or {}
+        art = e.get("art")
+        hit = next(root.glob(f"*/{art}.svg"), None) if art else None
+        if hit:
+            out[it["map_id"]] = str(hit.relative_to(episode))
+        elif e.get("template"):
+            out[it["map_id"]] = f"MOGRT ALUX_{e['template']}.mogrt (belum dibuat)"
+    return out
+
+
+def cmd_cues(episode: Path, words_file: str) -> None:
+    from episode.cues import build_cues, load_words, write_outputs
+    build = episode / "build"
+    tl = json.loads((build / "timeline.json").read_text(encoding="utf-8"))
+    gmap = json.loads((build / "graphics_map.json").read_text(encoding="utf-8"))
+    fill = json.loads((build / "graphics_fill.json").read_text(encoding="utf-8"))
+    words = load_words(build / words_file)
+    keys_file = build / "cue_keys.json"
+    phrases = json.loads(keys_file.read_text(encoding="utf-8")) if keys_file.exists() else {}
+    cues, log = build_cues(tl, gmap, fill, words, asset_index(episode, gmap, fill), phrases)
+    j, c = write_outputs(cues, log, build)
+    keyed = sum(1 for x in cues if x["key"])
+    print(f"[cues] {len(cues)} cues · {keyed} keyed to a spoken word · {len(log)} adjustments")
+    print(f"[out] {j}\n[out] {c}")
+
+
 def cmd_premiere(episode: Path, dry_run: bool) -> None:
     timeline = json.loads((episode / "build" / "timeline.json").read_text(encoding="utf-8"))
-    jsx = premiere.assembly_jsx(timeline, episode)
+    cues_file = episode / "build" / "graphics_cues.json"
+    if cues_file.exists():
+        jsx = premiere.cues_jsx(json.loads(cues_file.read_text(encoding="utf-8"))["cues"], timeline, episode)
+    else:
+        jsx = premiere.assembly_jsx(timeline, episode)
     out = episode / "build" / "premiere_assembly.jsx"
     out.write_text(jsx, encoding="utf-8")
     print(f"[premiere] wrote {out}")
@@ -116,12 +151,17 @@ def main() -> None:
     sub = ap.add_subparsers(dest="cmd", required=True)
     b = sub.add_parser("build", help="ingest script, transcribe VO, align, write timeline.json + marking.md")
     b.add_argument("episode", type=Path)
+    q = sub.add_parser("cues", help="lock every graphic to its spoken word -> graphics_cues.json/.csv")
+    q.add_argument("episode", type=Path)
+    q.add_argument("--words", default="words.json", help="whisper JSON in build/ (use words_dtw.json for DTW timing)")
     p = sub.add_parser("premiere", help="create sequence, place VO and markers in the open Premiere project")
     p.add_argument("episode", type=Path)
     p.add_argument("--dry-run", action="store_true", help="only write the .jsx, don't send it")
     args = ap.parse_args()
     if args.cmd == "build":
         cmd_build(args.episode.resolve())
+    elif args.cmd == "cues":
+        cmd_cues(args.episode.resolve(), args.words)
     else:
         cmd_premiere(args.episode.resolve(), args.dry_run)
 
