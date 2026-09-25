@@ -30,18 +30,21 @@ async function main() {
   const repair = await repairFonts(mapPage);
   let filled = 0, labelled = 0; const problems = [];
   for (const card of DATA.cards) {
+    try { await fillCard(card); } catch (e) { problems.push(card.id + ': ' + (e && e.message ? e.message : String(e))); }
+  }
+  async function fillCard(card) {
     const node = mapPage.findOne(n => (n.type === 'COMPONENT' || n.type === 'FRAME') && n.name.startsWith(card.id + ' '));
-    if (!node) { problems.push(card.id + ': kartu tidak ditemukan'); continue; }
+    if (!node) { problems.push(card.id + ': kartu tidak ditemukan'); return; }
     const thumb = node.findOne(n => n.name === 'Frame 16:9');
-    if (!thumb) { problems.push(card.id + ': Frame 16:9 tidak ada'); continue; }
+    if (!thumb) { problems.push(card.id + ': Frame 16:9 tidak ada'); return; }
 
     const f = card.fill;
     if (!f || f.hold) {
       placeholder(thumb, card.type, f && f.hold ? 'HOLD — ' + f.hold : 'TEMPLATE BELUM ADA', !!(f && f.hold), paintVar);
-      labelled++; continue;
+      labelled++; return;
     }
     const src = comp[f.template];
-    if (!src) { problems.push(card.id + ': template ' + f.template + ' tidak ada'); continue; }
+    if (!src) { problems.push(card.id + ': template ' + f.template + ' tidak ada'); return; }
 
     thumb.layoutMode = 'NONE';
     for (const c of [...thumb.children]) c.remove();
@@ -66,9 +69,11 @@ async function main() {
       const s = inst.exposedInstances.find(e => e.name === 'ALUX / Source label') || inst.findOne(n => n.type === 'INSTANCE' && n.name === 'ALUX / Source label');
       if (s) { const sk = Object.keys(s.componentProperties).find(k => k.startsWith('Source')); s.setProperties({ [sk]: f.source }); }
     }
-    if (f.template === 'compare') setBars(inst, f, paintVar);
     if (f.template === 'chapter') setRoute(inst, f.route, paintVar);
-    inst.rescale(SCALE);
+    // Instances can't override child geometry, so data-driven bar lengths need a detached copy.
+    const gfx = f.template === 'compare' ? inst.detachInstance() : inst;
+    if (f.template === 'compare') setBars(gfx, f, paintVar);
+    gfx.rescale(SCALE);
     filled++;
   }
   figma.closePlugin(`${DATA.episode}: ${filled} kartu diisi template · ${labelled} placeholder · font diperbaiki ${repair.fixed}` + (repair.failed ? ` (gagal ${repair.failed})` : '') + (problems.length ? ` · ${problems.length} masalah: ${problems.slice(0, 3).join('; ')}` : ''));
@@ -117,18 +122,18 @@ function setBars(inst, f, paintVar) {
   });
 }
 
+// Chapter k (0-based): stops 0..k and segments 0..k-1 cyan, halo on stop k. Colour only —
+// instances can't move or resize their layers.
 function setRoute(inst, k, paintVar) {
   const route = inst.findOne(n => n.name.startsWith('Route map'));
   if (!route) return;
-  const W = 3072, stops = route.children.filter(n => n.type === 'ELLIPSE');
+  const stops = route.children.filter(n => n.name.startsWith('Stop '));
+  const segs = route.children.filter(n => n.name.startsWith('Segment '));
   stops.forEach((e, i) => {
-    const cur = i === k, d = cur ? 44 : 20;
-    e.resize(d, d); e.x = i * (W / 15) - d / 2; e.y = 30 - d / 2;
     e.fills = [paintVar(i <= k ? 'cyan/500' : 'navy/700')];
-    e.strokes = cur ? [paintVar('cyan/500', 0.3)] : [];
+    e.strokes = i === k ? [paintVar('cyan/500', 0.3)] : [];
   });
-  const prog = route.findOne(n => n.name === 'Route progress');
-  if (prog) prog.resize(Math.max(0.01, W * k / 15), prog.height);
+  segs.forEach((r, i) => { r.fills = [paintVar(i < k ? 'cyan/500' : 'navy/700')]; });
 }
 
 main().catch(e => figma.closePlugin('Gagal: ' + (e && e.message ? e.message : String(e))));
