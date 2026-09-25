@@ -155,6 +155,36 @@ def cues_jsx(cues: List[Dict[str, Any]], tl: Dict[str, Any], episode: Path) -> s
     return JSX_TEMPLATE.replace("__DATA__", json.dumps(data, ensure_ascii=True))
 
 
+CAPTIONS_JSX = r"""
+var SRT = __SRT__, BIN = __BIN__, SEQ = __SEQ__;
+(function () {
+    if (!app.project || !app.project.path) return "ERR: no project open";
+    var seq = null;
+    for (var i = 0; i < app.project.sequences.numSequences; i++) if (app.project.sequences[i].name === SEQ) seq = app.project.sequences[i];
+    if (!seq) return "ERR: sequence not found: " + SEQ;
+    var root = app.project.rootItem, bin = null;
+    for (var j = 0; j < root.children.numItems; j++) if (root.children[j].name === BIN) bin = root.children[j];
+    if (!bin) bin = root.createBin(BIN);
+    var name = SRT.split("/").pop(), item = null;
+    for (var k = 0; k < bin.children.numItems; k++) if (bin.children[k].name === name) item = bin.children[k];
+    if (!item) {
+        app.project.importFiles([SRT], true, bin, false);
+        for (var m = 0; m < bin.children.numItems; m++) if (bin.children[m].name === name) item = bin.children[m];
+    }
+    if (!item) return "ERR: SRT import failed";
+    var before = seq.captionTracks ? seq.captionTracks.numTracks : -1;
+    var ok = seq.createCaptionTrack(item, 0, Sequence.CAPTION_FORMAT_SUBTITLE);
+    app.project.save();
+    return "OK caption track created=" + ok + " item=" + item.name + " captionTracks " + before + "->" + (seq.captionTracks ? seq.captionTracks.numTracks : "?");
+})();
+"""
+
+
+def captions_jsx(srt: Path, episode: Path) -> str:
+    return (CAPTIONS_JSX.replace("__SRT__", json.dumps(str(srt))).replace("__BIN__", json.dumps(f"ALUX {episode.name}"))
+            .replace("__SEQ__", json.dumps(f"ALUX {episode.name} — ASSEMBLY")))
+
+
 def bridge_alive(max_age_sec: float = 5.0) -> bool:
     hb = BRIDGE / "heartbeat"
     try:

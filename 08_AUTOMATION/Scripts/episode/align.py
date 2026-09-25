@@ -32,8 +32,11 @@ def load_whisper_words(path: Path) -> List[Dict[str, Any]]:
     data = json.loads(path.read_text(encoding="utf-8"))
     words = []
     for seg in data.get("transcription", []):
-        start = _ts_to_sec(seg["timestamps"]["from"])
-        end = _ts_to_sec(seg["timestamps"]["to"])
+        if "offsets" in seg:
+            start, end = seg["offsets"]["from"] / 1000.0, seg["offsets"]["to"] / 1000.0
+        else:
+            start = _ts_to_sec(seg["timestamps"]["from"])
+            end = _ts_to_sec(seg["timestamps"]["to"])
         for tok in normalize(seg.get("text", "")):
             words.append({"token": tok, "start": start, "end": end})
     return words
