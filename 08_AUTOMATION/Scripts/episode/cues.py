@@ -16,6 +16,7 @@ Rules
 import csv
 import json
 import re
+from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -96,7 +97,9 @@ def _find_phrase(words, phrase: str, near: float, radius: float = 90.0) -> Optio
     for i in range(len(words) - len(p) + 1):
         if abs(words[i]["start"] - near) > radius:
             continue
-        if all(_norm(words[i + k]["text"]) == p[k] for k in range(len(p))):
+        if all(_norm(words[i + k]["text"]) == p[k] or
+               (len(p[k]) > 3 and SequenceMatcher(None, _norm(words[i + k]["text"]), p[k]).ratio() >= 0.8)
+               for k in range(len(p))):
             if best is None or abs(words[i]["start"] - near) < abs(best["start"] - near):
                 best = words[i]
     return best
