@@ -18,12 +18,12 @@ Urutan kerja: **Lapis 0 dulu, baru template.** Bikin template sebelum brand diku
 
 ## Lapis 0 — Fondasi brand (Rijal siapkan duluan)
 
-- [ ] **Brand scrape ALUX** — ambil 5–10 video ALUX terbaru, screenshot semua grafiknya, catat pola: font, warna, cara angka muncul, durasi grafik di layar, transisi
-- [ ] **Logo & lockup** — versi terang/gelap, clear space, ukuran minimum di 4K
-- [ ] **Warna** — token HEX + aturan pemakaian (bg, aksen, teks, positif/negatif untuk grafik)
-- [ ] **Tipografi** — font display + body, lisensi font untuk semua anggota tim, type scale di 3840×2160
-- [ ] **Grid & safe area** — margin, title-safe, posisi baku lower third & source label
-- [ ] **Motion language** — kurva easing baku, durasi in/out, stagger, aturan "tipis" (maks. berapa elemen gerak sekaligus)
+- [x] **Brand scrape ALUX** *(2026-09-25: logo pack Drive + alux.com + app redesign → `00_SYSTEM/brand/alux_tokens.json`; video YouTube ALUX belum)* — ambil 5–10 video ALUX terbaru, screenshot semua grafiknya, catat pola: font, warna, cara angka muncul, durasi grafik di layar, transisi
+- [x] **Logo & lockup** *(SVG di `00_SYSTEM/brand/`)* — versi terang/gelap, clear space, ukuran minimum di 4K
+- [x] **Warna** *(13 token, Figma variables `ALUX / Color`)* — token HEX + aturan pemakaian (bg, aksen, teks, positif/negatif untuk grafik)
+- [x] **Tipografi** *(Gilroy — Light/Regular/Medium/Bold/Heavy; pakai set `Gilroy_fixed`)* — font display + body, lisensi font untuk semua anggota tim, type scale di 3840×2160
+- [x] **Grid & safe area** — margin, title-safe, posisi baku lower third & source label
+- [x] **Motion language** *(v0, belum diuji di AE)* — kurva easing baku, durasi in/out, stagger, aturan "tipis" (maks. berapa elemen gerak sekaligus)
 - [ ] **Tekstur & finishing** — grain, vignette, shadow (kalau ada)
 - [ ] **Sound signature** — whoosh/hit/tick standar untuk grafik muncul
 - [ ] **Spec teknis** — resolusi, fps, color space, codec export MOGRT
@@ -64,6 +64,10 @@ Kolom **Format**: `MOGRT` = dibuat di AE, diisi otomatis di Premiere oleh Claude
 | `versus` | Perbandingan A vs B | membandingkan dua hal | 2 label, 2 nilai/gambar | FIGMA → MOGRT | ☐ |
 | `rank` | Ranking / daftar | urutan atau top-N | item berurutan | MOGRT | ☐ |
 | `timeline` | Timeline | kronologi | tahun + peristiwa | FIGMA → MOGRT | ☐ |
+| `stamp` | Tempat · tahun | lompatan waktu/lokasi di cerita sejarah | tempat, tahun | MOGRT | ☐ |
+| `company` | Company tag | perusahaan penting pertama kali disebut | nama, kota, tahun, 1 fakta | MOGRT | ☐ |
+| `logos` | Logo row | beberapa perusahaan disebut sekaligus | 3–6 logo | MOGRT | ☐ |
+| `opener` | Series opener | awal episode setelah cold open | nama seri, nomor & judul episode | MOGRT | ☐ |
 | `map` | Peta / lokasi | menyebut tempat | lokasi, label | FIGMA | ☐ |
 | `quote` | Kutipan | mengutip seseorang | teks, nama | MOGRT | ☐ |
 | `price` | Price tag | menyebut harga barang | nama barang, harga | MOGRT | ☐ |

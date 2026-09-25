@@ -1,0 +1,155 @@
+{
+  "_about": "ALUX video graphics tokens v0.1 — source of truth for Figma (ALUX — Foundations page) and AE/MOGRT. Frame 3840x2160.",
+  "sources": [
+    "ALUX logo pack (Drive, 2022)",
+    "alux.com theme CSS",
+    "alux-app-redesign.vercel.app"
+  ],
+  "color": {
+    "navy/950": "#020814",
+    "navy/900": "#0A1420",
+    "navy/800": "#111F2F",
+    "navy/700": "#1D274C",
+    "cyan/500": "#00ADF1",
+    "blue/500": "#1FA2F0",
+    "blue/700": "#1774B0",
+    "ice/50": "#EEF4FB",
+    "mist/300": "#B6C6D5",
+    "slate/500": "#5F7488",
+    "gold/500": "#E2A52C",
+    "red/500": "#EF5350",
+    "green/500": "#8ED239"
+  },
+  "font": {
+    "production": "Gilroy",
+    "styles": [
+      "Light 300",
+      "Regular 400",
+      "Medium 500",
+      "Bold 700",
+      "Heavy 900"
+    ],
+    "install": "Install the name-fixed set (Gilroy_fixed). The Drive originals are FontForge conversions where every weight is a separate family ('Gilroy-Bold', weight 400) — mixing the two sets breaks MOGRT font references between machines.",
+    "brand_reference": "alux.com uses Euclid Circular A, app redesign uses Euclid Circular B"
+  },
+  "type": {
+    "Display": {
+      "size": 240,
+      "weight": "Heavy",
+      "lineHeight": 1.0,
+      "tracking": -0.02
+    },
+    "Numeral": {
+      "size": 320,
+      "weight": "Heavy",
+      "lineHeight": 1.0,
+      "tracking": -0.03
+    },
+    "H1": {
+      "size": 160,
+      "weight": "Bold",
+      "lineHeight": 1.05,
+      "tracking": -0.015
+    },
+    "H2": {
+      "size": 112,
+      "weight": "Bold",
+      "lineHeight": 1.1,
+      "tracking": -0.01
+    },
+    "H3": {
+      "size": 80,
+      "weight": "Bold",
+      "lineHeight": 1.15,
+      "tracking": -0.005
+    },
+    "Body": {
+      "size": 56,
+      "weight": "Medium",
+      "lineHeight": 1.3,
+      "tracking": 0
+    },
+    "Caption": {
+      "size": 44,
+      "weight": "Regular",
+      "lineHeight": 1.3,
+      "tracking": 0
+    },
+    "Eyebrow": {
+      "size": 36,
+      "weight": "Bold",
+      "lineHeight": 1.0,
+      "tracking": 0.14,
+      "case": "upper",
+      "color": "gold/500"
+    },
+    "Source": {
+      "size": 30,
+      "weight": "Medium",
+      "lineHeight": 1.2,
+      "tracking": 0.02
+    }
+  },
+  "frame": {
+    "size": [
+      3840,
+      2160
+    ],
+    "actionSafe": [
+      192,
+      108
+    ],
+    "titleSafe": [
+      384,
+      216
+    ],
+    "columns": 12,
+    "gutter": 48,
+    "lowerThirdBaselineY": 1860,
+    "sourceLabel": [
+      384,
+      1880
+    ]
+  },
+  "signature": {
+    "underline": {
+      "color": "cyan/500",
+      "heightTitle": 20,
+      "heightSmall": 16,
+      "widthTitle": 320,
+      "origin": "underline under the U in the ALUX wordmark"
+    }
+  },
+  "motion": {
+    "fps": 12,
+    "sequenceFps": 24,
+    "in_frames_24": [
+      8,
+      12
+    ],
+    "out_frames_24": [
+      6,
+      8
+    ],
+    "ease": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "bounce": false,
+    "underline_in_frames_24": 6,
+    "max_simultaneous": 3,
+    "stagger_frames_12": 2,
+    "countup": "Numeral only",
+    "text_in": "fade + 40px slide",
+    "overlay_scrim": "navy/950 gradient, 85% -> 0 from the text side"
+  },
+  "templates_in_figma": [
+    "Source label",
+    "Chapter",
+    "Stat (Neutral/Negative/Positive)",
+    "Stamp",
+    "Quick fact",
+    "Still frame",
+    "Illustration card",
+    "Bio card",
+    "Lower third",
+    "Chart — Compare"
+  ]
+}
