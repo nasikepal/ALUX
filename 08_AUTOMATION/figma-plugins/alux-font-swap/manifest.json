@@ -1,0 +1,8 @@
+{
+  "name": "ALUX — Apply brand font (Gilroy)",
+  "id": "alux-font-swap-local",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page"
+}

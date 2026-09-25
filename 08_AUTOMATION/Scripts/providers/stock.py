@@ -1,6 +1,6 @@
 """
 Commercial Stock Footage and Video Search Provider.
-Integrates Pexels API, Pixabay API, YouTube search, and structured fallback catalog.
+Integrates Pexels API and Pixabay API (real results only, needs API keys) plus manual search links.
 """
 
 from typing import List, Dict, Any, Optional
@@ -30,9 +30,9 @@ class StockFootageProvider:
                             "asset_type": "footage",
                             "source": "Pexels",
                             "url": v.get("url"),
-                            "resolution": f"{v.get('width', 3840)}x{v.get('height', 2160)} 4K",
+                            "resolution": f"{v['width']}x{v['height']}" if v.get("width") and v.get("height") else "unknown",
                             "license": "Pexels Commercial Free License",
-                            "duration": f"{v.get('duration', 15)}s",
+                            "duration": f"{v['duration']}s" if v.get("duration") else "unknown",
                             "tags": [query.lower(), "stock", "commercial"],
                             "description": f"Pexels video by {v.get('user', {}).get('name', 'Pexels Creator')}"
                         })
@@ -49,14 +49,15 @@ class StockFootageProvider:
                 if resp.status_code == 200:
                     data = resp.json()
                     for v in data.get("hits", []):
+                        large = (v.get("videos") or {}).get("large") or {}
                         results.append({
                             "title": f"Pixabay Footage: {query.title()}",
                             "asset_type": "footage",
                             "source": "Pixabay",
                             "url": v.get("pageURL"),
-                            "resolution": "4K / HD",
+                            "resolution": f"{large['width']}x{large['height']}" if large.get("width") and large.get("height") else "unknown",
                             "license": "Pixabay Commercial License",
-                            "duration": f"{v.get('duration', 12)}s",
+                            "duration": f"{v['duration']}s" if v.get("duration") else "unknown",
                             "tags": [query.lower()] + [t.strip() for t in v.get("tags", "").split(",")],
                             "description": f"Pixabay footage tags: {v.get('tags', '')}"
                         })
@@ -64,34 +65,18 @@ class StockFootageProvider:
                 logger.debug(f"Pixabay search note: {e}")
         return results
 
-    def generate_editorial_stock_suggestions(self, query: str, visual_concept: str) -> List[Dict[str, Any]]:
+    def search_links(self, query: str) -> List[Dict[str, str]]:
         """
-        Generates production-grade curated footage targets with direct search links to Pexels, Storyblocks, Artgrid, and YouTube.
+        Search pages an editor can browse manually. These are NOT assets: no resolution,
+        duration, or license is known until someone opens them and picks a clip.
         """
-        encoded_q = urllib.parse.quote_plus(query)
+        q = urllib.parse.quote_plus(query)
+        q_path = urllib.parse.quote(query)
         return [
-            {
-                "title": f"{query.title()} (Cinematic Footage)",
-                "asset_type": "footage",
-                "source": "Pexels Stock",
-                "url": f"https://www.pexels.com/search/videos/{encoded_q}/",
-                "resolution": "4K UHD (3840x2160)",
-                "license": "Commercial / Royalty-Free",
-                "duration": "12s-18s",
-                "tags": [query.lower(), visual_concept.lower(), "4k", "cinematic"],
-                "description": f"High quality footage capture for {visual_concept}."
-            },
-            {
-                "title": f"{query.title()} (Reference & B-Roll)",
-                "asset_type": "footage",
-                "source": "YouTube B-Roll",
-                "url": f"https://www.youtube.com/results?search_query={encoded_q}+b+roll+4k",
-                "resolution": "4K 60fps",
-                "license": "Creative Commons / Editorial Review",
-                "duration": "Variable",
-                "tags": [query.lower(), "reference", "youtube"],
-                "description": f"Live documentary and editorial context for {query}."
-            }
+            {"label": "Pexels", "url": f"https://www.pexels.com/search/videos/{q_path}/"},
+            {"label": "Pixabay", "url": f"https://pixabay.com/videos/search/{q_path}/"},
+            {"label": "Artgrid", "url": f"https://artgrid.io/search?term={q}"},
+            {"label": "Storyblocks", "url": f"https://www.storyblocks.com/video/search/{q_path}"},
         ]
 
 

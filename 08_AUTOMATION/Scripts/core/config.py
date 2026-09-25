@@ -7,6 +7,7 @@ from pathlib import Path
 import json
 import os
 import yaml
+from core.logger import logger
 
 
 # Vault root is 2 levels up from 08_AUTOMATION/Scripts/core
@@ -80,25 +81,34 @@ class Config:
             
         try:
             content = settings_file.read_text(encoding="utf-8")
-            if content.startswith("---"):
-                parts = content.split("---", 2)
-                if len(parts) >= 3:
-                    frontmatter = yaml.safe_load(parts[1])
-                    if isinstance(frontmatter, dict):
-                        if "local_media_root" in frontmatter and frontmatter["local_media_root"]:
-                            self.local_media_root = Path(frontmatter["local_media_root"])
-                        if "weights" in frontmatter and isinstance(frontmatter["weights"], dict):
-                            w = frontmatter["weights"]
-                            self.weights = RelevanceWeights(
-                                visual_similarity=float(w.get("visual_similarity", 0.30)),
-                                script_relevance=float(w.get("script_relevance", 0.25)),
-                                entity_match=float(w.get("entity_match", 0.15)),
-                                temporal_relevance=float(w.get("temporal_relevance", 0.10)),
-                                geographic_relevance=float(w.get("geographic_relevance", 0.10)),
-                                source_quality=float(w.get("source_quality", 0.10)),
-                            )
-        except Exception:
-            pass
+            if not content.startswith("---"):
+                return
+            parts = content.split("---", 2)
+            if len(parts) < 3:
+                return
+            frontmatter = yaml.safe_load(parts[1])
+            if not isinstance(frontmatter, dict):
+                return
+
+            if frontmatter.get("local_media_root"):
+                self.local_media_root = Path(frontmatter["local_media_root"])
+            if frontmatter.get("words_per_second"):
+                self.words_per_second = float(frontmatter["words_per_second"])
+
+            w = frontmatter.get("weights")
+            if isinstance(w, dict):
+                known = set(RelevanceWeights.__dataclass_fields__)
+                unknown = set(w) - known
+                if unknown:
+                    logger.warning(f"Settings.md: ignoring unknown weight keys {sorted(unknown)}")
+                weights = RelevanceWeights(**{k: float(v) for k, v in w.items() if k in known})
+                if weights.validate():
+                    self.weights = weights
+                else:
+                    logger.warning("Settings.md: weights do not sum to 1.0 — keeping defaults")
+        except Exception as e:
+            # Don't fail the pipeline over settings, but never swallow the reason silently.
+            logger.warning(f"Could not load Settings.md, using defaults: {e}")
 
 
 config = Config()

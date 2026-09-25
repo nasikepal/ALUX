@@ -1,0 +1,145 @@
+"""
+timeline.json -> ExtendScript for Premiere Pro, sent through the Claude Bridge CEP panel
+(`com.feugee.claudebridge`: it polls ~/Library/Application Support/ClaudeBridge/inbox for .jsx files,
+evals them in Premiere and writes the result to outbox/).
+
+Assembly step 1 (this file): sequence 3840x2160 @ 24 fps, VO on A1, markers for chapters and graphics.
+Re-running is safe: the sequence is reused, its markers are cleared and rebuilt, the VO is not re-imported.
+"""
+
+import json
+import subprocess
+import time
+from pathlib import Path
+from typing import Any, Dict
+
+BRIDGE = Path.home() / "Library" / "Application Support" / "ClaudeBridge"
+TICKS_PER_SEC = 254016000000
+
+# Premiere marker colour indices
+COLOR = {"chapter": 1, "client": 3, "suggested": 4}  # red, orange, yellow
+
+JSX_TEMPLATE = r"""
+var DATA = __DATA__;
+
+function findItem(bin, name) {
+    for (var i = 0; i < bin.children.numItems; i++) {
+        var it = bin.children[i];
+        if (it.name === name) return it;
+    }
+    return null;
+}
+function findSequence(name) {
+    for (var i = 0; i < app.project.sequences.numSequences; i++) {
+        if (app.project.sequences[i].name === name) return app.project.sequences[i];
+    }
+    return null;
+}
+
+(function () {
+    if (!app.project || !app.project.path) return "ERR: no Premiere project open — open or save a project first";
+    var root = app.project.rootItem;
+
+    var bin = findItem(root, DATA.bin);
+    if (!bin) bin = root.createBin(DATA.bin);
+
+    var vo = findItem(bin, DATA.voName);
+    if (!vo) {
+        app.project.importFiles([DATA.voPath], true, bin, false);
+        vo = findItem(bin, DATA.voName);
+        if (!vo) return "ERR: VO import failed: " + DATA.voPath;
+    }
+
+    var seq = findSequence(DATA.seqName);
+    var created = false;
+    if (!seq) {
+        seq = app.project.createNewSequenceFromClips(DATA.seqName, [vo], bin);
+        if (!seq) return "ERR: could not create sequence";
+        created = true;
+    }
+
+    var s = seq.getSettings();
+    s.videoFrameWidth = DATA.width;
+    s.videoFrameHeight = DATA.height;
+    var fr = new Time(); fr.ticks = String(DATA.frameTicks);
+    s.videoFrameRate = fr;
+    seq.setSettings(s);
+
+    // Rebuild markers from timeline.json
+    var markers = seq.markers, removed = 0;
+    var m = markers.getFirstMarker();
+    while (m) { var next = markers.getNextMarker(m); markers.deleteMarker(m); removed++; m = next; }
+
+    var added = 0;
+    for (var i = 0; i < DATA.markers.length; i++) {
+        var d = DATA.markers[i];
+        var mk = markers.createMarker(d.start);
+        mk.name = d.name;
+        mk.comments = d.comments;
+        if (d.end > d.start) mk.end = d.end;  // Premiere takes seconds here, not a Time object
+        if (d.chapter) mk.setTypeAsChapter();
+        mk.setColorByIndex(d.color);
+        added++;
+    }
+
+    app.project.activeSequence = seq;
+    return "OK sequence=" + seq.name + (created ? " (new)" : " (reused)") +
+           " size=" + DATA.width + "x" + DATA.height + " fps=" + DATA.fps +
+           " markers_removed=" + removed + " markers_added=" + added;
+})();
+"""
+
+
+def _snap(sec: float, fps: int) -> float:
+    return round(round(sec * fps) / fps, 6)
+
+
+def assembly_jsx(tl: Dict[str, Any], episode: Path) -> str:
+    fps = tl["fps"]
+    markers = []
+    for ch in tl["chapters"]:
+        markers.append({"start": _snap(ch["start"], fps), "end": 0, "name": ch["title"],
+                        "comments": "chapter", "chapter": True, "color": COLOR["chapter"]})
+    for g in tl["graphics"]:
+        color = COLOR["client"] if g["origin"] == "client" else COLOR["suggested"]
+        tag = "" if g["status"] == "approved" else " (SARAN)"
+        comments = [f"template: {g['template']}", f"status: {g['status']}", f"isi: {g['label']}"]
+        if g.get("file"):
+            comments.append(f"file: {g['file']}")
+        if g.get("source"):
+            comments.append(f"source: {g['source']}")
+        markers.append({"start": _snap(g["start"], fps), "end": _snap(g["end"], fps),
+                        "name": f"{g['id']} {g['template'].upper()}{tag}", "comments": "\n".join(comments),
+                        "chapter": False, "color": color})
+
+    vo_path = Path(tl["vo"]["file"])
+    data = {
+        "bin": f"ALUX {episode.name}",
+        "seqName": f"ALUX {episode.name} — ASSEMBLY",
+        "voPath": str(vo_path),
+        "voName": vo_path.name,
+        "width": tl["resolution"][0],
+        "height": tl["resolution"][1],
+        "fps": fps,
+        "frameTicks": TICKS_PER_SEC // fps,
+        "markers": markers,
+    }
+    # ensure_ascii keeps the payload plain ASCII for ExtendScript's parser
+    return JSX_TEMPLATE.replace("__DATA__", json.dumps(data, ensure_ascii=True))
+
+
+def bridge_alive(max_age_sec: float = 5.0) -> bool:
+    hb = BRIDGE / "heartbeat"
+    try:
+        return (time.time() * 1000 - int(hb.read_text().strip())) < max_age_sec * 1000
+    except (OSError, ValueError):
+        return False
+
+
+def run(jsx_path: Path, timeout: int = 180) -> str:
+    if not bridge_alive():
+        return ("ERR: Claude Bridge tidak aktif — buka Premiere, lalu Window > Extensions > Claude Bridge. "
+                f"JSX tetap tersimpan di {jsx_path}")
+    out = subprocess.run([str(BRIDGE / "ppro.sh"), str(jsx_path), str(timeout)],
+                         capture_output=True, text=True)
+    return (out.stdout or out.stderr).strip()

@@ -138,11 +138,14 @@ class RelevanceEngine:
             s_utility = 0.85
 
         # 9. Source Quality (5%)
-        s_source = 0.75
+        # Unknown licensing is a production risk, so it scores lowest rather than being assumed safe.
+        s_source = 0.50
         lic = candidate.get("license", "").lower()
-        if "commercial" in lic or "internal" in lic or "public domain" in lic:
+        if "unknown" in lic:
+            s_source = 0.50
+        elif "commercial" in lic or "internal" in lic or "public domain" in lic:
             s_source = 1.0
-        elif "creative commons" in lic:
+        elif "creative commons" in lic or lic.startswith("cc"):
             s_source = 0.90
 
         # 10. Sequence Redundancy Penalty (Deduction)
@@ -192,25 +195,27 @@ class RelevanceEngine:
         return round(composite, 3), breakdown, why_reason, specificity, narrative_func
 
     def score_source_fact(self, source_dict: Dict, claim: str) -> Tuple[float, str]:
-        """Calculates credibility and relevance for journalistic facts."""
+        """
+        Returns (match_score, credibility).
+        match_score: share of the claim's keywords found in the source title + excerpt (0.0-1.0).
+            It measures topical overlap only — it does NOT mean the source confirms the claim.
+        credibility: publisher reputation tier (high / medium / unrated), independent of the match.
+        """
         pub = source_dict.get("publisher", "").lower()
-        high_cred = ["reuters", "bloomberg", "ap news", "financial times", "sec", "nature", "science", "ieee", "wall street journal", "mit technology review"]
-        med_cred = ["the verge", "techcrunch", "wired", "arstechnica", "cnbc", "forbes"]
+        high_cred = ["reuters", "bloomberg", "associated press", "ap news", "financial times", "sec.gov",
+                     "nature", "science", "ieee", "wall street journal", "mit technology review"]
+        med_cred = ["wikipedia", "the verge", "techcrunch", "wired", "arstechnica", "cnbc", "forbes"]
 
-        credibility = "medium"
-        base_score = 0.75
+        credibility = "unrated"
         if any(h in pub for h in high_cred):
             credibility = "high"
-            base_score = 0.94
         elif any(m in pub for m in med_cred):
-            credibility = "high"
-            base_score = 0.86
+            credibility = "medium"
 
         claim_tokens = self._tokenize(claim)
-        title_tokens = self._tokenize(source_dict.get("title", ""))
-        overlap = len(claim_tokens.intersection(title_tokens)) / max(1, min(len(claim_tokens), 4))
-        score = min(0.99, max(0.50, base_score + (overlap * 0.1)))
-        return round(score, 3), credibility
+        source_tokens = self._tokenize(source_dict.get("title", "") + " " + source_dict.get("excerpt", ""))
+        match = len(claim_tokens.intersection(source_tokens)) / max(1, len(claim_tokens))
+        return round(match, 3), credibility
 
 
 relevance_engine = RelevanceEngine()

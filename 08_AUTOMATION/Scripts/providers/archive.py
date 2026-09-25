@@ -36,14 +36,16 @@ class ArchiveOrgProvider:
                 for doc in docs:
                     identifier = doc.get("identifier")
                     title = doc.get("title", identifier)
+                    # archive.org items carry mixed rights; only report a license the item declares.
+                    license_url = doc.get("licenseurl")
                     results.append({
                         "title": title,
                         "asset_type": "footage",
                         "source": "Internet Archive",
                         "url": f"https://archive.org/details/{identifier}",
-                        "resolution": "HD / Archival",
-                        "license": "Public Domain / Open Access",
-                        "duration": "Archival",
+                        "resolution": "unknown",
+                        "license": f"Declared: {license_url}" if license_url else "unknown — check item page",
+                        "duration": "unknown",
                         "tags": [query.lower(), "archive", "historical", str(doc.get("year", ""))],
                         "description": doc.get("description", title)
                     })

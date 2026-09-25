@@ -40,29 +40,27 @@ class FootagePipeline:
         archive_hits = archive_provider.search_video(primary_concept, limit=2)
         candidates.extend(archive_hits)
 
-        # 3. Search Stock Providers (Pexels / Pixabay / Curated Reference)
+        # 3. Search Stock Providers (Pexels / Pixabay — only when API keys are set)
         stock_hits = stock_footage_provider.search_pexels(primary_concept, limit=2)
         stock_hits.extend(stock_footage_provider.search_pixabay(primary_concept, limit=2))
-        if not stock_hits:
-            stock_hits = stock_footage_provider.generate_editorial_stock_suggestions(
-                primary_concept,
-                unit.visual_intent.abstract[0] if unit.visual_intent.abstract else "cinematic concept"
-            )
         candidates.extend(stock_hits)
+
+        # Search links are always offered to the editor, but never ranked as assets.
+        unit.broll_search_links = stock_footage_provider.search_links(primary_concept)
 
         # 4. Score all candidates using 9-Factor Editorial Relevance Engine
         scored_assets: List[MediaAsset] = []
         for cand in candidates:
             score, breakdown, why, spec, n_func = self.scorer.score_media(cand, unit, previous_shot_meta)
             scored_assets.append(MediaAsset(
-                title=cand.get("title", "Cinematic Footage"),
+                title=cand.get("title") or "Untitled asset",
                 asset_type=cand.get("asset_type", "footage"),
-                source=cand.get("source", "Stock"),
-                url=cand.get("url", "#"),
+                source=cand.get("source", "unknown"),
+                url=cand.get("url", ""),
                 local_path=cand.get("local_path"),
-                duration=cand.get("duration", "12s"),
-                resolution=cand.get("resolution", "4K UHD"),
-                license=cand.get("license", "Commercial / Royalty-Free"),
+                duration=cand.get("duration") or "unknown",
+                resolution=cand.get("resolution") or "unknown",
+                license=cand.get("license") or "unknown — check before use",
                 relevance_score=score,
                 relevance_breakdown=breakdown,
                 why_reason=why,
@@ -90,13 +88,15 @@ class FootagePipeline:
                 claim_id=f"CLAIM-{unit.id.split('-')[-1]}",
                 claim_text=claim_seed,
                 source_type="news",
-                title=nh.get("title", "Editorial Reporting"),
-                publisher=nh.get("publisher", "Reuters"),
-                url=nh.get("url", "#"),
-                published_date=nh.get("published_date", "2026-08-14"),
+                title=nh.get("title") or "Untitled source",
+                publisher=nh.get("publisher") or "Unknown publisher",
+                url=nh.get("url", ""),
+                published_date=nh.get("published_date") or "unknown",
                 credibility=cred,
                 relevance_score=n_score,
-                excerpt=nh.get("excerpt", "")
+                excerpt=nh.get("excerpt", ""),
+                verification_status="candidate",
+                match_type=nh.get("match_type", "")
             )
 
         # 6. Evaluate Visual Coverage for this unit

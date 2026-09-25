@@ -32,10 +32,10 @@ class MediaAsset:
     source: str      # local, pexels, pixabay, wikimedia, youtube, archive, freesound
     url: str
     local_path: Optional[str] = None
-    duration: Optional[str] = "10s"
-    resolution: Optional[str] = "4K / 1080p"
-    license: str = "Commercial Use / Creative Commons"
-    relevance_score: float = 0.85
+    duration: Optional[str] = "unknown"
+    resolution: Optional[str] = "unknown"
+    license: str = "unknown — check before use"
+    relevance_score: float = 0.0
     relevance_breakdown: Dict[str, float] = field(default_factory=dict)
     why_reason: str = ""
     visual_specificity: int = 4  # 0 to 5 (0=generic, 5=exact)
@@ -53,9 +53,13 @@ class SourceFact:
     publisher: str
     url: str
     published_date: str
-    credibility: str = "high"  # high, medium, unverified
-    relevance_score: float = 0.90
+    credibility: str = "unrated"  # high, medium, unrated — publisher reputation only, not proof
+    relevance_score: float = 0.0  # keyword match between claim and source text, not a verification score
     excerpt: str = ""
+    # unverified: nothing found · candidate: found by search, awaiting human review
+    # verified: only ever set by a human in the Research Inbox, never by the pipeline
+    verification_status: str = "unverified"
+    match_type: str = ""
 
 
 @dataclass
@@ -89,6 +93,10 @@ class VisualUnit:
     editorial_news: Optional[SourceFact] = None
     sfx_matches: List[MediaAsset] = field(default_factory=list)
     source_matches: List[SourceFact] = field(default_factory=list)
+
+    # Honest fallbacks when nothing real was found — search links, never presented as assets/sources
+    broll_search_links: List[Dict[str, str]] = field(default_factory=list)
+    unsourced_claims: Dict[str, List[Dict[str, str]]] = field(default_factory=dict)  # claim -> research leads
 
 
 @dataclass

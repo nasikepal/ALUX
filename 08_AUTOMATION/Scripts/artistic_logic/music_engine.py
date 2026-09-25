@@ -130,21 +130,19 @@ class MusicScoreEngine:
                     source="Local Studio Music Vault",
                     url=local_matches[0]["url"],
                     local_path=local_matches[0].get("local_path"),
-                    duration=f"{u.duration_sec}s",
-                    license="Internal Master",
-                    relevance_score=0.95,
-                    why_reason=f"Studio theme matching {motif} arc."
+                    license=local_matches[0].get("license", "Internal Studio Ownership"),
+                    relevance_score=round(local_matches[0].get("internal_match_score", 0.0), 3),
+                    why_reason=f"Local music file keyword match for '{motif}' arc."
                 )
             else:
                 matched_asset = MediaAsset(
-                    title=f"Score Cue: {motif.title()} Atmosphere",
-                    asset_type="music",
-                    source="Production Music Library",
+                    title=f"Search: {motif} atmosphere",
+                    asset_type="search_link",
+                    source="Free Music Archive search",
                     url=f"https://freemusicarchive.org/search?quicksearch={motif}",
-                    duration=f"{u.duration_sec}s",
-                    license="Royalty-Free / CC",
-                    relevance_score=0.88,
-                    why_reason=f"Thematic acoustic bed for {profile['mood']}."
+                    license="n/a — search link, license depends on the track you pick",
+                    relevance_score=0.0,
+                    why_reason=f"No local music file matched. Target bed: {profile['mood']}."
                 )
 
             cue = {

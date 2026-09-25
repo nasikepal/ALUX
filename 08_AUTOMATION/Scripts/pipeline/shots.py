@@ -30,7 +30,7 @@ class ShotPlanner:
                 camera=u.visual_intent.camera,
                 movement=u.visual_intent.movement,
                 transition="cut" if idx > 0 else "fade-in",
-                source=primary_asset.source if primary_asset else "stock",
+                source=primary_asset.source if primary_asset else "needs sourcing",
                 primary_asset=primary_asset,
                 status="planned"
             )
@@ -53,8 +53,8 @@ class ShotPlanner:
         file_path = target_dir / filename
 
         p_asset = shot.primary_asset
-        n_func = p_asset.narrative_function if p_asset else "B — Context"
-        spec_score = p_asset.visual_specificity if p_asset else 3
+        n_func = p_asset.narrative_function if p_asset else "—"
+        spec_score = p_asset.visual_specificity if p_asset else "—"
 
         frontmatter = {
             "type": "shot",
@@ -70,13 +70,14 @@ class ShotPlanner:
             "movement": shot.movement,
             "transition": shot.transition,
             "status": shot.status,
-            "relevance": int(round((shot.primary_asset.relevance_score if shot.primary_asset else 0.85) * 100)),
-            "coverage_pct": unit.visual_coverage.get("coverage_pct", 75)
+            "relevance": int(round(shot.primary_asset.relevance_score * 100)) if shot.primary_asset else 0,
+            "asset_status": "candidate" if shot.primary_asset else "needs_sourcing",
+            "coverage_pct": unit.visual_coverage.get("coverage_pct", 0)
         }
 
         progress = render_progress_bar(frontmatter["relevance"])
-        sfx_name = unit.sfx_matches[0].title if unit.sfx_matches else "Default Ambience"
-        news_name = unit.editorial_news.title if unit.editorial_news else "Supporting Context"
+        sfx_name = unit.sfx_matches[0].title if unit.sfx_matches else "none"
+        news_name = f"{unit.editorial_news.title} (unverified)" if unit.editorial_news else "none found"
         cov = unit.visual_coverage
 
         content = f"""---
@@ -126,9 +127,9 @@ class ShotPlanner:
 > {unit.text}
 
 ## Asset Specifications
-- **Primary Asset**: {f"[{shot.primary_asset.title}]({shot.primary_asset.url})" if shot.primary_asset else "Pending Selection"}
+- **Primary Asset**: {f"[{shot.primary_asset.title}]({shot.primary_asset.url})" if shot.primary_asset else "⚠️ NO ASSET FOUND — " + (" · ".join(f"[{l['label']}]({l['url']})" for l in unit.broll_search_links) or "source manually")}
 - **License**: `{shot.primary_asset.license if shot.primary_asset else 'N/A'}`
-- **Resolution**: `{shot.primary_asset.resolution if shot.primary_asset else '4K'}`
+- **Resolution**: `{shot.primary_asset.resolution if shot.primary_asset else 'N/A'}`
 - **Source Platform**: `{shot.source}`
 - **Artistic Rationale**: > {shot.primary_asset.why_reason if shot.primary_asset else 'Sourced to fulfill narrative beat.'}
 """
@@ -140,12 +141,12 @@ class ShotPlanner:
         
         cards = []
         for s, u in zip(shots, units):
-            score_pct = int(round((s.primary_asset.relevance_score if s.primary_asset else 0.85) * 100))
+            score_pct = int(round(s.primary_asset.relevance_score * 100)) if s.primary_asset else 0
             bar = render_progress_bar(score_pct)
             sfx_term = u.sound_intent.ambience[0] if u.sound_intent.ambience else "Ambience"
-            source_term = u.editorial_news.title if u.editorial_news else "Source verification"
-            n_func = s.primary_asset.narrative_function if s.primary_asset else "B — Context"
-            spec = s.primary_asset.visual_specificity if s.primary_asset else 3
+            source_term = f"{u.editorial_news.title} (unverified)" if u.editorial_news else "no source found"
+            n_func = s.primary_asset.narrative_function if s.primary_asset else "—"
+            spec = s.primary_asset.visual_specificity if s.primary_asset else "—"
             cov = u.visual_coverage
 
             card = f"""### {s.shot_id} — [[{s.shot_id} - {s.visual_description[:35]}|{s.visual_description}]]
@@ -153,7 +154,7 @@ class ShotPlanner:
 
 - **Relevance**: `{bar}` | **Specificity**: `{spec}/5`
 - **Narrative Function**: `{n_func}`
-- 🎥 **Footage**: [{s.visual_description}]({s.primary_asset.url if s.primary_asset else '#'}) (`{s.source}`)
+- 🎥 **Footage**: [{s.visual_description}]({s.primary_asset.url if s.primary_asset else (u.broll_search_links[0]['url'] if u.broll_search_links else '')}) (`{s.source}`)
 - 🔊 **SFX**: `{sfx_term}`
 - 📰 **Source**: `{source_term[:50]}`
 - ⏱️ **Duration**: `{s.duration_sec}s` | **Camera**: `{s.camera}` | **Status**: `{s.status}`

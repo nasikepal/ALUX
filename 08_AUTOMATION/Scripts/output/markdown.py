@@ -11,6 +11,7 @@ from core.models import ScriptDocument, VisualUnit
 from scoring.relevance import render_progress_bar
 from core.config import config
 from core.logger import logger
+from pipeline.source import source_note_name
 
 
 class MarkdownWriter:
@@ -27,9 +28,13 @@ class MarkdownWriter:
         # Update metadata
         meta = dict(doc.metadata)
         meta["status"] = "production"
-        meta["broll_status"] = "completed"
-        meta["research_status"] = "completed"
-        meta["source_status"] = "completed"
+        # Statuses describe what the pipeline actually found — "completed" is never claimed on a
+        # human's behalf. Sources only become verified after Research Inbox review.
+        has_claims = any(u.claims for u in units)
+        any_unsourced = any(u.unsourced_claims for u in units)
+        meta["broll_status"] = "candidates_found" if all(u.primary_broll for u in units) else "needs_sourcing"
+        meta["research_status"] = "needs_research" if any_unsourced else ("needs_review" if has_claims else "no_claims")
+        meta["source_status"] = meta["research_status"]
         meta["visual_units_count"] = len(units)
         meta["artistic_engine"] = "v2-editorial"
         total_duration = sum(u.duration_sec for u in units)
@@ -68,21 +73,27 @@ class MarkdownWriter:
 
             # 1. Master Visual Markdown Panel Breakdown (Two-Column A/V Table)
             p = u.primary_broll
-            p_title = f"[{p.title}]({p.url})" if p else "Pending Asset Match"
-            p_spec = f"`{p.visual_specificity}/5`" if p else "`3/5`"
-            p_score = f"`{int(round(p.relevance_score * 100))}%`" if p else "`N/A`"
+            if p:
+                p_title = f"[{p.title}]({p.url})"
+            elif u.broll_search_links:
+                p_title = "⚠️ **NO ASSET FOUND** — search: " + " · ".join(
+                    f"[{l['label']}]({l['url']})" for l in u.broll_search_links[:2])
+            else:
+                p_title = "⚠️ **NO ASSET FOUND**"
+            p_spec = f"`{p.visual_specificity}/5`" if p else "`—`"
+            p_score = f"`{int(round(p.relevance_score * 100))}%`" if p else "`—`"
 
             # Claims summary for panel
             claims_summary = ""
             if u.claims and u.source_matches:
                 claims_links = []
                 for sm in u.source_matches[:2]:
-                    safe_pub = sm.publisher.replace('/', '-').replace(':', '')
-                    safe_title = sm.title[:35].replace('/', '-').replace(':', '')
-                    claims_links.append(f"[[Source - {safe_pub} - {safe_title}\\|{sm.publisher}]]")
+                    claims_links.append(f"[[{source_note_name(sm)}\\|{sm.publisher}]] (`{sm.verification_status}`)")
+                if u.unsourced_claims:
+                    claims_links.append(f"⚠️ {len(u.unsourced_claims)} claim(s) unsourced")
                 claims_summary = "<br>".join(claims_links)
             elif u.claims:
-                claims_summary = f"*{u.claims[0][:40]}...*"
+                claims_summary = f"⚠️ **UNSOURCED**: *{u.claims[0][:40]}...*"
             else:
                 claims_summary = "*Narrative beat (stylistic)*"
 
@@ -160,6 +171,11 @@ class MarkdownWriter:
                 lines.append(f">   - **Relevance**: {p_bar} `{p_pct}%` | **Specificity**: `{p.visual_specificity}/5`")
                 lines.append(f">   - **Director Note**: > {p.why_reason}")
                 lines.append(f">   - **Specs**: Source: `{p.source}` | Type: `{p.asset_type.upper()}` | Res: `{p.resolution}` | License: `{p.license}`")
+            else:
+                lines.append("> - **Primary Recommendation**: ⚠️ none — no real asset was found by any provider")
+            if u.broll_search_links:
+                links = " · ".join(f"[{l['label']}]({l['url']})" for l in u.broll_search_links)
+                lines.append(f"> - **Manual search links** (not assets — license/resolution unknown until you pick a clip): {links}")
 
             if u.alternative_broll:
                 alt = u.alternative_broll
@@ -202,10 +218,13 @@ class MarkdownWriter:
                     else:
                         intent_term = asset.title
 
-                    rel_pct = int(round(asset.relevance_score * 100))
-                    lines.append(f"| {layer_name} | {intent_term} | [{asset.title}]({asset.url}) | {rel_pct}% |")
+                    if asset.asset_type == "search_link":
+                        lines.append(f"| {layer_name} | {intent_term} | ⚠️ no file — [search {asset.source.replace(' search', '')}]({asset.url}) | — |")
+                    else:
+                        rel_pct = int(round(asset.relevance_score * 100))
+                        lines.append(f"| {layer_name} | {intent_term} | [{asset.title}]({asset.url}) | {rel_pct}% |")
             else:
-                lines.append("| Ambience | Environmental room tone | [Studio Library](#) | 90% |")
+                lines.append("| — | — | ⚠️ no SFX analysis ran | — |")
             lines.append("")
 
             # Musical Score Direction
@@ -216,22 +235,30 @@ class MarkdownWriter:
                 lines.append(f"- **Emotional Tone**: *{mc['emotional_mood']}*")
                 lines.append(f"- **Instrumentation**: {mc['instrumentation']}")
                 lines.append(f"- **Style Reference**: `{mc['reference_style']}`")
-                lines.append(f"- **Thematic Track**: [{mc['matched_asset'].title}]({mc['matched_asset'].url})")
+                track = mc['matched_asset']
+                if track.asset_type == "search_link":
+                    lines.append(f"- **Thematic Track**: ⚠️ no local track — [{track.source}]({track.url})")
+                else:
+                    lines.append(f"- **Thematic Track**: [{track.title}]({track.url})")
                 lines.append("")
 
-            # Claims and Verified Sources
-            lines.append("### Claims & Verified Evidence")
+            # Claims and candidate sources — nothing here is verified until a human accepts it
+            lines.append("### Claims & Evidence (unverified until Research Inbox sign-off)")
             if u.claims:
                 for c in u.claims:
                     lines.append(f"**Claim**: *\"{c}\"*")
                     lines.append("Sources:")
-                    if u.source_matches:
-                        for sm in u.source_matches:
-                            safe_pub = sm.publisher.replace('/', '-').replace(':', '')
-                            safe_title = sm.title[:50].replace('/', '-').replace(':', '')
-                            lines.append(f"- [[Source - {safe_pub} - {safe_title}]] (`{sm.publisher}` - {int(round(sm.relevance_score * 100))}% credibility)")
+                    claim_sources = [sm for sm in u.source_matches if sm.claim_text == c]
+                    if claim_sources:
+                        for sm in claim_sources:
+                            lines.append(
+                                f"- [[{source_note_name(sm)}]] (`{sm.publisher}` · reputation `{sm.credibility}` · "
+                                f"keyword match {int(round(sm.relevance_score * 100))}% · `{sm.verification_status}`)"
+                            )
                     else:
-                        lines.append("- [ ] Source pending verification")
+                        leads = u.unsourced_claims.get(c, [])
+                        lead_txt = " — leads: " + " · ".join(f"[{l['label']}]({l['url']})" for l in leads[:3]) if leads else ""
+                        lines.append(f"- [ ] ⚠️ **No source found** — do not put on screen{lead_txt}")
             else:
                 lines.append("*(Stylistic narrative beat — no statistical or empirical claims)*")
 
