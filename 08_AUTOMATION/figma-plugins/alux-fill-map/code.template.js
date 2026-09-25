@@ -7,14 +7,18 @@ const TEMPLATE = {
   still: 'ALUX / Still frame', illustration: 'ALUX / Illustration card', bio: 'ALUX / Bio card',
   lower: 'ALUX / Lower third', compare: 'ALUX / Chart — Compare',
   cta_subscribe: 'ALUX / CTA — Subscribe', cta_app: 'ALUX / CTA — App', endscreen: 'ALUX / End screen',
-  opener: 'ALUX / Series opener',
+  opener: 'ALUX / Series opener', share: 'ALUX / Chart — Share', versus: 'ALUX / Chart — Versus',
+  timeline: 'ALUX / Timeline', rank: 'ALUX / Rank', company: 'ALUX / Company tag', logos: 'ALUX / Logo row',
 };
-const OVERLAY = new Set(['stat', 'stamp', 'bio', 'lower', 'cta_subscribe', 'cta_app']); // transparent templates: show a footage stand-in behind
+const OVERLAY = new Set(['stat', 'stamp', 'bio', 'lower', 'cta_subscribe', 'cta_app', 'company']);
+// Where client artwork sits inside a template, in 3840x2160 template coordinates.
+const ART_SLOT = { still: { x: 640, y: 240, w: 2560, h: 1440, r: 32 }, illustration: { x: 2016, y: 360, w: 1440, h: 1440, r: 48 },
+                   art_only: { x: 0, y: 0, w: 3840, h: 2160, r: 0 } }; // transparent templates: show a footage stand-in behind
 const THUMB_W = 444, SCALE = THUMB_W / 3840;
 
 async function main() {
   const gilroy = (await figma.listAvailableFontsAsync()).filter(f => f.fontName.family === 'Gilroy').map(f => f.fontName.style);
-  for (const s of ['Regular', 'Medium', 'Bold', 'Heavy']) {
+  for (const s of ['Light', 'Regular', 'Medium', 'Bold', 'Heavy']) {
     if (!gilroy.includes(s)) return figma.closePlugin(`Gilroy ${s} belum terinstal — install Gilroy_fixed lalu restart Figma.`);
     await figma.loadFontAsync({ family: 'Gilroy', style: s });
   }
@@ -51,6 +55,13 @@ async function main() {
       placeholder(thumb, card.type, f && f.hold ? 'HOLD — ' + f.hold : 'TEMPLATE BELUM ADA', !!(f && f.hold), paintVar);
       labelled++; return;
     }
+    if (f.template === 'art_only') {
+      thumb.layoutMode = 'NONE';
+      for (const c of [...thumb.children]) c.remove();
+      thumb.clipsContent = true; thumb.fills = [paintVar('navy/900')];
+      await placeArt(thumb, f.art, ART_SLOT.art_only);
+      filled++; return;
+    }
     const src = comp[f.template];
     if (!src) { problems.push(card.id + ': template ' + f.template + ' tidak ada'); return; }
 
@@ -79,9 +90,12 @@ async function main() {
     }
     if (f.template === 'chapter') setRoute(inst, f.route, paintVar);
     // Instances can't override child geometry, so data-driven bar lengths need a detached copy.
-    const gfx = f.template === 'compare' ? inst.detachInstance() : inst;
+    const detach = f.template === 'compare' || f.template === 'share';
+    const gfx = detach ? inst.detachInstance() : inst;
     if (f.template === 'compare') setBars(gfx, f, paintVar);
+    if (f.template === 'share') setShares(gfx, f.shares);
     gfx.rescale(SCALE);
+    if (f.art) await placeArt(thumb, f.art, ART_SLOT[f.template]);
     filled++;
   }
   figma.closePlugin(`${DATA.episode}: ${filled} kartu diisi template · ${labelled} placeholder · font diperbaiki ${repair.fixed}` + (repair.failed ? ` (gagal ${repair.failed})` : '') + (problems.length ? ` · ${problems.length} masalah: ${problems.slice(0, 3).join('; ')}` : ''));
@@ -128,6 +142,50 @@ function setBars(inst, f, paintVar) {
     bar.resize(Math.max(8, track.width * f.bars[i]), bar.height);
     bar.fills = [paintVar(f.barColor)];
   });
+}
+
+// Donut segments A/B/C from fractions that sum to 1, clockwise from 12 o'clock.
+function setShares(frame, shares) {
+  let start = -Math.PI / 2;
+  ['A', 'B', 'C'].forEach((k, i) => {
+    const seg = frame.findOne(n => n.name === 'Segment ' + k);
+    if (!seg) return;
+    const end = start + shares[i] * 2 * Math.PI;
+    seg.arcData = { startingAngle: start, endingAngle: end, innerRadius: seg.arcData.innerRadius };
+    start = end;
+  });
+}
+
+// Client artwork (SVG) laid over the template's image slot, clipped to the slot's corner radius.
+async function placeArt(thumb, name, slot) {
+  const svg = DATA.art[name];
+  if (!svg || !slot) throw new Error('art ' + name + ' tidak ada');
+  const holder = figma.createFrame();
+  holder.name = 'Art · ' + name; holder.fills = []; holder.clipsContent = true;
+  holder.cornerRadius = slot.r * SCALE;
+  holder.resize(slot.w * SCALE, slot.h * SCALE);
+  thumb.appendChild(holder);
+  holder.x = slot.x * SCALE; holder.y = slot.y * SCALE;
+  const art = figma.createNodeFromSvg(svg);
+  art.name = name;
+  holder.appendChild(art);
+  await normalizeGilroy(art);
+  art.rescale(holder.width / art.width);
+  art.x = 0; art.y = 0;
+}
+
+// SVG import can name Gilroy weights differently (e.g. 900 -> "Black"); map them onto the installed styles.
+async function normalizeGilroy(root) {
+  const MAP = { Thin: 'Light', ExtraLight: 'Light', Light: 'Light', Regular: 'Regular', Book: 'Regular', Medium: 'Medium',
+                SemiBold: 'Bold', Bold: 'Bold', ExtraBold: 'Heavy', Heavy: 'Heavy', Black: 'Heavy' };
+  for (const t of root.findAllWithCriteria({ types: ['TEXT'] })) {
+    for (const seg of t.getStyledTextSegments(['fontName'])) {
+      const style = MAP[seg.fontName.style.replace(/\s+/g, '')] || 'Regular';
+      const target = { family: 'Gilroy', style };
+      if (seg.fontName.family === target.family && seg.fontName.style === target.style) continue;
+      try { t.setRangeFontName(seg.start, seg.end, target); } catch (e) { /* leave as imported */ }
+    }
+  }
 }
 
 // Chapter k (0-based): stops 0..k and segments 0..k-1 cyan, halo on stop k. Colour only —
