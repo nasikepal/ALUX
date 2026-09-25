@@ -23,6 +23,8 @@ from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
+from .tools import WHISPER
+
 FPS = 24
 MAX_LINE = 42
 MAX_LINES = 2
@@ -122,7 +124,7 @@ def relisten(wav: Path, t0: float, t1: float, candidates: List[str], whisper_mod
                     "-i", str(wav), str(clip)], check=True)
     heard = []
     for model, extra in whisper_models:
-        r = subprocess.run(["whisper-cli", "-m", str(model), "-f", str(clip), "-l", "en", "-nt", "-np"] + extra,
+        r = subprocess.run([WHISPER, "-m", str(model), "-f", str(clip), "-l", "en", "-nt", "-np"] + extra,
                            capture_output=True, text=True)
         heard.append(" ".join(r.stdout.split()))
     def toks(t):
