@@ -27,3 +27,6 @@ Desktop.ini
 
 # Temporary automation logs
 08_AUTOMATION/Logs/*.log
+
+# Generated per episode by 08_AUTOMATION/Scripts/episode/figma_fill.py — embeds client script data and artwork
+08_AUTOMATION/figma-plugins/alux-fill-map/code.js
