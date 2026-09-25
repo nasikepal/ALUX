@@ -18,9 +18,17 @@ PLUGIN_DIR = Path(__file__).resolve().parents[2] / "figma-plugins" / "alux-fill-
 TEMPLATE_JS = PLUGIN_DIR / "code.template.js"
 
 
-def build_plugin(graphics_map: Path, fill: Path, episode_label: str) -> Path:
+def build_plugin(graphics_map: Path, fill: Path, episode_label: str, art_dir: Path = None) -> Path:
+    """art_dir: folder with stills/, illustrations/, explainer/ SVGs; fill entries reference them by "art": <stem>."""
     items = json.loads(graphics_map.read_text(encoding="utf-8"))
     spec: Dict[str, Any] = json.loads(fill.read_text(encoding="utf-8"))
+    art: Dict[str, str] = {}
+    if art_dir and art_dir.exists():
+        for svg in art_dir.glob("*/*.svg"):
+            art[svg.stem] = svg.read_text(encoding="utf-8")
+    missing = sorted({e["art"] for e in spec.values() if isinstance(e, dict) and e.get("art")} - set(art))
+    if missing:
+        raise SystemExit(f"art referenced but not found: {missing}")
     cards = []
     for it in items:
         entry = spec.get(it["map_id"])
@@ -29,7 +37,8 @@ def build_plugin(graphics_map: Path, fill: Path, episode_label: str) -> Path:
             "type": it["type"],
             "fill": entry,  # None -> no template yet
         })
-    payload = {"episode": episode_label, "cards": cards}
+    used = {e["art"] for e in spec.values() if isinstance(e, dict) and e.get("art")}
+    payload = {"episode": episode_label, "cards": cards, "art": {k: v for k, v in art.items() if k in used}}
     code = TEMPLATE_JS.read_text(encoding="utf-8").replace("__DATA__", json.dumps(payload, ensure_ascii=False))
     out = PLUGIN_DIR / "code.js"
     out.write_text(code, encoding="utf-8")
@@ -39,4 +48,5 @@ def build_plugin(graphics_map: Path, fill: Path, episode_label: str) -> Path:
 if __name__ == "__main__":
     import sys
     ep = Path(sys.argv[1])
-    print(build_plugin(ep / "build" / "graphics_map.json", ep / "build" / "graphics_fill.json", ep.name))
+    print(build_plugin(ep / "build" / "graphics_map.json", ep / "build" / "graphics_fill.json", ep.name,
+                       ep / "assets" / "graphics"))
