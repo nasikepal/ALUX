@@ -25,8 +25,9 @@ from episode.align import load_whisper_words, align_sentences  # noqa: E402
 from episode.timeline import build_timeline, tc  # noqa: E402
 from episode.review import write_review  # noqa: E402
 from episode import premiere  # noqa: E402
+from episode.tools import WHISPER, WHISPER_MODELS  # noqa: E402
 
-WHISPER_MODEL = Path.home() / ".cache" / "whisper" / "ggml-large-v3-turbo.bin"
+WHISPER_MODEL = WHISPER_MODELS / "ggml-large-v3-turbo.bin"
 AUDIO_EXTS = (".mp3", ".wav", ".m4a", ".aif", ".aiff", ".flac")
 
 
@@ -65,7 +66,7 @@ def transcribe(vo: Path, build: Path) -> Path:
     print("[transcribe] converting to 16 kHz mono")
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(vo), "-ar", "16000", "-ac", "1", str(wav)], check=True)
     print("[transcribe] whisper large-v3-turbo (≈5 min per hour of audio on Apple Silicon)")
-    subprocess.run(["whisper-cli", "-m", str(WHISPER_MODEL), "-f", str(wav), "-l", "en",
+    subprocess.run([WHISPER, "-m", str(WHISPER_MODEL), "-f", str(wav), "-l", "en",
                     "-ml", "1", "-sow", "-oj", "-of", str(build / "words"), "-np"],
                    check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     wav.unlink(missing_ok=True)
@@ -96,7 +97,7 @@ def transcribe_chunked(wav16: Path, out_json: Path, target: float = 25.0) -> Pat
         clip = tmp / f"c{k:04d}.wav"
         subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", f"{c0:.2f}", "-t", f"{c1 - c0:.2f}", "-i", str(wav16),
                         str(clip)], check=True)
-        subprocess.run(["whisper-cli", "-m", str(WHISPER_MODEL), "-f", str(clip), "-l", "en", "-ml", "1", "-sow", "-ojf",
+        subprocess.run([WHISPER, "-m", str(WHISPER_MODEL), "-f", str(clip), "-l", "en", "-ml", "1", "-sow", "-ojf",
                         "-dtw", "large.v3.turbo", "-nfa", "-of", str(clip.with_suffix("")), "-np"],
                        check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         data = json.loads(clip.with_suffix(".json").read_text(encoding="utf-8"))
@@ -206,7 +207,7 @@ def cmd_captions(episode: Path, words_file: str, check_file: str, to_premiere: b
                         "-ac", "1", "-c:a", "pcm_s16le", str(wav16)], check=True)
     from episode.captions import relisten
     models = [(WHISPER_MODEL, []), (WHISPER_MODEL, ["-bs", "5", "-bo", "5"])]
-    base = Path.home() / ".cache" / "whisper" / "ggml-base.en.bin"
+    base = WHISPER_MODELS / "ggml-base.en.bin"
     if base.exists():
         models.append((base, []))
     tiebreak = lambda t0, t1, cands: relisten(wav16, t0, t1, cands, models)

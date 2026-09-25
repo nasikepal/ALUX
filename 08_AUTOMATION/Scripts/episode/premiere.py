@@ -1,6 +1,7 @@
 """
 timeline.json -> ExtendScript for Premiere Pro, sent through the Claude Bridge CEP panel
-(`com.feugee.claudebridge`: it polls ~/Library/Application Support/ClaudeBridge/inbox for .jsx files,
+(`com.feugee.claudebridge`, source in 08_AUTOMATION/premiere-bridge/: it polls
+<home>/Library/Application Support/ClaudeBridge/inbox for .jsx files — same path on macOS and Windows —
 evals them in Premiere and writes the result to outbox/).
 
 Assembly step 1 (this file): sequence 3840x2160 @ 24 fps, VO on A1, markers for chapters and graphics.
@@ -8,7 +9,7 @@ Re-running is safe: the sequence is reused, its markers are cleared and rebuilt,
 """
 
 import json
-import subprocess
+import os
 import time
 from pathlib import Path
 from typing import Any, Dict, List
@@ -194,9 +195,22 @@ def bridge_alive(max_age_sec: float = 5.0) -> bool:
 
 
 def run(jsx_path: Path, timeout: int = 180) -> str:
+    """Drop the .jsx in the bridge inbox and wait for the panel's answer in outbox (same protocol as bridge/ppro.sh)."""
     if not bridge_alive():
         return ("ERR: Claude Bridge tidak aktif — buka Premiere, lalu Window > Extensions > Claude Bridge. "
                 f"JSX tetap tersimpan di {jsx_path}")
-    out = subprocess.run([str(BRIDGE / "ppro.sh"), str(jsx_path), str(timeout)],
-                         capture_output=True, text=True)
-    return (out.stdout or out.stderr).strip()
+    job = f"cmd_{int(time.time() * 1000)}_{os.getpid()}"
+    inbox, outbox = BRIDGE / "inbox", BRIDGE / "outbox"
+    tmp = inbox / f".{job}.tmp"
+    tmp.write_text(Path(jsx_path).read_text(encoding="utf-8"), encoding="utf-8")
+    tmp.rename(inbox / f"{job}.jsx")                  # atomic: the panel never reads a half-written file
+    answer = outbox / f"{job}.txt"
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        if answer.exists():
+            text = answer.read_text(encoding="utf-8")
+            answer.unlink(missing_ok=True)
+            return text.strip()
+        time.sleep(0.1)
+    (inbox / f"{job}.jsx").unlink(missing_ok=True)
+    return "TIMEOUT: bridge tidak merespon (panel Claude Bridge tertutup, atau ada dialog terbuka di Premiere)"

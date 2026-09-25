@@ -5,6 +5,17 @@
 
 ---
 
+## 0. New machine setup
+
+```bash
+git clone https://github.com/nasikepal/ALUX && cd ALUX
+python3 setup/install.py --check     # what is missing (Windows: py setup\install.py --check)
+python3 setup/install.py             # install it: tools, .venv, whisper models, Premiere bridge, fonts
+```
+
+In Claude Code just say **"setup"** — the `alux-setup` skill runs the installer and walks through the manual steps
+(Premiere panel, Figma sign-in and plugins). Fonts come from the Drive folder `Gilroy_fixed (INSTALL INI)`.
+
 ## 1. System Architecture
 
 The vault operates across 5 decoupled layers:

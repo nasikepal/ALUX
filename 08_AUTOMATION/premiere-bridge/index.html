@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Claude Bridge</title>
+<style>body{background:#1d1d1d;color:#ddd;font:12px -apple-system,Helvetica,sans-serif;margin:10px}#st{font-weight:600}#st.on{color:#7ad47a}#st.err{color:#ff7a7a}#log{margin-top:8px;height:150px;overflow:auto;font:11px Menlo,monospace;color:#aaa;white-space:pre-wrap}</style></head>
+<body><div>Claude Bridge · <span id="st">starting…</span></div><div id="log"></div>
+<script>
+(function(){
+  var st=document.getElementById('st'), logEl=document.getElementById('log');
+  function log(m){ var t=new Date().toTimeString().slice(0,8); logEl.textContent=(t+'  '+m+'\n'+logEl.textContent).slice(0,4000); }
+  var fs, path, os;
+  try{ fs=require('fs'); path=require('path'); os=require('os'); }catch(e){ st.textContent='Node.js tidak aktif'; st.className='err'; return; }
+  var base=path.join(os.homedir(),'Library','Application Support','ClaudeBridge');
+  var inbox=path.join(base,'inbox'), outbox=path.join(base,'outbox');
+  [base,inbox,outbox].forEach(function(d){ try{ fs.mkdirSync(d,{recursive:true}); }catch(e){} });
+  var busy=false;
+  function heartbeat(){ try{ fs.writeFileSync(path.join(base,'heartbeat'), String(Date.now())); }catch(e){} }
+  function tick(){
+    heartbeat();
+    if(busy) return;
+    var files; try{ files=fs.readdirSync(inbox).filter(function(f){ return /\.jsx$/.test(f) && f.charAt(0)!=='.'; }).sort(); }catch(e){ return; }
+    if(!files.length) return;
+    var f=files[0], src=path.join(inbox,f), code;
+    try{ code=fs.readFileSync(src,'utf8'); fs.unlinkSync(src); }catch(e){ return; }
+    busy=true; log('run '+f);
+    var wrapped='(function(){ try{ var __r = eval('+JSON.stringify(code)+'); return (__r===undefined)?"undefined":String(__r); }catch(__e){ return "ERR: "+__e.toString()+" (line "+__e.line+")"; } })()';
+    window.__adobe_cep__.evalScript(wrapped, function(res){
+      try{ fs.writeFileSync(path.join(outbox,f.replace(/\.jsx$/,'.txt')), String(res)); }catch(e){}
+      log('done '+f+' -> '+String(res).slice(0,80)); busy=false;
+    });
+  }
+  setInterval(tick,250); heartbeat();
+  st.textContent='connected'; st.className='on'; log('watching '+inbox);
+})();
+</script></body></html>
