@@ -5,8 +5,9 @@ title: "{{title}}"
 publisher: "{{publisher}}"
 url: "{{url}}"
 published: "{{date}}"
-credibility: high
-relevance_score: 95
+credibility: unrated
+keyword_match: 0
+verification_status: unverified
 related_claims:
   - CLAIM-001
 ---

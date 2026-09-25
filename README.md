@@ -1,7 +1,7 @@
 # ALUX — OBSIDIAN PRODUCTION OS
 
 > **Enterprise-Grade Video Pre-Production Command Center & Automation Engine**
-> Converts narrative scripts into structured Visual Units, queries local & external footage archives with 6-factor relevance scoring, maps acoustic sound design, and verifies claims into permanent citation notes.
+> Converts narrative scripts into structured Visual Units, queries local & external footage archives with 6-factor relevance scoring, maps acoustic sound design, and finds candidate sources for claims — queued for human verification.
 
 ---
 
@@ -105,7 +105,7 @@ ALUX/
 │   ├── Archive/                   # Unused shot candidates
 │   └── Shot_Planner.md            # Master storyboard deck & Dataview shot table
 ├── 06_SOURCES/
-│   ├── News/                      # Permanent verified source notes
+│   ├── News/                      # Candidate source notes (verified only after human review)
 │   ├── YouTube/                   # Video reference links
 │   ├── Websites/                  # Web citations
 │   ├── Papers/                    # Academic literature
@@ -211,7 +211,7 @@ Every pipeline run outputs three synchronized editorial deliverables:
    - Ranked B-Roll recommendations with 9-Factor editorial relevance score, visual specificity (0-5), and sequence cutting rules.
    - Multi-layered SFX acoustic design table (Ambience, Mechanical, Foley, Transition, Impact).
    - Dynamic Musical Score direction (Tempo BPM, Musical Key, Instrumentation, and In-house Theme matches).
-   - Factual claim verifications linked bidirectionally to canonical Source Notes in `06_SOURCES/News/`.
+   - Claims linked to candidate Source Notes in `06_SOURCES/News/`, or flagged **No source found** with research leads.
 
 2. **NLE Cut List CSV (`02_SCRIPTS/Draft/<Title>_CutList.csv`)**:
    - DaVinci Resolve & Adobe Premiere Pro conformable spreadsheet.
@@ -221,6 +221,29 @@ Every pipeline run outputs three synchronized editorial deliverables:
    - Broadcast runtime analytics (total duration, word count, words-per-second pacing vs standard 2.3-2.5 wps).
    - Master Storyboard table with camera framing, narrative functions, and asset URLs.
    - Musical Score cue sheet (motifs, tempo, key, instrumentation).
-   - Legal Fact Verification dossier with source publisher reputations and excerpt proof.
+   - Research dossier: candidate sources with publisher reputation and keyword match, unsourced claims flagged.
    - Post-production sign-off and delivery lock checklist.
+
+---
+
+## 6. Honesty Rules (what the pipeline will and won't claim)
+
+The pipeline only reports what a provider actually returned. It never fills gaps with invented data.
+
+| Situation | Output |
+|---|---|
+| Search found a page for a claim | Source note with `verification_status: candidate` + Research Inbox card. Only a human sets `verified`. |
+| Search found nothing | **No** source note. Inbox card `NO SOURCE FOUND` with research leads (search links, clearly labelled as not sources). |
+| No real footage found | Primary asset is empty and marked **NO ASSET FOUND**; manual search links listed separately. CSV `Broll_Status = NO ASSET - search link`. |
+| Resolution / duration / license not returned by the provider | `unknown` — never assumed "4K" or "royalty-free". |
+| Local media file missing or under 1 KB (placeholder) | Skipped by the indexer and by search. |
+| Script frontmatter | `broll_status: candidates_found / needs_sourcing`, `research_status: needs_review / needs_research / no_claims` — never `completed`. |
+
+Scores are labelled for what they measure: **keyword match** is topical overlap between claim and source text, not proof; **publisher reputation** (`high / medium / unrated`) is independent of the match.
+
+Guardrail tests (offline, network disabled):
+
+```bash
+.venv/bin/python -m unittest discover -s 08_AUTOMATION/tests -v
+```
 

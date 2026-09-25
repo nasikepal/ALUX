@@ -13,6 +13,19 @@ from core.logger import logger
 
 
 class LocalMediaProvider:
+    # Files below this size are placeholders or broken copies, not usable media.
+    MIN_MEDIA_BYTES = 1024
+
+    @classmethod
+    def is_usable_file(cls, path_str: Optional[str]) -> bool:
+        if not path_str:
+            return False
+        try:
+            p = Path(path_str)
+            return p.is_file() and p.stat().st_size >= cls.MIN_MEDIA_BYTES
+        except OSError:
+            return False
+
     def __init__(self):
         self.index_path = config.local_media_index_path
         self.index_path.parent.mkdir(parents=True, exist_ok=True)
@@ -63,6 +76,9 @@ class LocalMediaProvider:
                     ext = os.path.splitext(file)[1].lower()
                     if ext in valid_exts:
                         full_path = Path(root) / file
+                        if not self.is_usable_file(str(full_path)):
+                            logger.warning(f"Skipping placeholder/empty media file: {full_path}")
+                            continue
                         rel_parts = full_path.relative_to(base).parts
                         
                         # Infer asset type
@@ -85,8 +101,8 @@ class LocalMediaProvider:
                             "source": "local",
                             "url": f"file:///{full_path.as_posix()}",
                             "local_path": str(full_path),
-                            "duration": "N/A",
-                            "resolution": "Master / Native",
+                            "duration": "unknown",
+                            "resolution": "unknown",
                             "license": "Internal Studio Ownership",
                             "tags": list(set(tags)),
                             "description": f"Internal asset from {full_path.parent.name}"
@@ -105,6 +121,9 @@ class LocalMediaProvider:
         matches = []
         for item in self.index_data:
             if asset_type and item["asset_type"] != asset_type:
+                continue
+            # The index can be stale (built on another machine, files moved or emptied) — only offer files that exist here.
+            if not self.is_usable_file(item.get("local_path")):
                 continue
 
             item_tokens = set(item.get("tags", []))

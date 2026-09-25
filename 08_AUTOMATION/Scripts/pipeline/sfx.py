@@ -88,13 +88,13 @@ class SfxAnalyzer:
         intent = unit.sound_intent
 
         cues = [
-            ("Ambience", intent.ambience[0] if intent.ambience else "Atmospheric room tone", 94),
-            ("Mechanical", intent.mechanical[0] if intent.mechanical else "Tactile operation", 89),
-            ("Transition", intent.transition[0] if intent.transition else "Cinematic whoosh", 83),
-            ("Emphasis", intent.emphasis[0] if intent.emphasis else "Sub bass impact", 88)
+            ("Ambience", intent.ambience[0] if intent.ambience else "Atmospheric room tone"),
+            ("Mechanical", intent.mechanical[0] if intent.mechanical else "Tactile operation"),
+            ("Transition", intent.transition[0] if intent.transition else "Cinematic whoosh"),
+            ("Emphasis", intent.emphasis[0] if intent.emphasis else "Sub bass impact")
         ]
 
-        for cue_type, search_term, rel_base in cues:
+        for cue_type, search_term in cues:
             # Check local media provider first
             local_matches = local_media_provider.search(search_term, asset_type="sfx", limit=1)
             if local_matches:
@@ -105,22 +105,20 @@ class SfxAnalyzer:
                     source="Local Media Library",
                     url=local_asset["url"],
                     local_path=local_asset.get("local_path"),
-                    duration="05s-30s",
-                    license="Internal Master",
-                    relevance_score=0.96,
-                    why_reason=f"Direct studio asset match for {cue_type}: '{search_term}'."
+                    license=local_asset.get("license", "Internal Studio Ownership"),
+                    relevance_score=round(local_asset.get("internal_match_score", 0.0), 3),
+                    why_reason=f"Local file keyword match for {cue_type}: '{search_term}'."
                 ))
             else:
-                # Stock sound catalog match
+                # No local file — offer a search page, clearly marked as not an asset
                 results.append(MediaAsset(
-                    title=f"Sound Design: {search_term.title()}",
-                    asset_type="sfx",
-                    source="Production SFX Library",
+                    title=f"Search: {search_term}",
+                    asset_type="search_link",
+                    source="Freesound search",
                     url=f"https://freesound.org/search/?q={search_term.replace(' ', '+')}",
-                    duration="03s-15s",
-                    license="CC0 / Royalty Free",
-                    relevance_score=rel_base / 100.0,
-                    why_reason=f"Semantic acoustic match for {cue_type} layer: '{search_term}'."
+                    license="n/a — search link, license depends on the clip you pick",
+                    relevance_score=0.0,
+                    why_reason=f"No local {cue_type.lower()} file matched '{search_term}'. Browse and pick manually."
                 ))
 
         return results

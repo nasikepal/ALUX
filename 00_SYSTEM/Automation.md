@@ -101,8 +101,8 @@ Each narration beat is converted into an Obsidian-native **Visual Markdown Panel
 ```markdown
 > [!panel|audio] AUDIO TRACK (VO) — 00:00 - 00:06 (6s)
 > *"The fund quietly reallocated $4 billion into physical real estate and hard infrastructure..."*
-> - **Pacing**: 14 words @ 2.4 wps = 5.8s | **Status**: Verified
-> - **Fact Citation**: [[Source - Bloomberg - Market Data & Capital Intelligence]]
+> - **Pacing**: 14 words @ 2.4 wps = 5.8s | **Claim status**: `candidate` (awaiting Research Inbox review)
+> - **Fact Citation**: [[Source - Bloomberg - Fund reallocates $4B into real assets]]
 
 > [!panel|visual] VISUAL DIRECTION & B-ROLL SPEC — SH-001
 > - **Visual Job**: `prove, establish` | **Narrative Function**: `A — Literal Evidence`

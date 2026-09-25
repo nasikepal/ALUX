@@ -99,11 +99,11 @@ def run_pipeline(script_path: Path):
     table.add_column("Coverage", justify="right", style="cyan")
 
     for u in doc.visual_units:
-        primary_title = u.primary_broll.title if u.primary_broll else "N/A"
-        score = f"{int(round((u.primary_broll.relevance_score if u.primary_broll else 0.85)*100))}%"
+        primary_title = u.primary_broll.title if u.primary_broll else "NO ASSET"
+        score = f"{int(round(u.primary_broll.relevance_score*100))}%" if u.primary_broll else "—"
         job_func = f"{u.visual_jobs[0] if u.visual_jobs else 'context'} / {u.narrative_functions[0][:1] if u.narrative_functions else 'B'}"
-        spec = f"{u.primary_broll.visual_specificity if u.primary_broll else 3}/5"
-        cov = f"{u.visual_coverage.get('coverage_pct', 75)}%"
+        spec = f"{u.primary_broll.visual_specificity}/5" if u.primary_broll else "—"
+        cov = f"{u.visual_coverage.get('coverage_pct', 0)}%"
         table.add_row(u.id, u.script_section[:18], job_func, spec, primary_title[:28], score, cov)
 
     console.print(table)

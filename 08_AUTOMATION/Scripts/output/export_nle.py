@@ -47,6 +47,7 @@ class NLEExporter:
             "Narrative_Function",
             "Visual_Specificity",
             "Primary_Broll_Title",
+            "Broll_Status",
             "Broll_URL",
             "Resolution",
             "Camera_Direction",
@@ -82,11 +83,12 @@ class NLEExporter:
                 "Section": u.script_section,
                 "Narration_Beat": u.text,
                 "Visual_Job": ", ".join(u.visual_jobs),
-                "Narrative_Function": s.primary_asset.narrative_function if s.primary_asset else "B — Context",
-                "Visual_Specificity": f"{s.primary_asset.visual_specificity if s.primary_asset else 3}/5",
-                "Primary_Broll_Title": p_asset.title if p_asset else "Stock B-Roll",
-                "Broll_URL": p_asset.url if p_asset else "#",
-                "Resolution": p_asset.resolution if p_asset else "4K UHD",
+                "Narrative_Function": s.primary_asset.narrative_function if s.primary_asset else "",
+                "Visual_Specificity": f"{s.primary_asset.visual_specificity}/5" if s.primary_asset else "",
+                "Primary_Broll_Title": p_asset.title if p_asset else "",
+                "Broll_Status": "candidate" if p_asset else "NO ASSET - search link",
+                "Broll_URL": p_asset.url if p_asset else (u.broll_search_links[0]["url"] if u.broll_search_links else ""),
+                "Resolution": p_asset.resolution if p_asset else "",
                 "Camera_Direction": f"{s.camera} ({s.movement})",
                 "SFX_Ambience": sfx_amb,
                 "SFX_Mechanical": sfx_mech,
@@ -121,7 +123,10 @@ class NLEExporter:
         total_duration = sum(u.duration_sec for u in units)
         total_words = sum(len(u.text.split()) for u in units)
         avg_wps = round(total_words / max(1, total_duration), 2)
-        avg_coverage = int(sum(u.visual_coverage.get("coverage_pct", 75) for u in units) / max(1, len(units)))
+        avg_coverage = int(sum(u.visual_coverage.get("coverage_pct", 0) for u in units) / max(1, len(units)))
+        assets_found = sum(1 for u in units if u.primary_broll)
+        total_claims = sum(len(u.claims) for u in units)
+        unsourced = sum(len(u.unsourced_claims) for u in units)
 
         lines = [
             "---",
@@ -131,12 +136,18 @@ class NLEExporter:
             f'total_runtime: "{total_duration//60:02d}:{total_duration%60:02d}"',
             f'total_shots: {len(shots)}',
             f'average_coverage: "{avg_coverage}%"',
+            f'broll_assets_found: "{assets_found}/{len(units)}"',
+            f'claims_unsourced: "{unsourced}/{total_claims}"',
             f'date: {datetime.now().strftime("%Y-%m-%d")}',
             "---",
             "",
             f"# Executive Production Brief: {doc.title}",
             "",
-            "> Comprehensive pre-production blueprint, sequence plan, fact verification dossier, and sound cue sheet.",
+            "> Comprehensive pre-production blueprint, sequence plan, research dossier, and sound cue sheet.",
+            "",
+            "> [!warning] Automated output — review before lock",
+            f"> - B-roll: real assets found for **{assets_found}/{len(units)}** units; the rest need manual sourcing.",
+            f"> - Claims: **{unsourced}/{total_claims}** have no source at all. Every found source is a *candidate* until a human accepts it in the Research Inbox.",
             "",
             "## 1. Timeline & Runtime Analytics",
             f"- **Target Runtime**: `{total_duration//60:02d}:{total_duration%60:02d}` ({total_duration} seconds)",
@@ -158,13 +169,17 @@ class NLEExporter:
             end_tc = f"{cumulative_time//60:02d}:{cumulative_time%60:02d}"
 
             p = s.primary_asset
-            title = p.title if p else "Pending Shot"
-            url = p.url if p else "#"
-            n_func = p.narrative_function if p else "B — Context"
-            spec = f"{p.visual_specificity if p else 3}/5"
+            n_func = p.narrative_function if p else "—"
+            spec = f"{p.visual_specificity}/5" if p else "—"
             cam = f"{s.camera} ({s.movement})"
+            if p:
+                asset_cell = f"[{p.title[:32]}]({p.url})"
+            elif u.broll_search_links:
+                asset_cell = f"⚠️ NO ASSET — [search]({u.broll_search_links[0]['url']})"
+            else:
+                asset_cell = "⚠️ NO ASSET"
 
-            lines.append(f"| `{s.shot_id}` | `{start_tc} - {end_tc}` | `{cam}` | `{n_func[:18]}` | [{title[:32]}]({url}) | `{spec}` |")
+            lines.append(f"| `{s.shot_id}` | `{start_tc} - {end_tc}` | `{cam}` | `{n_func[:18]}` | {asset_cell} | `{spec}` |")
 
         lines.extend([
             "",
@@ -179,7 +194,7 @@ class NLEExporter:
 
         lines.extend([
             "",
-            "## 4. Factual Verification & Legal Source Dossier",
+            "## 4. Research Dossier (candidate sources — not verified)",
             ""
         ])
 
@@ -191,14 +206,18 @@ class NLEExporter:
                     lines.append(f"### Claim {claim_count:02d} (`{u.id}`)")
                     lines.append(f'> *"{c}"*')
                     lines.append("")
-                    if u.source_matches:
-                        lines.append("**Verified Citations:**")
-                        for sm in u.source_matches:
-                            lines.append(f"- **Publisher**: {sm.publisher} | **Credibility**: `{sm.credibility.upper()}` ({int(round(sm.relevance_score*100))}%)")
+                    claim_sources = [sm for sm in u.source_matches if sm.claim_text == c]
+                    if claim_sources:
+                        lines.append("**Candidate Sources (awaiting human review):**")
+                        for sm in claim_sources:
+                            lines.append(f"- **Publisher**: {sm.publisher} | **Reputation**: `{sm.credibility.upper()}` | **Keyword match**: {int(round(sm.relevance_score*100))}% | **Status**: `{sm.verification_status}`")
                             lines.append(f"  - Link: [{sm.title}]({sm.url})")
-                            lines.append(f"  - Excerpt: *\"{sm.excerpt or 'Verified enterprise disclosure'}\"*")
+                            if sm.excerpt:
+                                lines.append(f"  - Excerpt (from search): *\"{sm.excerpt}\"*")
                     else:
-                        lines.append("- *(Verification pending editorial sign-off)*")
+                        lines.append("- ⚠️ **No source found** — keep off screen until a researcher sources it.")
+                        for l in u.unsourced_claims.get(c, [])[:3]:
+                            lines.append(f"  - Lead: [{l['label']}]({l['url']})")
                     lines.append("")
 
         lines.extend([
