@@ -25,7 +25,13 @@ async function main() {
   const comp = {};
   for (const [k, name] of Object.entries(TEMPLATE)) comp[k] = tplPage.findOne(n => (n.type === 'COMPONENT' || n.type === 'COMPONENT_SET') && n.name === name);
   const vars = await figma.variables.getLocalVariablesAsync('COLOR');
-  const paintVar = (name, opacity) => { const p = figma.variables.setBoundVariableForPaint({ type: 'SOLID', color: { r: 0, g: 0, b: 0 } }, 'color', vars.find(v => v.name === name)); return opacity == null ? p : { ...p, opacity }; };
+  // Store the resolved colour as well as the binding: detached frames can render the raw colour.
+  const paintVar = (name, opacity) => {
+    const v = vars.find(x => x.name === name);
+    const c = Object.values(v.valuesByMode)[0];
+    const p = figma.variables.setBoundVariableForPaint({ type: 'SOLID', color: { r: c.r, g: c.g, b: c.b } }, 'color', v);
+    return opacity == null ? p : { ...p, opacity };
+  };
 
   const repair = await repairFonts(mapPage);
   let filled = 0, labelled = 0; const problems = [];
