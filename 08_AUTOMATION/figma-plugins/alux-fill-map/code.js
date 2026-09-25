@@ -16,7 +16,7 @@ async function main() {
     if (!gilroy.includes(s)) return figma.closePlugin(`Gilroy ${s} belum terinstal — install Gilroy_fixed lalu restart Figma.`);
     await figma.loadFontAsync({ family: 'Gilroy', style: s });
   }
-  await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
+  await figma.loadFontAsync({ family: 'Gilroy', style: 'Bold' });
 
   const tplPage = figma.root.children.find(p => p.name === 'ALUX — Templates');
   const mapPage = figma.root.children.find(p => p.name.startsWith(DATA.episode.toUpperCase()) || p.name.startsWith('EP' + DATA.episode));
@@ -27,6 +27,7 @@ async function main() {
   const vars = await figma.variables.getLocalVariablesAsync('COLOR');
   const paintVar = (name, opacity) => { const p = figma.variables.setBoundVariableForPaint({ type: 'SOLID', color: { r: 0, g: 0, b: 0 } }, 'color', vars.find(v => v.name === name)); return opacity == null ? p : { ...p, opacity }; };
 
+  const repair = await repairFonts(mapPage);
   let filled = 0, labelled = 0; const problems = [];
   for (const card of DATA.cards) {
     const node = mapPage.findOne(n => (n.type === 'COMPONENT' || n.type === 'FRAME') && n.name.startsWith(card.id + ' '));
@@ -36,7 +37,7 @@ async function main() {
 
     const f = card.fill;
     if (!f || f.hold) {
-      await label(thumb, f && f.hold ? 'HOLD — ' + f.hold : 'TEMPLATE BELUM ADA · ' + card.type.toUpperCase(), !!(f && f.hold));
+      placeholder(thumb, card.type, f && f.hold ? 'HOLD — ' + f.hold : 'TEMPLATE BELUM ADA', !!(f && f.hold), paintVar);
       labelled++; continue;
     }
     const src = comp[f.template];
@@ -70,16 +71,39 @@ async function main() {
     inst.rescale(SCALE);
     filled++;
   }
-  figma.closePlugin(`${DATA.episode}: ${filled} kartu diisi template · ${labelled} diberi label` + (problems.length ? ` · ${problems.length} masalah: ${problems.slice(0, 3).join('; ')}` : ''));
+  figma.closePlugin(`${DATA.episode}: ${filled} kartu diisi template · ${labelled} placeholder · font diperbaiki ${repair.fixed}` + (repair.failed ? ` (gagal ${repair.failed})` : '') + (problems.length ? ` · ${problems.length} masalah: ${problems.slice(0, 3).join('; ')}` : ''));
 }
 
-async function label(thumb, text, hold) {
-  const t = thumb.findOne(n => n.type === 'TEXT');
-  if (!t) return;
-  for (const f of t.getRangeAllFontNames(0, t.characters.length)) await figma.loadFontAsync(f);
-  t.fontName = { family: 'Inter', style: 'Bold' };
-  t.characters = text;
-  t.fills = [{ type: 'SOLID', color: hold ? { r: 0.94, g: 0.33, b: 0.31 } : { r: 0.89, g: 0.65, b: 0.17 } }];
+// Cards without a template get a clean placeholder: type name + status, in the fixed Gilroy.
+function placeholder(thumb, type, status, hold, paintVar) {
+  thumb.layoutMode = 'NONE';
+  for (const c of [...thumb.children]) c.remove();
+  thumb.clipsContent = true;
+  thumb.fills = [paintVar('navy/900')];
+  const mk = (chars, style, size, fill, y) => {
+    const t = figma.createText(); t.fontName = { family: 'Gilroy', style }; t.fontSize = size; t.characters = chars;
+    t.fills = [fill]; thumb.appendChild(t); t.x = 20; t.y = y; t.resize(404, t.height); t.textAutoResize = 'HEIGHT'; return t;
+  };
+  mk(type.toUpperCase(), 'Bold', 12, paintVar('slate/500'), 20);
+  mk(status, 'Bold', hold ? 15 : 20, paintVar(hold ? 'red/500' : 'gold/500'), 150);
+}
+
+// Text set in the broken Drive originals shows up as family "Gilroy-Bold" with a junk style ("☞").
+// Those fonts are gone once Gilroy_fixed is installed, so map them onto the fixed family.
+async function repairFonts(page) {
+  let fixed = 0, failed = 0;
+  for (const t of page.findAllWithCriteria({ types: ['TEXT'] })) {
+    let segs;
+    try { segs = t.getStyledTextSegments(['fontName']); } catch (e) { failed++; continue; }
+    const broken = segs.filter(s => /^Gilroy-/.test(s.fontName.family));
+    if (!broken.length) continue;
+    for (const s of broken) {
+      const style = s.fontName.family.replace('Gilroy-', '');
+      const target = { family: 'Gilroy', style: ['Light', 'Regular', 'Medium', 'Bold', 'Heavy'].includes(style) ? style : 'Regular' };
+      try { t.setRangeFontName(s.start, s.end, target); fixed++; } catch (e) { failed++; }
+    }
+  }
+  return { fixed, failed };
 }
 
 function setBars(inst, f, paintVar) {
@@ -107,4 +131,4 @@ function setRoute(inst, k, paintVar) {
   if (prog) prog.resize(Math.max(0.01, W * k / 15), prog.height);
 }
 
-main().catch(e => figma.closePlugin('Gagal: ' + e.message));
+main().catch(e => figma.closePlugin('Gagal: ' + (e && e.message ? e.message : String(e))));
