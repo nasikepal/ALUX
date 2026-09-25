@@ -109,11 +109,12 @@ def step_tools(check):
 
 
 def install_whisper_windows():
-    """Latest whisper.cpp release, prebuilt x64 binaries, into ~/.alux/bin."""
-    api = "https://api.github.com/repos/ggml-org/whisper.cpp/releases/latest"
+    """Newest whisper.cpp release that ships prebuilt x64 binaries, into ~/.alux/bin.
+    (Tagged versions like v1.9.4 can have no assets; the binaries live on the b#### build releases.)"""
+    api = "https://api.github.com/repos/ggml-org/whisper.cpp/releases?per_page=10"
     with urllib.request.urlopen(api, timeout=30) as r:
-        release = json.load(r)
-    asset = next((a for a in release["assets"] if a["name"] == "whisper-bin-x64.zip"), None)
+        releases = json.load(r)
+    asset = next((a for rel in releases for a in rel["assets"] if a["name"] == "whisper-bin-x64.zip"), None)
     if not asset:
         say("no whisper-bin-x64.zip in the latest release — build whisper.cpp manually")
         return
