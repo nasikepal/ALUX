@@ -24,9 +24,19 @@ async function main() {
     styles++;
   }
 
-  let nodes = 0;
+  // Templates built through the remote MCP can't use Gilroy yet: their text is set in Figtree and
+  // named "style:ALUX/<Style>". Link those to the real text style here.
+  const byName = Object.fromEntries((await figma.getLocalTextStylesAsync()).map(s => [s.name, s]));
+  let linked = 0, nodes = 0;
   for (const page of figma.root.children.filter(p => p.name.startsWith('ALUX —'))) {
     await page.loadAsync();
+    for (const t of page.findAllWithCriteria({ types: ['TEXT'] })) {
+      const m = t.name.match(/^style:(ALUX\/.+)$/);
+      if (!m || !byName[m[1]] || t.textStyleId === byName[m[1]].id) continue;
+      for (const f of t.getRangeAllFontNames(0, t.characters.length)) await figma.loadFontAsync(f);
+      await t.setTextStyleIdAsync(byName[m[1]].id);
+      linked++;
+    }
     for (const t of page.findAllWithCriteria({ types: ['TEXT'] })) {
       if (t.textStyleId && typeof t.textStyleId === 'string') continue; // follows its style
       const segs = t.getStyledTextSegments(['fontName']);
@@ -36,6 +46,6 @@ async function main() {
       nodes++;
     }
   }
-  figma.closePlugin(`ALUX font: ${styles} text style + ${nodes} teks diganti ke Gilroy.`);
+  figma.closePlugin(`ALUX font: ${styles} text style · ${linked} teks disambung ke style · ${nodes} teks diganti ke Gilroy.`);
 }
 main().catch(e => figma.closePlugin('Gagal: ' + e.message));

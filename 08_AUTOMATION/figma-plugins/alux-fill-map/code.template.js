@@ -6,8 +6,10 @@ const TEMPLATE = {
   chapter: 'ALUX / Chapter', stat: 'ALUX / Stat', stamp: 'ALUX / Stamp', quickfact: 'ALUX / Quick fact',
   still: 'ALUX / Still frame', illustration: 'ALUX / Illustration card', bio: 'ALUX / Bio card',
   lower: 'ALUX / Lower third', compare: 'ALUX / Chart — Compare',
+  cta_subscribe: 'ALUX / CTA — Subscribe', cta_app: 'ALUX / CTA — App', endscreen: 'ALUX / End screen',
+  opener: 'ALUX / Series opener',
 };
-const OVERLAY = new Set(['stat', 'stamp', 'bio', 'lower']); // transparent templates: show a footage stand-in behind
+const OVERLAY = new Set(['stat', 'stamp', 'bio', 'lower', 'cta_subscribe', 'cta_app']); // transparent templates: show a footage stand-in behind
 const THUMB_W = 444, SCALE = THUMB_W / 3840;
 
 async function main() {
