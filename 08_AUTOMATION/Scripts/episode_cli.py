@@ -206,7 +206,15 @@ def cmd_captions(episode: Path, words_file: str, check_file: str, to_premiere: b
         subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(build / "vo_master_48k.wav"), "-ar", "16000",
                         "-ac", "1", "-c:a", "pcm_s16le", str(wav16)], check=True)
     from episode.captions import relisten
+    # Voters for the tie-break. large-v3 is the most accurate model available, and the weak
+    # base.en voter used to hallucinate here ("built for" -> "for us" at 52:49 of EP001), so it
+    # is replaced by large-v3 whenever the file is present. Add it with:
+    #   curl -L -o ~/.cache/whisper/ggml-large-v3.bin \
+    #     https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3.bin
     models = [(WHISPER_MODEL, []), (WHISPER_MODEL, ["-bs", "5", "-bo", "5"])]
+    v3 = WHISPER_MODELS / "ggml-large-v3.bin"
+    if v3.exists():
+        models.append((v3, []))
     base = WHISPER_MODELS / "ggml-base.en.bin"
     if base.exists():
         models.append((base, []))
