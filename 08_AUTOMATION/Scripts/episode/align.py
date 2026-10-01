@@ -107,10 +107,17 @@ def _interpolate(sentences: List[Dict[str, Any]]) -> None:
 
 
 def _close_gaps(sentences: List[Dict[str, Any]]) -> None:
-    """Footage slots must tile the timeline: each sentence runs until the next one starts."""
+    """
+    Footage slots must tile the timeline: each sentence runs until the next one starts.
+
+    Whisper's segment ends are coarse and overshoot, so consecutive sentences routinely overlap by a
+    few frames (EP002: 31 pairs, up to 0.36 s). Filling only the gaps left those overlaps in the
+    timeline, where two clips then claimed the same frames — so the slot end is pulled back to the next
+    sentence's start in both directions, not just when there is a gap.
+    """
     for a, b in zip(sentences, sentences[1:]):
-        if b["start"] is not None and a["end"] is not None and b["start"] > a["end"]:
-            a["slot_end"] = b["start"]
+        if b["start"] is not None and a["end"] is not None:
+            a["slot_end"] = max(a["start"], b["start"])
         else:
             a["slot_end"] = a["end"]
     if sentences:
